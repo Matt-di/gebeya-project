@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Auth\LoginContrller;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::get('{user_id}/cart',[CartController::class, 'index']);
+
+Route::get('{user_id}/order',[OrderController::class, 'store']);
+Route::get('{user_id}/orders',[OrderController::class, 'index']);
+Route::post('{user_id}/order',[OrderController::class, 'store']);
+
+Route::get('/login', [LoginContrller::class, 'index'])->name("login");
+Route::post('/login', [LoginContrller::class, 'store'])->name('login');
+
+Route::get('/register', [RegisterController::class, 'index'])->name("register");
+
+
+Route::get('/admin', function(){
+    return view('auth.login');
 });
