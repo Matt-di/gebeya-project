@@ -1,6 +1,5 @@
-<!-- Navbar -->
 <header class="mb-5">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <nav class="navbar navbar-expand-md navbar-light bg-white fixed-top">
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Toggle button -->
@@ -21,36 +20,31 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href=" {{route('products')}}">All Products</a>
+                        <a class="nav-link" href=" {{ route('products') }}">All Products</a>
                     </li>
                     @auth('web')
-                    @if(auth()->user()->user_type =="merchant")
-                    @for ($i = 0; $i < 5; $i++)
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Category {{$i}}</a>
-                    </li>
-                    @endfor
-                    @endif
+                        @if (auth()->user()->user_type == 'merchant')
+                            @for ($i = 0; $i < 5; $i++)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Category {{ $i }}</a>
+                                </li>
+                            @endfor
+                        @endif
                     @endauth
 
                     @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Some things</a>
-                    </li>
-                    <form class="d-flex input-group w-auto">
-                        <input
-                          type="search"
-                          class="form-control rounded"
-                          placeholder="Search"
-                          aria-label="Search"
-                          aria-describedby="search-addon"
-                        />
-                        <span class="input-group-text border-0" id="search-addon">
-                          <i class="fas fa-search"></i>
-                        </span>
-                      </form>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Some things</a>
+                        </li>
+                        <form class="d-flex input-group w-auto">
+                            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                aria-describedby="search-addon" />
+                            <span class="input-group-text border-0" id="search-addon">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </form>
                     @endguest
-                    
+
 
                     @auth('web_admin')
                         <li class="nav-item">
@@ -81,11 +75,11 @@
             <!-- Right elements -->
             <div class="d-flex align-items-center">
                 <!-- Icon -->
-                @if( auth()->user() && auth()->user()->user_type == ' client')
-                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#cart-modal-ex">
-                    <i class="fa fa-shopping-cart left"></i>
-                    <span>Open my cart</span>
-                </a>
+                @if (auth()->user() && auth()->user()->user_type == ' client')
+                    <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#cart-modal-ex">
+                        <i class="fa fa-shopping-cart left"></i>
+                        <span>Open my cart</span>
+                    </a>
                 @endif
 
                 <!-- Notifications -->
@@ -149,6 +143,5 @@
             </div>
             <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->
-
+    <!-- Navbar -->   
 </header>

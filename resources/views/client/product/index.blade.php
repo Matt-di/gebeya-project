@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
-    @include('layouts.client_sidenav')
 
+@section('sidenav')
+    @include('layouts.client_sidenav')
+@endsection
+@section('content')
     <div class="container">
         <div class="container-fluid my-5 py-5">
 

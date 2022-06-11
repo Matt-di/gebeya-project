@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
-    @include('layouts.client_sidenav')
 
+@section('sidenav')
+    @include('layouts.client_sidenav')
+@endsection
+@section('content')
     <div class="container">
         <div class="container-fluid my-5 py-5">
 
@@ -11,43 +13,45 @@
 
                 <div class="card">
                     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-                        Your Products
+                        Your Categories
                     </h3>
                     <div class="card-body">
                         <div id="dataTable" class="table-editable">
                             <button class="btn btn-primary table-add float-right mb-3 mr-2" data-mdb-toggle="modal"
-                                data-mdb-target="#addProductModal">
+                                data-mdb-target="#addCategoryModal">
                                 <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
                             </button>
+                            @if($categories->count())
                             <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Product Id</th>
+                                        <th class="text-center">Category Id</th>
                                         <th class="text-center">Name</th>
-                                        <th class="text-center">Category</th>
                                         <th class="text-center">Description</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-center">Sort</th>
-                                        <th class="text-center">Remove</th>
+                                        <th class="text-center">Show In Navbar</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @for ($i = 0; $i < 5; $i++)
-                                        <x-product-list />
-                                    @endfor
+                                    @foreach ($categories as $category)
+                                    <x-category-list :category="$category"/>        
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
+                        {{$categories->links()}}
                     </div>
+                    
+                    @else
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                        No Categories Created
+                    </h3>
+                    @endif
                 </div>
-                <!-- Editable table -->
-                <!-- Grid row -->
-
             </section>
             <!-- Section: Block Content -->
 
         </div>
     </div>
 @endsection
-@include('client.product.store')
+@include('client.category.store')

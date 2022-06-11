@@ -1,9 +1,7 @@
-<div class="sidebar-fixed top-0 pt-2 position-fixed">
-
+<div class="sidebar-fixed top-0 pt-2 ">
     <a class="logo-wrapper waves-effect mb-3">
         <img src="https://mdbootstrap.com/img/logo/mdb-email.png" class="img-fluid" alt="">
     </a>
-
     <div class="list-group list-group-flush">
         <a href=" {{route('merchant.dashboard')}}" class="list-group-item {{ Request::is('dashboard') ? 'active' : '' }}  waves-effect mt-3">
             <i class="fa fa-pie-chart mr-3"></i>Dashboard

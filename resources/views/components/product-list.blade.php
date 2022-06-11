@@ -1,7 +1,7 @@
 <tr>
     <td class="pt-3-half">Aurelia Vega</td>
     <td class="pt-3-half">30</td>
-    <td class="pt-3-half">Deepends</td>
+    <td class="pt-3-half"><a href="#">#as24</a></td>
     <td class="pt-3-half">Deepends</td>
     <td class="pt-3-half">Spain</td>
     <td class="pt-3-half">Madrid</td>

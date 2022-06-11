@@ -31,19 +31,9 @@
                         @enderror
                     </div>
                     <!-- Email input -->
+                    
                     <div class="form-outline mb-4">
-                        <input type="email" id="category" name="category"
-                            class="form-control @error('category') is-invalid @enderror"
-                            value="{{ old('category') }}" />
-                        <label class="form-label" for="category">Category</label>
-                        @error('category')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                        <input type="text" id="price" name="price"
+                        <input type="number" id="price" name="price"
                             class="form-control @error('email') is-invalid @enderror" value="{{ old('price') }}" />
                         <label class="form-label" for="price">Price</label>
                         @error('price')
@@ -59,10 +49,23 @@
                         @enderror
                     </div>
                     <div class="form-outline mb-4">
-                        <input type="file" min=0 id="image" name="image"
+                        <label class="form-label ml-2 p-2" for="image">Product Image</label>
+
+                        <input accept="image/png, image/jpeg" type="file" min=0 id="image" name="image"
                             class="form-control @error('email') is-invalid @enderror" value="{{ old('image') }}" />
-                        <label class="form-label" for="image">Product Image</label>
                         @error('quantity')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-outline mb-4">
+                        <select class="custom-select form-control " id="exampleFormControlSelect1">
+                            <option>Category</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        @error('category')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

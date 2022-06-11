@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MerchanProductController;
 use App\Http\Controllers\MerchantDashboardorController;
 
@@ -51,5 +52,12 @@ Route::get('/dashboard',[MerchantDashboardorController::class,'index'])->name('m
 Route::get('/products',[MerchanProductController::class, 'index'])->name('products');
 Route::post('/products',[MerchanProductController::class, 'store'])->name('products.add');
 
-Route::get('/category',[MerchanProductController::class, 'index'])->name('products');
+Route::get('/category',[CategoryController::class, 'index'])->name('category');
+Route::post('/category',[CategoryController::class, 'store'])->name('category.add');
+Route::get('/category/{category}',[CategoryController::class, 'get'])->name('category.get');
+Route::post('/category/{category}/update',[CategoryController::class, 'update'])->name('category.update');
+Route::delete('/category/{category}',[CategoryController::class, 'destroy'])->name('category.delete');
+Route::post('/category/{category}/enable',[CategoryController::class, 'showInNav'])->name('category.enable');
+
+Route::get('/orders',[OrderController::class, 'getOrders'])->name('orders');
 

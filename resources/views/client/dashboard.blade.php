@@ -1,36 +1,31 @@
 @extends('layouts.app')
 
+@section('sidenav')
+    @include('layouts.client_sidenav')
+@endsection
 @section('content')
-@include('layouts.client_sidenav')
-    <div class="container">
-        <div class="container-fluid my-5 py-5">
+    <div class="container-fluid my-5 py-5">
+        <section>
+            <style>
+                .footer-hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                    -webkit-transition: all .3s ease-in-out;
+                    transition: all .3s ease-in-out
+                }
 
-            <!-- Section: Block Content -->
-            <section>
+                .footer-hover:hover {
+                    background-color: rgba(0, 0, 0, 0.2)
+                }
 
-                <style>
-                    .footer-hover {
-                        background-color: rgba(0, 0, 0, 0.1);
-                        -webkit-transition: all .3s ease-in-out;
-                        transition: all .3s ease-in-out
-                    }
-
-                    .footer-hover:hover {
-                        background-color: rgba(0, 0, 0, 0.2)
-                    }
-
-                    .text-black-40 {
-                        color: rgba(0, 0, 0, 0.4)
-                    }
-                </style>
-
-                <!-- Grid row -->
-                <div class="row">
-
-                    <!-- Grid column -->
-                    <div class="col-md-6 col-lg-3 mb-4">
-
-                        <!-- Card -->
+                .text-black-40 {
+                    color: rgba(0, 0, 0, 0.4)
+                }
+            </style>
+            <div class="row">
+                @for ($i = 0; $i < 4; $i++)
+                    <x-dashboard-card />
+                @endfor
+                {{-- <div class="col-md-6 col-lg-3 mb-4">
                         <div class="card primary-color white-text">
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <div>
@@ -44,8 +39,6 @@
                             <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i
                                     class="fas fa-arrow-circle-right pl-2"></i></a>
                         </div>
-                        <!-- Card -->
-
                     </div>
                     <!-- Grid column -->
 
@@ -113,14 +106,13 @@
                         <!-- Card -->
 
                     </div>
-                    <!-- Grid column -->
+                    <!-- Grid column --> --}}
 
-                </div>
-                <!-- Grid row -->
+            </div>
+            <!-- Grid row -->
 
-            </section>
-            <!-- Section: Block Content -->
+        </section>
+        <!-- Section: Block Content -->
 
-        </div>
     </div>
 @endsection
