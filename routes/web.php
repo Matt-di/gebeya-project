@@ -51,3 +51,5 @@ Route::get('/dashboard',[MerchantDashboardorController::class,'index'])->name('m
 Route::get('/products',[MerchanProductController::class, 'index'])->name('products');
 Route::post('/products',[MerchanProductController::class, 'store'])->name('products.add');
 
+Route::get('/category',[MerchanProductController::class, 'index'])->name('products');
+
