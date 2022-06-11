@@ -14,11 +14,19 @@ class LoginContrller extends Controller
     }
 
     public function store(Request $request ){
+
         $this->validate($request, [
             'email'=>'required',
             'password'=>'required'
         ]);
-        dd($request->email);
+
+    if(!auth()->attempt($request->only('email','password'))){
+        return back()->with('status','Invalid login credentials');
+    }
+    if (auth()->user()->user_type=='client')
+    return redirect()->route('home');
+    else
+    return redirect()->route('merchant.dashboard');
 
     }
 }
