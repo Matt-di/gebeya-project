@@ -10,11 +10,11 @@
         </a>
         <a href="{{route('products')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('products') ? 'active' : '' }}">
             <i class="fa fa-shopping-basket mr-5"></i>Products</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect mb-3">
+        <a href="{{route('category')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('category') ? 'active' : '' }}">
             <i class="fa fa-table mr-3"></i>Category</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect mb-3">
+        <a href="{{route('orders')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('orders') ? 'active' : '' }}">
             <i class="fa fa-map mr-3"></i>Orders</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect mb-3">
+        <a href="{{route('orders')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('orders') ? 'active' : '' }}">
             <i class="fa fa-money mr-3"></i>Orders</a>
     </div>
 

@@ -10,6 +10,11 @@ use Ramsey\Uuid\Rfc4122\UuidV3;
 
 class RegisterController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(['guest']);
+    }
+    
     public function index()
     {
         return view('auth.register');
