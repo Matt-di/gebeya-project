@@ -1,8 +1,9 @@
+    @props(['product'])
     <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
-        <div class="card">
+        <div class="card" style="height: 100%">
             <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/belt.webp"
-                    class="w-100" />
+                <img src="{{ url('images/products', $product->image) }}" alt="Product Image" class="img-thumbnail"
+                    />
                 <a href="#!">
                     <div class="mask">
                         <div class="d-flex justify-content-start align-items-end h-100">
@@ -12,22 +13,29 @@
                     <div class="hover-overlay">
                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                     </div>
-
                 </a>
             </div>
             <div class="card-body">
-                <a href="" class="text-reset">
-                    <h5 class="card-title mb-3">Product name</h5>
+                <a href="{{ route('product.get', $product->id) }}" class="text-reset">
+                    <h5 class="card-title mb-3"> {{ $product->name }} </h5>
                 </a>
                 <a href="" class="text-reset">
-                    <p>Category</p>
+                    <p>{{ $product->description }}</p>
                 </a>
-                <h6 class="mb-3">$61.99</h6>
+                <h6 class="mb-3">${{ $product->price }}</h6>
+
                 <div class="d-flex flex-row">
-                    <button type="button" class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-                        Add to cart
-                    </button>
-                    <button type="button" class="btn btn-danger flex-fill ms-1">Buy now</button>
+                    @if ($product->quantity > 0)
+                        <form method="post" action="{{ route('cart.store', $product->id) }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
+                                Add to cart
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-danger flex-fill ms-1">Buy now</button>
+                    @else
+                        <button type="button" disabled class="btn  flex-fill ms-1">Not Available In Stock</button>
+                    @endif
                 </div>
             </div>
         </div>

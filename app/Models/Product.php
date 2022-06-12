@@ -22,6 +22,13 @@ class Product extends Model
         'image'
     ];
 
+    public function productAdded(User $user){
+        return $this->carts->contains('user_id',$user->id);
+    }
+    public function carts(){
+        return $this->hasMany(Cart::class);
+    }
+
     public function categroy(){
         return  $this->belongsTo(Category::class);
     }

@@ -6,9 +6,15 @@ use Ramsey\Uuid\Uuid;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MerchanProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $category = Category::get();
@@ -68,7 +74,11 @@ class MerchanProductController extends Controller
 
     public function getProduct(Product $product)
     {
+        if(Auth::check())
+        if(auth()->user()->user_type == 'merchant')
         return $product;
+
+        return view('user.product.single',['product'=>$product]);
     }
 
     public function update(Product $product, Request $request)

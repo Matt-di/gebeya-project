@@ -1,81 +1,117 @@
 @extends('layouts.app')
 
 @section('content')
+    <section class="p-4 p-md-5" style="
+            background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
+          ">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-5">
+                <div class="card rounded-3">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <h3>Order Details</h3>
+                        </div>
+                        <form action="{{route('order.add')}}" method="POST">
+                          @csrf
+                            <p class="fw-bold mb-4 pb-2">Fill</p>
+                            <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                                <div class="flex-fill mx-3">
+                                    <div class="form-outline">
+                                        <input type="text" id="formControlLgXc" class="form-control form-control-lg"
+                                            placeholder="Your Full name on ID" />
+                                        <label class="form-label" for="formControlLgXc">Full Name</label>
+                                    </div>
+                                </div>
+                            </div>
 
-<section class="p-4 p-md-5" style="
-    background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
-  ">
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-10 col-lg-8 col-xl-5">
-      <div class="card rounded-3">
-        <div class="card-body p-4">
-          <div class="text-center mb-4">
-            <h3>Order Details</h3>
-          </div>
-          <form action="">
-            <p class="fw-bold mb-4 pb-2">Fill</p>
+                            <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                                <div class="flex-fill mx-3">
+                                    <div class="form-outline">
+                                        <input type="text" id="formControlLgXs" class="form-control form-control-lg"
+                                            placeholder="Shipping Address" />
+                                        <label class="form-label" for="formControlLgXs">Shipping Address</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
 
-            <div class="d-flex flex-row align-items-center mb-4 pb-1">
-              <img class="img-fluid" src="https://img.icons8.com/color/48/000000/mastercard-logo.webp" />
-              <div class="flex-fill mx-3">
-                <div class="form-outline">
-                  <input type="text" id="formControlLgXc" class="form-control form-control-lg"
-                    value="**** **** **** 3193" />
-                  <label class="form-label" for="formControlLgXc">First Name</label>
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-12 mb-4">
+
+                                    <label for="country">Country</label>
+                                    <select class="form-control d-block w-100" id="country" required>
+                                        <option value="">Choose...</option>
+                                        <option>United States</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a valid country.
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-6 mb-4">
+
+                                    <label for="state">State</label>
+                                    <select class="form-control d-block w-100" id="state" required>
+                                        <option value="">Choose...</option>
+                                        <option>California</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please provide a valid state.
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                                <!--Grid column-->
+                                <div class="col-lg-4 col-md-6 mb-4">
+
+                                    <label for="zip">Zip</label>
+                                    <input type="text" class="form-control" id="zip" placeholder="" required>
+                                    <div class="invalid-feedback">
+                                        Zip code required.
+                                    </div>
+
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <div class="form-outline mb-4">
+                                <label class="fw-bold mb-1 ml-2">Payment Method</label>
+                                <select class="form-control" name="provider" id="provider">
+                                    <option value="telebirr">Telebirr</option>
+                                    <option value="cbebirr">CBEbirr</option>
+                                    <option value="banking">Banking</option>
+                                    <option value="visa">visa</option>
+                                </select>
+                            </div>
+
+                            <hr>
+
+                            <div class="mb-1">
+                                <input type="checkbox" class="form-check-input filled-in" id="chekboxRules">
+                                <label class="form-check-label" for="chekboxRules">I accept the terms and
+                                    conditions</label>
+                            </div>
+                            <div class="mb-1">
+                                <input type="checkbox" class="form-check-input filled-in" id="safeTheInfo">
+                                <label class="form-check-label" for="safeTheInfo">Save this information for next
+                                    time</label>
+                            </div>
+                            <div class="mb-1">
+                                <input type="checkbox" class="form-check-input filled-in" id="subscribeNewsletter">
+                                <label class="form-check-label" for="subscribeNewsletter">Subscribe to the
+                                    newsletter</label>
+                            </div>
+
+                            <hr>
+                            <button type="submit" class="btn btn-success btn-lg btn-block">Order</button>
+                        </form>
+                    </div>
                 </div>
-              </div>
             </div>
-
-            <div class="d-flex flex-row align-items-center mb-4 pb-1">
-              <img class="img-fluid" src="https://img.icons8.com/color/48/000000/visa.webp" />
-              <div class="flex-fill mx-3">
-                <div class="form-outline">
-                  <input type="text" id="formControlLgXs" class="form-control form-control-lg"
-                    value="**** **** **** 4296" />
-                  <label class="form-label" for="formControlLgXs">Card Number</label>
-                </div>
-              </div>
-              <a href="#!">Remove card</a>
-            </div>
-
-            <p class="fw-bold mb-4">Add new card:</p>
-
-            <div class="form-outline mb-4">
-              <input type="text" id="formControlLgXsd" class="form-control form-control-lg"
-                value="Anna Doe" />
-              <label class="form-label" for="formControlLgXsd">Cardholder's Name</label>
-            </div>
-
-            <div class="row mb-4">
-              <div class="col-7">
-                <div class="form-outline">
-                  <input type="text" id="formControlLgXM" class="form-control form-control-lg"
-                    value="1234 5678 1234 5678" />
-                  <label class="form-label" for="formControlLgXM">Card Number</label>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="form-outline">
-                  <input type="password" id="formControlLgExpk" class="form-control form-control-lg"
-                    placeholder="MM/YYYY" />
-                  <label class="form-label" for="formControlLgExpk">Expire</label>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="form-outline">
-                  <input type="password" id="formControlLgcvv" class="form-control form-control-lg"
-                    placeholder="Cvv" />
-                  <label class="form-label" for="formControlLgcvv">Cvv</label>
-                </div>
-              </div>
-            </div>
-
-            <button class="btn btn-success btn-lg btn-block">Order</button>
-          </form>
         </div>
-      </div>
-    </div>
-  </div>
-</section>>
-    
+    </section>
 @endsection

@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('sidenav')
+    @section('sidenav')
     <!--Section: Content-->
+    <div class="col-md-2 col-lg-2">
     <section class="container-fluid">
+
         <p class="text-center font-weight-bold">Filter panel</p>
         <style>
             .link-black a {
@@ -71,8 +73,8 @@
                     </div>
 
                     <div class="form-check pl-0 mb-2">
-                        <input type="radio" class="form-check-input" id="materialGroupExample2"
-                            name="groupOfMaterialRadios" checked>
+                        <input type="radio" class="form-check-input" id="materialGroupExample2" name="groupOfMaterialRadios"
+                            checked>
                         <label class="form-check-label" for="materialGroupExample2">Laptops</label>
                     </div>
 
@@ -161,20 +163,23 @@
             <!--Grid column-->
 
         </div>
-@endsection
+    </div>
+        @endsection
 
-@section('content')
-            <section  style="background-color: #eee;">
-                <div class="text-center container py-5">
+    @section('content')
+    <div class="col-lg-8 col-md-10">
+        <section style="background-color: #eee;">
+            <div class="text-center container py-5">
 
-                    <div class="row">
-                        <h3>Latest Products</h3>
-                        @for ($i = 0; $i < 10; $i++)
-                            <x-product-card />
-                        @endfor
-                    </div>
-
+                <div class="row">
+                    <h3>Latest Products</h3>
+                    @foreach ($products as $product)
+                        <x-product-card :product="$product" />
+                    @endforeach
                 </div>
-            </section>
-    @include('layouts.contact')
-@endsection
+
+            </div>
+        </section>
+    </div>
+        @include('layouts.contact')
+    @endsection

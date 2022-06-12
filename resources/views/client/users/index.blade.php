@@ -20,13 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        @foreach ($orders as $order)
-                            {{$payment = $order->payment}}
-                              {{$orderItems = $order->orderItems}}
-                                {{$user = $order->user  }}
-                            <x-user-order-card :orders="$order" :payment="$payment" :user="$user"/>
-                        @endforeach
+                            {{-- <x-user-order-card  /> --}}
                     </tbody>
                 </table>
             </div>

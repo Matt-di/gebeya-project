@@ -20,7 +20,7 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href=" {{ route('products') }}">All Products</a>
+                        <a class="nav-link" href="{{  auth()=='merchant'?route('products'):route('home') }}">All Products</a>
                     </li>
                     @auth('web')
                         @if (auth()->user()->user_type == 'merchant')
@@ -78,13 +78,18 @@
             <!-- Collapsible wrapper -->
 
             <!-- Right elements -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mr-2">
                 <!-- Icon -->
-                @if (auth()->user() && auth()->user()->user_type == ' client')
-                    <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#cart-modal-ex">
+                @if (auth()->user() && auth()->user()->user_type == 'client')
+                    {{-- <a class="btn btn-primary btn-sm mr-3" data-toggle="modal" data-target="#cart-modal-ex">
                         <i class="fa fa-shopping-cart left"></i>
                         <span>Open my cart</span>
-                    </a>
+                    </a> --}}
+                    <a  class="text-reset me-3" href="{{route('cart')}}">
+                        <span class="badge badge-pill bg-danger">1</span>
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger">{{auth()->user()->carts()->count()}}</span>
+                      </a>
                 @endif
 
                 <!-- Notifications -->

@@ -12,8 +12,8 @@
             <i class="fa fa-table mr-3"></i>Category</a>
         <a href="{{route('orders')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('orders') ? 'active' : '' }}">
             <i class="fa fa-map mr-3"></i>Orders</a>
-        <a href="{{route('orders')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('orders') ? 'active' : '' }}">
-            <i class="fa fa-money mr-3"></i>Orders</a>
+        <a href="{{route('users')}}" class="list-group-item list-group-item-action waves-effect mb-3 {{ Request::is('users') ? 'active' : '' }}">
+            <i class="fa fa-user mr-3"></i>Users</a>
     </div>
 
 </div>

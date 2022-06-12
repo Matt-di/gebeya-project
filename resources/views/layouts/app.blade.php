@@ -24,17 +24,10 @@
 
 <body>
     @include('layouts.navbar')
-    <main class="container-fluid">
+    <main class="container-fluid mr-3">
         <div class="row">
-            <div class="col-lg-2 col-sm-4 col-md-4">
                 @yield('sidenav')
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-8">
                 @yield('content')
-            </div>
-            <div class="col-lg-2">
-                <h2>AD</h2>
-            </div>
         </div>
     </main>
     @include('layouts.footer')

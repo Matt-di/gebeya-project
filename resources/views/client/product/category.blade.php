@@ -2,9 +2,12 @@
 
 
 @section('sidenav')
+<div class="col-lg-2 col-md-4">
     @include('layouts.client_sidenav')
+</div>
 @endsection
 @section('content')
+<div class="col-lg-8 col-md-8">
     <div class="container">
         <div class="container-fluid my-5 py-5">
             <section>
@@ -64,6 +67,7 @@
             <!-- Section: Block Content -->
 
         </div>
+    </div>
     </div>
 @endsection
 @section('modal')

@@ -47,11 +47,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+    public function orderItems(){
+        return $this->hasMany(OrderItem::class);
+    }
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
+
     public function categories(){
         return $this->hasMany(Category::class);      
     }
     public function products(){
         return $this->hasMany(Product::class);      
+    }
+
+    public function carts(){
+        return $this->hasMany(Cart::class);
     }
     public $incrementing = false;
 

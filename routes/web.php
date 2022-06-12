@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MerchanProductController;
 use App\Http\Controllers\MerchantDashboardorController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +25,21 @@ use App\Http\Controllers\MerchantDashboardorController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/home',[ProductController::class,'index'])->name('home');
 
-Route::get('{user_id}/cart',[CartController::class, 'index']);
+Route::get('cart',[CartController::class, 'index'])->name('cart');
+Route::post('/cart/{product}',[CartController::class, 'store'])->name('cart.store');
+Route::delete('/cart/{cart}',[CartController::class, 'destroy'])->name('cart.delete');
+Route::put('/cart/{cart}',[CartController::class, 'updateQuantity']);
+
+
+
+Route::get('/order',[OrderController::class, 'store'])->name('order.add');
+Route::post('/order',[OrderController::class, 'addOrder']);
+
+
+Route::get('/orders',[OrderController::class, 'getOrders'])->name('orders');
+Route::get('/users',[UserController::class, 'index'])->name('users');
 
 Route::get('{user_id}/order',[OrderController::class, 'store']);
 Route::get('{user_id}/orders',[OrderController::class, 'index']);
@@ -68,5 +80,4 @@ Route::get('/category/{category}/product',[CategoryController::class, 'getProduc
 Route::post('/category/{category}/update',[CategoryController::class, 'update'])->name('category.update');
 Route::post('/category/{category}/enable',[CategoryController::class, 'showInNav'])->name('category.enable');
 
-Route::get('/orders',[OrderController::class, 'getOrders'])->name('orders');
 
