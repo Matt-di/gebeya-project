@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         # code...
-        $categories = auth()->user()->categories()->paginate(10);
+        $categories = Category::paginate(10);
         return view('client.category.index',[
             'categories'=>$categories
         ]);
@@ -53,4 +53,15 @@ class CategoryController extends Controller
         return redirect()->route('category');
         // Category::get();
     }
+
+    public function getProducts(Category $category)
+    {
+        $categories = Category::paginate(10);
+        return view('client.product.category',[
+            'products'=>$category->products()->paginate(),
+            'categories'=>$categories
+        ])->with('title',$category->name." Products");
+    }
+
+
 }

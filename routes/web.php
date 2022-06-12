@@ -45,18 +45,27 @@ Route::post('/register',[RegisterController::class, 'store']);
 Route::get('/admin',[AdminController::class, 'index'])->name('admin');
 Route::post('/admin',[AdminController::class, 'store'])->name('admin');
 
-Route::get('/admin/dashboard',[AdminDashboard::class, 'index'])->name('admin/dashboard');
+Route::get('/admin/dashboard',[AdminDashboard::class, 'index'])->name('admin.dashboard');
 
 Route::get('/dashboard',[MerchantDashboardorController::class,'index'])->name('merchant.dashboard');
 
 Route::get('/products',[MerchanProductController::class, 'index'])->name('products');
 Route::post('/products',[MerchanProductController::class, 'store'])->name('products.add');
+Route::get('/products/{product}',[MerchanProductController::class, 'index'])->name('products.get');
+
+Route::get('/products/{product}/get',[MerchanProductController::class, 'getProduct'])->name('product.get');
+Route::delete('/products/{product}',[MerchanProductController::class, 'destroy'])->name('product.delete');
+Route::post('/products/{product}/update',[MerchanProductController::class, 'update'])->name('product.update');
 
 Route::get('/category',[CategoryController::class, 'index'])->name('category');
 Route::post('/category',[CategoryController::class, 'store'])->name('category.add');
+
 Route::get('/category/{category}',[CategoryController::class, 'get'])->name('category.get');
-Route::post('/category/{category}/update',[CategoryController::class, 'update'])->name('category.update');
 Route::delete('/category/{category}',[CategoryController::class, 'destroy'])->name('category.delete');
+
+Route::get('/category/{category}/product',[CategoryController::class, 'getProducts'])->name('category.products');
+
+Route::post('/category/{category}/update',[CategoryController::class, 'update'])->name('category.update');
 Route::post('/category/{category}/enable',[CategoryController::class, 'showInNav'])->name('category.enable');
 
 Route::get('/orders',[OrderController::class, 'getOrders'])->name('orders');

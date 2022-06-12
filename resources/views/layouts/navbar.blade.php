@@ -24,11 +24,16 @@
                     </li>
                     @auth('web')
                         @if (auth()->user()->user_type == 'merchant')
-                            @for ($i = 0; $i < 5; $i++)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Category {{ $i }}</a>
-                                </li>
-                            @endfor
+                            @isset($categories)
+                                @foreach ($categories as $category)
+                                    @if ($category->show_nav == 1)
+                                        <li class="nav-item">
+                                            <a class="nav-link"
+                                                href="{{ route('category.products', $category->id) }}">{{ $category->name }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            @endisset
                         @endif
                     @endauth
 
@@ -49,11 +54,11 @@
                     @auth('web_admin')
                         <li class="nav-item">
                             <div class="dropdown nav-link">
-                                <a class="text-reset me-3 dropdown-toggle " href="#" id="navbarDropdownMenuLink"
+                                <a class="text-reset me-3 dropdown-toggle " href="#" id="anavbarDropdownMenuLink"
                                     role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                     Manage Customer
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="anavbarDropdownMenuLink">
                                     <li>
                                         <a class="dropdown-item" href="#">Merchant</a>
                                     </li>
@@ -143,5 +148,5 @@
             </div>
             <!-- Container wrapper -->
     </nav>
-    <!-- Navbar -->   
+    <!-- Navbar -->
 </header>

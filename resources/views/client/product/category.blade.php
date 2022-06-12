@@ -10,7 +10,11 @@
             <section>
                 <div class="card">
                     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-                        Your Products
+                        @if ($title ?? '')
+                            {{ $title ?? ('' ?? '') }}
+                        @else
+                            Your Products
+                        @endif
                     </h3>
                     <div class="card-body">
                         <div id="dataTable" class="table-editable">
@@ -24,7 +28,9 @@
                                         <tr>
                                             <th class="text-center">Product</th>
                                             <th class="text-center">Name</th>
-                                            <th class="text-center">Category</th>
+                                            @if (!$title)
+                                                <th class="text-center">Category</th>
+                                            @endif
                                             <th class="text-center">Description</th>
                                             <th class="text-center">Price</th>
                                             <th class="text-center">Qty</th>
@@ -33,7 +39,12 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($products as $product)
-                                            <x-product-list :product="$product" :name="$categories->find($product->category_id)->name" />
+                                            @if (!$title)
+                                                {{ $name = $categories->find($product->category_id)->name }}
+                                            @else
+                                                {{ $name = 'none' }}
+                                            @endif
+                                            <x-product-list :product="$product" :name="$name" />
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -48,7 +59,7 @@
                 </div>
                 <!-- Editable table -->
                 <!-- Grid row -->
-                <!-- Button trigger modal -->
+
             </section>
             <!-- Section: Block Content -->
 
@@ -57,5 +68,4 @@
 @endsection
 @section('modal')
     @include('client.product.store')
-    @include('client.product.single')
 @endsection

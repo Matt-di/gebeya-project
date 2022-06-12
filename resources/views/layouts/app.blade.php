@@ -38,6 +38,8 @@
         </div>
     </main>
     @include('layouts.footer')
+
+@yield('modal')
 </body>
 <!-- MDB -->
 <script type="text/javascript" src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>

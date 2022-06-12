@@ -12,8 +12,13 @@
             <section>
 
                 <div class="card">
+
                     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-                        Your Categories
+                        @if ($title ?? '')
+                            {{ $title ?? ('' ?? '') }}
+                        @else
+                            Your Categories
+                        @endif
                     </h3>
                     <div class="card-body">
                         <div id="dataTable" class="table-editable">
@@ -21,28 +26,26 @@
                                 data-mdb-target="#addCategoryModal">
                                 <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
                             </button>
-                            @if($categories->count())
-                            <table class="table table-bordered table-responsive-md table-striped text-center">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Category Id</th>
-                                        <th class="text-center">Name</th>
-                                        <th class="text-center">Description</th>
-                                        <th class="text-center">Show In Navbar</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($categories as $category)
-                                    <x-category-list :category="$category"/>        
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            @if ($categories->count())
+                                <table class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Category</th>
+                                            <th class="text-center">Description</th>
+                                            <th class="text-center">Show In Navbar</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($categories as $category)
+                                            <x-category-list :category="$category" />
+                                        @endforeach
+                                    </tbody>
+                                </table>
                         </div>
-                        {{$categories->links()}}
+                        {{ $categories->links() }}
                     </div>
-                    
-                    @else
+                @else
                     <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
                         No Categories Created
                     </h3>
@@ -54,4 +57,6 @@
         </div>
     </div>
 @endsection
-@include('client.category.store')
+@section('modal')
+    @include('client.category.store')
+@endsection
