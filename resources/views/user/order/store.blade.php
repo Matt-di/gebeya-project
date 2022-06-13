@@ -2,8 +2,8 @@
 
 @section('content')
     <section class="p-4 p-md-5" style="
-            background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
-          ">
+                    background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
+                  ">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-5">
                 <div class="card rounded-3">
@@ -11,8 +11,8 @@
                         <div class="text-center mb-4">
                             <h3>Order Details</h3>
                         </div>
-                        <form action="{{route('order.add')}}" method="POST">
-                          @csrf
+                        <form action="{{ route('order.add') }}" method="POST">
+                            @csrf
                             <p class="fw-bold mb-4 pb-2">Fill</p>
                             <div class="d-flex flex-row align-items-center mb-4 pb-1">
                                 <div class="flex-fill mx-3">
@@ -41,7 +41,7 @@
                                     <label for="country">Country</label>
                                     <select class="form-control d-block w-100" id="country" required>
                                         <option value="">Choose...</option>
-                                        <option>United States</option>
+                                        <option>Ethiopia</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
@@ -56,16 +56,16 @@
                                     <label for="state">State</label>
                                     <select class="form-control d-block w-100" id="state" required>
                                         <option value="">Choose...</option>
-                                        <option>California</option>
+                                        <option>Addis Ababa</option>
+                                        <option>Oromia</option>
+                                        <option>..</option>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please provide a valid state.
                                     </div>
 
                                 </div>
-                                <!--Grid column-->
 
-                                <!--Grid column-->
                                 <div class="col-lg-4 col-md-6 mb-4">
 
                                     <label for="zip">Zip</label>
@@ -75,8 +75,6 @@
                                     </div>
 
                                 </div>
-                                <!--Grid column-->
-
                             </div>
                             <div class="form-outline mb-4">
                                 <label class="fw-bold mb-1 ml-2">Payment Method</label>

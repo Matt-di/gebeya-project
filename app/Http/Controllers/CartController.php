@@ -52,6 +52,6 @@ class CartController extends Controller
             return back()->with('status',"Quantity not correct");
         }
         $cart->update(['quantity'=>$request->quantity]);
-        return back();
+        return back()->with('status',"Quantity Udated");
     }
 }

@@ -9,16 +9,19 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Type </th>
+                    <th>Admin Type</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
+
+
                 @foreach ($users as $user)
-                    <x-user-card :user="$user" :orders="$user->orders" :orderItems="$user->orderItems" />
+                    <x-admin-user-card :user="$user"  />
                 @endforeach
 
             </tbody>
         </table>
+
     </div>
 @endsection

@@ -9,7 +9,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::where('user_type','client')->paginate(10);
-        return view("client.users.index",['user'=>$user]);
+        $users = User::where('user_type','client')->get();
+        // dd($users[0]->order);
+        return view("client.users.index",['users'=>$users]);
     }
 }

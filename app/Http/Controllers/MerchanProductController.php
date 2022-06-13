@@ -32,21 +32,20 @@ class MerchanProductController extends Controller
             'description' => "required|max:255",
             'price' => "required",
             "quantity" => "required",
-            "category_id" => "required",
             'image' => "required"
         ]);
 
         $fileName = $this->uploadImage($request);
-        // dd($fileName);
-        $request->user()->products()->create([
+        // dd($request->category);
+        $product = $request->user()->products()->create([
             'id' => Uuid::uuid4(),
             'name' => $request->name,
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
-            'category_id' => $request->category_id,
             'image' => $fileName
         ]);
+        $product->categories()->attach(Category::find($request->category));
 
         return back();
     }
@@ -84,14 +83,15 @@ class MerchanProductController extends Controller
     public function update(Product $product, Request $request)
     {
         $fileName = $this->uploadImage($request);
-        Product::where('id', $product->id)->update([
+        $retn = $product->update([
             'name' => $request->name,
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
-            'category_id' => $request->category_id,
             'image' => $fileName == "default" ? $product->image : $fileName
         ]);
+        
+        $product->categories()->attach(Category::find($request->category));
         return redirect()->route('products');
     }
 }

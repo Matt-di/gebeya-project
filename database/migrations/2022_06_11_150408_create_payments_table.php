@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->float('amount');
             $table->string('provider');
-            $table->enum('staus', ['Awaiting', 'Recieved', 'Completed', 'Refunded(partially)', 'Refunded', 'Canceled', 'Failed', 'Expired']);
+            $table->enum('status', ['Awaiting', 'Recieved', 'Completed', 'Refunded(partially)', 'Refunded', 'Canceled', 'Failed', 'Expired']);
             $table->timestamps();
         });
     }

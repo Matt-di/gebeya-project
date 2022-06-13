@@ -4,7 +4,7 @@
       <div class="card-body bg-primary ">
         <div class="d-flex justify-content-between px-md-1">
           <div>
-            <h3 class="text-success">{{ $data['total'] }}</h3>
+            <h3 class="text-success text-center">{{ $data['total'] }}</h3>
             <p class="mb-0">{{ $data['title'] }}</p>
           </div>
           <div class="align-self-center">
@@ -13,7 +13,7 @@
         </div>
       </div>
       <a href="{{ url($data['link']) }}"
-      class="card-footer footer-hover small text-center border-0 p-2">More info<i
+      class="card-footer footer-hover black-text text-center border-0 p-2">More info<i
           class="fas fa-arrow-circle-right pl-2"></i></a>
     </div>
   </div>

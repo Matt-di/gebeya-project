@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('sidenav')
-<div class="col-lg-2 col-md-4">
+<div class="col-lg-3">
     @include('layouts.client_sidenav')
 </div>
 @endsection
 @section('content')
-<div class="col-lg-8 col-md-8">
+<div class="col-lg-6 vstack gap-4 col-md-8">
     <div class="container-fluid my-5 py-5">
         <section>
             <style>

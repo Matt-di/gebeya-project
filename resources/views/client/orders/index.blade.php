@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('sidenav')
-    <div class="col-lg-2 col-md-4">
+    <div class="col-lg-3 col-md-4">
         @include('layouts.client_sidenav')
     </div>
 @endsection
@@ -12,20 +12,20 @@
                 <table class="table align-middle mb-0 bg-white">
                     <thead class="bg-light">
                         <tr>
-                            <th>Name</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Position</th>
+                            <th>Order Id</th>
+                            <th>User</th>
+                            <th>Payment Status</th>
+                            <th>Total Order</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        @foreach ($orders as $order)
-                            {{$payment = $order->payment}}
-                              {{$orderItems = $order->orderItems}}
-                                {{$user = $order->user  }}
-                            <x-user-order-card :orders="$order" :payment="$payment" :user="$user"/>
+                        @foreach($orders as $order)
+                        @php
+                            $payment = $order->payment;
+                                $user = $order->user ;
+                        @endphp
+                            <x-user-order-card :order="$order" :payment="$payment" :user="$user"/>
                         @endforeach
                     </tbody>
                 </table>

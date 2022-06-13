@@ -4,17 +4,18 @@
         <div class="modal-content">
             <div class="modal-header text-center">
                 <h4 class="modal-title w-100 font-weight-bold">Add New Product</h4>
-                <button type="button" class="close" data-dismiss="modal" id="closeProductModal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" id="closeProductModal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form enctype="multipart/form-data" action="{{ route('products.add') }}" method="POST" id="addProductForm" name="addProductForm">
+                <form enctype="multipart/form-data" action="{{ route('products.add') }}" method="POST"
+                    id="addProductForm" name="addProductForm">
                     @csrf
                     <div class="form-outline mb-4">
                         <input type="text" id="name" name="name"
-                            class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('name') }}" />
+                            class="form-control @error('email') is-invalid @enderror" value="{{ old('name') }}" />
                         <label class="form-label" for="name">Product Name</label>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -28,7 +29,7 @@
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>                    
+                    </div>
                     <div class="form-outline mb-4">
                         <input type="number" id="price" name="price"
                             class="form-control @error('email') is-invalid @enderror" value="{{ old('price') }}" />
@@ -54,15 +55,14 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-outline mb-4">
-                        Category: <select class="custom-select form-control" name="category_id" id="category_id">
-                            <option value="default" selected>Default</option>
-                            @if($categories->count())
+                    <div class=" mb-4">
+                        <select class="select" multiple name="category[]" id="category">
+                            <option>Category</option>
                             @foreach ($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
-                            @endif
-                          </select>
+                        </select>
+                    
                         @error('category_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

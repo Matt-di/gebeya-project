@@ -20,7 +20,11 @@ class OrderController extends Controller
     {
         return view('user.order.store');
     }
-
+    public function singleOrder(Order $order)
+    {
+        $orders = OrderItem::find($order->user->id);
+        return view('client.orders.single',['orders'=>[$orders]]);
+    }
     public function addOrder(Request $request)
     {
         // dd($request);
@@ -56,7 +60,7 @@ class OrderController extends Controller
             'total' => $carts->count(),
         ]);
 
-        return redirect()->route('home')->with('status',"Your Order has been submitted");
+        return view("user.order.thanks")->with('status',"Your Order has been submitted");
         
     }
 

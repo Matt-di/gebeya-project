@@ -60,11 +60,7 @@
                     </div>
                     {{ $products->links() }}
                 </div>
-                <!-- Editable table -->
-                <!-- Grid row -->
-
             </section>
-            <!-- Section: Block Content -->
 
         </div>
     </div>
