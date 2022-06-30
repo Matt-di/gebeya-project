@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:web_admin')->except(["index","identify"]);
+    }
     public function index()
     {
         if (auth('web_admin')->check()) {

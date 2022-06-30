@@ -3,6 +3,7 @@
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Toggle button -->
+            <button class="btn btn-primary" id="menu-togglea"><i class="fas fa-bars"></i></button>
             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -43,11 +44,11 @@
                         </li>
                         <li class="nav-item">
                             <div class="dropdown nav-link">
-                                <a class="text-reset me-3 dropdown-toggle " href="#" id="anavbarDropdownMenuLink"
+                                <a class="text-reset me-3 dropdown-toggle " href="#" id="manageCustomerDropdown"
                                     role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                     Manage Customer
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="anavbarDropdownMenuLink">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="manageCustomerDropdown">
                                     <li>
                                         <a class="dropdown-item" href="{{ route('system.users') }}">Merchant</a>
                                     </li>

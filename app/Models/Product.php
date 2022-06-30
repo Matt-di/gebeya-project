@@ -21,6 +21,12 @@ class Product extends Model
         'price',
         'image'
     ];
+    public function scopeCategory($query,$categoryId){
+        return $query->where('category_id',$categoryId);
+    }
+    public function scopePrice($query,$price){
+        return $query->where('price','<',$price);
+    }
 
     public function productAdded(User $user){
         return $this->carts->contains('user_id',$user->id);
