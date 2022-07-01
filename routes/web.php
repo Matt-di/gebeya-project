@@ -65,7 +65,8 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
     Route::get('/dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
 
     Route::get('/products', [MerchanProductController::class, 'index'])->name('products');
-    Route::post('/products', [MerchanProductController::class, 'store'])->name('products.add');
+    Route::post('/products', [MerchanProductController::class, 'store']);
+    
     Route::get('/products/{product}', [MerchanProductController::class, 'index'])->name('products.get');
     Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])->name('product.get');
 
@@ -90,7 +91,7 @@ Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])-
 Route::group(['middleware' => 'auth:web_admin'], function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::post('/admin', [AdminController::class, 'identify']);
-    
+
     Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.add');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::post('/admin/{admin}', [AdminController::class, 'users'])->name('admin.delete');
