@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Rfc4122\UuidV3;
@@ -24,6 +25,20 @@ class DatabaseSeeder extends Seeder
             'password'=> Hash::make('password'),
             'admin_type' => 'super'
     
+        ]);
+        User::create([
+            'id' => UuidV3::uuid4(), 
+            'email' => 'customer@admin.com',
+            'username' => 'customer@admin.com',
+            'password'=> Hash::make('password'),
+            'user_type' => 'client'
+        ]);
+        User::create([
+            'id' => UuidV3::uuid4(), 
+            'email' => ',merchant@admin.com',
+            'username' => 'merchant@admin.com',
+            'password'=> Hash::make('password'),
+            'user_type' => 'merchant'
         ]);
     }
 }
