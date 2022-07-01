@@ -3,7 +3,6 @@
         <!-- Container wrapper -->
         <div class="container-fluid">
             <!-- Toggle button -->
-            <button class="btn btn-primary" id="menu-togglea"><i class="fas fa-bars"></i></button>
             <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
                 data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -14,15 +13,16 @@
 
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    @auth('web_admin')
-                        <a class="navbar-brand mt-2 mt-lg-0" href="/admin/dashboard">
-                            Gebeya - Mat
-                        </a>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('store.products') }}">All
-                                Products</a>
-                        </li>
+                    <a class="navbar-brand mt-2 mt-lg-0" href="/admin/dashboard">
+                        Gebeya - Mat
+                    </a>
 
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('store.products') }}">All
+                            Products</a>
+                    </li>
+
+                    @auth('web_admin')
                         <li class="nav-item">
                             <div class="dropdown nav-link">
                                 <a class="text-reset me-3 dropdown-toggle " href="#" id="anavbarDropdownMenuLink"
@@ -60,11 +60,10 @@
                         </li>
                     @endauth
                     @auth('web')
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
                                 Products</a>
-                        </li>
+                        </li> --}}
                         @if (auth()->user()->user_type == 'merchant')
                             @isset($categories)
                                 @foreach ($categories as $category)
@@ -81,23 +80,10 @@
                     @endauth
 
                     @guest()
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
                                 Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Some things</a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="d-flex input-group w-auto">
-                                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                                    aria-describedby="search-addon" />
-                                <span class="input-group-text border-0" id="search-addon">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                            </form>
-                        </li>
+                        </li> --}}
                     @endguest
                 </ul>
                 <!-- Left links -->
@@ -105,6 +91,15 @@
             <!-- Collapsible wrapper -->
 
             <!-- Right elements -->
+            <div class="d-flex align-items-center mr-2">
+                <form class="d-flex input-group w-auto" action="/" method="GET">
+                    <input type="search" name="search" class="form-control rounded" placeholder="Search"
+                        aria-label="Search" aria-describedby="search-addon" />
+                    <button type="submit" class="link-text"> <span class="input-group-text border-0" id="search-addon">
+                            <i class="fas fa-search"></i>
+                        </span></button>
+                </form>
+            </div>
             <div class="d-flex align-items-center mr-2">
                 @if (auth()->user() && auth()->user()->user_type == 'client')
                     <a class="text-reset me-3" href="{{ route('cart') }}">
@@ -131,7 +126,7 @@
                     </ul>
                 </div>
                 <!-- Avatar -->
-                @auth
+                @auth()
                     <div class="dropdown">
                         <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                             id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -142,9 +137,12 @@
                             <li>
                                 <a class="dropdown-item" href="#">Account</a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" href="order">My Orders</a>
-                            </li>
+                            @if (auth()->user()->user_type == 'client')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('orders') }}">My Orders</a>
+                                </li>
+                            @endif
+
                             <li>
                                 <a class="dropdown-item" href="#">Settings</a>
                             </li>

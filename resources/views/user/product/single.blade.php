@@ -1,25 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-   
     <div class="container my-5 py-5 z-depth-1">
         <div class="mr-auto">
-
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb d-inline-flex pl-0 pt-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="/">Home</a></li>
-                    <li class="breadcrumb-item active">Product</li>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/"><i class="fa fa-dashboard "></i>Home</a>
+                    </li>
+                    <?php $segments = ''; ?>
+                    @foreach (Request::segments() as $segment)
+                        <?php $segments .= '/' . $segment; ?>
+                        <li class="breadcrumb-item active">
+                            <a href="{{ $segments }}">{{ $segment }}</a>
+                        </li>
+                    @endforeach
                 </ol>
             </nav>
-    
+
         </div>
         <section class="text-center">
             <h3 class="font-weight-bold mb-5">Product Details</h3>
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="carousel-inner text-center text-md-left" role="listbox">
-                            <img style="" src="{{ url('images/products', $product->image) }}" alt="First slide"
-                                class="img-thumbnail">
+                        <img style="" src="{{ url('images/products', $product->image) }}" alt=" slide"
+                            class="img-thumbnail">
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6 text-center text-md-left">
@@ -36,7 +42,7 @@
                         </span>
                         <span class="grey-text">
                             <small>
-                                <s>$1449</s>
+                                <s>$549</s>
                             </small>
                         </span>
                     </h3>
@@ -46,14 +52,9 @@
                         <p class="ml-xl-0 ml-4">{{ $product->description }}</p>
 
                         <p class="ml-xl-0 ml-4">
-                            <strong>Storage: </strong>64GB
+                            <strong>Size: </strong>Size
                         </p>
-                        <p class="ml-xl-0 ml-4">
-                            <strong>Size: </strong>9.6-inch
-                        </p>
-                        <p class="ml-xl-0 ml-4">
-                            <strong>Resolution: </strong>2048 x 1536
-                        </p>
+                     
                         <p class="ml-xl-0 ml-4">
                             <strong>Availability: </strong>
                             @if ($product->quantity > 0)
@@ -76,20 +77,23 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <input class="form-check-input" name="group100" type="radio" id="radio101">
-                                        <label for="radio101" class="form-check-label dark-grey-text">Silver</label>
+                                        <label for="radio101" class="form-check-label dark-grey-text">Black</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input class="form-check-input" name="group100" type="radio" id="radio102">
-                                        <label for="radio102" class="form-check-label dark-grey-text">Gold</label>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row mt-3 mb-4">
-                                <div class="col-md-12 text-center text-md-left text-md-right">
-                                    <button class="btn btn-primary btn-rounded">
-                                        <i class="fas fa-cart-plus mr-2" aria-hidden="true"></i> Add to cart</button>
+                                <div class="text-center">
+                                    @if ($product->quantity > 0)
+                                        <form method="post" action="{{ route('cart.store', $product->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-block btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
+                                                Add to cart
+                                            </button>
+                                        </form>
+                                    @else
+                                        <button type="button" disabled class="btn  flex-fill ms-1">Not Available In Stock</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>

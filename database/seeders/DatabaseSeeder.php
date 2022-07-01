@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             'id' => UuidV3::uuid4(), 
             'email' => 'admin@admin.com',
+            'username' => 'admin@admin.com',
             'password'=> Hash::make('password'),
             'admin_type' => 'super'
     

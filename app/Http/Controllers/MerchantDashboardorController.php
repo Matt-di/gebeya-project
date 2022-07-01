@@ -59,7 +59,7 @@ class MerchantDashboardorController extends Controller
                     [
                         'total' => $total_order,
                         'title' => "Total Orders",
-                        'link' => "order",
+                        'link' => "merchant/orders",
                         'icon' => 'shopping-bag'
 
                     ],

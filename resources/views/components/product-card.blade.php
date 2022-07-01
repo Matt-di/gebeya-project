@@ -1,8 +1,8 @@
-    @props(['product'])
-    <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+    @props(['product','tags'])
+    <div class="col-lg-4 col-md-6 col-sm-6 mb-4" style="height: 400px">
         <div class="card" style="height: 100%">
             <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
-                <img src="{{ url('images/products', $product->image) }}" alt="Product Image" class="img-thumbnail"
+                <img style=""  src="{{ url('images/products', $product->image) }}" alt="Product Image" class="img-thumbnail"
                     />
                 <a href="#!">
                     <div class="mask">
@@ -16,12 +16,17 @@
                 </a>
             </div>
             <div class="card-body">
-                <a href="{{ route('product.get', $product->id) }}" class="text-reset">
+                <div><span>
+                @foreach ($tags as $tag)
+                    {{$tag}}
+                @endforeach    
+                </span> </div>              
+                <a href="{{ route('product.get', $product->id) }}" class="link">
                     <h5 class="card-title mb-3"> {{ $product->name }} </h5>
                 </a>
-                <a href="" class="text-reset">
-                    <p>{{ $product->description }}</p>
-                </a>
+                <p href="" class="text-reset">
+                    <p>{{ Str::substr($product->description,0,40) }}..<a href="#"   class="link">More</a></p>
+                </p>
                 <h6 class="mb-3">${{ $product->price }}</h6>
 
                 <div class="d-flex flex-row">

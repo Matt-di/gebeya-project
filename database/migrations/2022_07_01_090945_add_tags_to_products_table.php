@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderItemsTable extends Migration
+class AddTagsToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('product_id')->constrained()->onDelete('cascade');
-            $table->integer("quantity");
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('tags')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_items');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('tags');
+        });
     }
 }

@@ -27,7 +27,7 @@ class Product extends Model
     public function scopePrice($query,$price){
         return $query->where('price','<',$price);
     }
-
+    
     public function productAdded(User $user){
         return $this->carts->contains('user_id',$user->id);
     }

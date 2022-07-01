@@ -1,9 +1,8 @@
 @props(['product', 'name','user'])
 <tr>
     <td class="pt-3-half">
-        <a href="{{ route('products.get', $product->id) }}">
-            <img src="{{ url('images/products/' . $product->image) }}" class="img-thumbnail" alt="Product Image" />
-            {{-- <img class="img" src="{{ url('images/products/' . $product->image) }}" alt="product_image" /> --}}
+        <a href="{{ route('products.get', $product->id) }}" >
+            <img src="{{ url('images/products/' . $product->image) }}" class="img-thumbnail" style="height: 100px; width:100px;" alt="Product Image" />
         </a>
     </td>
     <td class="pt-3-half">{{ $product->name }}</td>
@@ -24,7 +23,7 @@
         </td>
     @endif
     <td class="pt-3-half">{{ $user ?? '' }}</td>
-    <td class="pt-3-half">{{ Str::limit($product->description, 20) }}</td>
+    <td class="pt-3-half">{{ Str::substr($product->description, 10) }}</td>
     <td class="pt-3-half">{{ $product->price }}</td>
     <td class="pt-3-half">{{ $product->quantity }}</td>
     <td>

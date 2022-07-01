@@ -19,6 +19,9 @@ class Category extends Model
     ];
 
 
+    public function scopeCategory($query,$categoryId){
+        return $query->where('id',$categoryId);
+    }
     public function user(){
         return $this->belongsTo(User::class);
     }

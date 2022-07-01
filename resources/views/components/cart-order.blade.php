@@ -13,11 +13,10 @@
     <td>L</td>
     <td>{{ $product->price }}</td>
     <td>
-        <span class="qty" id="cartQty">{{ $cart->quantity }}</span>
         <form action="/cart/{{$cart->id}}" method="POST">
             @method("PUT")
             @csrf
-            <input min=0 max="{{$product->price}}" required type="number" class="form-input" name="quantity"/>
+            <input class="form-control-inline" min=0 value="{{ $cart->quantity }}" max="{{$product->price}}" required type="number" class="form-input" name="quantity"/>
                 <button type="submit" class="btn btn-rounded btn-sm btn-primary btn-rounded">
                     Update
                 </button>

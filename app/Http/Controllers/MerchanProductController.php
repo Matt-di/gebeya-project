@@ -18,7 +18,7 @@ class MerchanProductController extends Controller
     public function index()
     {
         $category = Category::get();
-        $products = Product::paginate(10);
+        $products = auth()->user()->products()->paginate(10);
         return view('client.product.index', [
             "categories" => $category,
             "products" => $products
@@ -73,11 +73,11 @@ class MerchanProductController extends Controller
 
     public function getProduct(Product $product)
     {
-        if(Auth::check())
-        if(auth()->user()->user_type == 'merchant')
-        return $product;
+        if (Auth::check())
+            if (auth()->user()->user_type == 'merchant')
+                return $product;
 
-        return view('user.product.single',['product'=>$product]);
+        return view('user.product.single', ['product' => $product]);
     }
 
     public function update(Product $product, Request $request)
@@ -90,8 +90,16 @@ class MerchanProductController extends Controller
             'price' => $request->price,
             'image' => $fileName == "default" ? $product->image : $fileName
         ]);
-        
+
         $product->categories()->attach(Category::find($request->category));
         return redirect()->route('products');
+    }
+
+    public function removeCategory(Product $product, Request $request)
+    {
+        $category = Category::find($request->category_id);
+        $product->categories()->detach($category);
+
+        return back();
     }
 }

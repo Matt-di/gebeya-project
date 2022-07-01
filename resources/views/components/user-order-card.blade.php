@@ -1,28 +1,49 @@
-@props(['order','user','payment'])
+@props(['order', 'user', 'payment'])
 <tr>
     <td>
         <div class="d-flex align-items-center">
-            <a href="/orders/{{$order->id}}"> {{$order->id}}</a>
+            <a href="{{route('merchant.orders.single',$order->id )}}"> {{ $order->id }}</a>
             <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px"
                 class="rounded-circle" />
-            <div class="ms-3">
-        <p class="fw-bold mb-1">{{$user->name}}</p>
-                <p class="text-muted mb-0">{{$user->email}}</p>
-            </div>
         </div>
     </td>
     <td>
-        <p class="fw-normal mb-1">{{$payment->status}}</p>
-        <p class="text-muted mb-0">{{$payment->provider}}</p>
+        <div class="ms-3">
+
+            <p class="fw-bold mb-1">{{ $user->name }}</p>
+            <p class="text-muted mb-0">{{ $user->email }}</p>
+        </div>
+        </div>
     </td>
-    
     <td>
-        <span class="badge badge-success rounded-pill d-inline">Active</span>
+        <span class="badge badge-success rounded-pill d-inline">{{ $payment->status }}</span>
     </td>
-    <td>{{$order->total}}</td>
+    <td>
+        <p class="text-muted mb-0">{{ $payment->provider }}</p>
+    </td>
+    <td>
+        <p class="text-muted mb-0">{{ $order->status }}</p>
+
+        <form action="{{ route('merchant.orders.update', $order->id) }}" method="POST">
+            @csrf
+            <select class="form-input" name="order_status" id="order_status">
+                <option value="ordered">Ordered</option>
+                <option value="shipped">Shipped</option>
+                <option value="reached">Delivered</option>
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm" >Update</button>
+        </form>
+
+    </td>
+
+    <td>{{ $order->total }}</td>
+    <td>{{ $payment->amount }}</td>
     <td>
         <button type="button" class="btn btn-link btn-sm btn-rounded">
             Edit
+        </button>
+        <button type="button" class="btn btn-link btn-sm btn-rounded">
+            Cancel
         </button>
     </td>
 </tr>

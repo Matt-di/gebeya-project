@@ -2,14 +2,14 @@
 
 
 @section('sidenav')
-    <div class="col-lg-2 col-md-8">
+    <div class="col-lg-2 col-md-2 my-5">
         @include('layouts.client_sidenav')
     </div>
 @endsection
 @section('content')
-    <div class="col-lg-8 col-md-8">
+    <div class="col-lg-10 col-md-9">
         <div class="container">
-            <div class="container-fluid my-5 py-5">
+            <div class="container-fluid my-5">
 
                 <!-- Section: Block Content -->
                 <section>
@@ -29,24 +29,29 @@
                                     data-mdb-target="#addCategoryModal">
                                     <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
                                 </button>
-                                @if ($categories->count())
-                                    <table class="table table-bordered table-responsive-md table-striped text-center">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">Category</th>
-                                                <th class="text-center">Description</th>
-                                                <th class="text-center">Show In Navbar</th>
-                                                <th class="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($categories as $category)
-                                                <x-category-list :category="$category" />
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                <div class="table-responsive">
+                                    @if (session('status'))
+                                        <span>{{ session('status') }}</span>
+                                    @endif
+                                    @if ($categories->count())
+                                        <table class="table table-bordered table-responsive-md table-striped text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Category</th>
+                                                    <th class="text-center">Description</th>
+                                                    <th class="text-center">Show In Navbar</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($categories as $category)
+                                                    <x-category-list :category="$category" />
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                </div>
+                                {{ $categories->links() }}
                             </div>
-                            {{ $categories->links() }}
                         </div>
                     @else
                         <h3 class="card-header text-center font-weight-bold text-uppercase py-4">

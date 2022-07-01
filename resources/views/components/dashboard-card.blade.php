@@ -8,7 +8,7 @@
                     <p class="mb-0">{{ $data['title'] }}</p>
                 </div>
                 <div class="align-self-center">
-                    <i class="far fa-{{ $data['icon'] }} text-success fa-3x"></i>
+                    <i class="fas fa-{{ $data['icon'] }} text-success fa-3x"></i>
                 </div>
             </div>
         </div>
