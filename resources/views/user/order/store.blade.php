@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="p-4 p-md-5"
-        style="
-                    background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
-                  ">
+    <section class="p-4 p-md-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard "></i>Home</a></li>
+                <?php $segments = ''; ?>
+                @foreach (Request::segments() as $segment)
+                    <?php $segments .= '/' . $segment; ?>
+                    <li class="breadcrumb-item active">
+                        <a  href="{{ $segments }}">{{ $segment }}</a>
+                    </li>
+                @endforeach
+                </ol>
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-5">
                 <div class="card rounded-3">
@@ -90,17 +98,17 @@
                             <hr>
 
                             <div class="mb-1">
-                                <input type="checkbox" class="form-check-input filled-in" id="chekboxRules">
+                                <input type="checkbox" class="form-check-input filled-in" id="chekboxRules" required>
                                 <label class="form-check-label" for="chekboxRules">I accept the terms and
                                     conditions</label>
                             </div>
                             <div class="mb-1">
-                                <input type="checkbox" class="form-check-input filled-in" id="safeTheInfo">
+                                <input type="checkbox" class="form-check-input filled-in" id="safeTheInfo" required>
                                 <label class="form-check-label" for="safeTheInfo">Save this information for next
                                     time</label>
                             </div>
                             <div class="mb-1">
-                                <input type="checkbox" class="form-check-input filled-in" id="subscribeNewsletter">
+                                <input type="checkbox" class="form-check-input filled-in" id="subscribeNewsletter" required>
                                 <label class="form-check-label" for="subscribeNewsletter">Subscribe to the
                                     newsletter</label>
                             </div>
