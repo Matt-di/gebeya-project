@@ -41,7 +41,7 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/order', [OrderController::class, 'store'])->name('order.add');
-    // Route::post('/order', [OrderController::class, 'addOrder']);
+    Route::post('/order', [OrderController::class, 'addOrder']);
     Route::get('/orders', [OrderController::class, 'index'])->name("orders");
     Route::get('/orders/{order_id}', [OrderController::class, 'singleOrder'])->name("user.orders.single");
 

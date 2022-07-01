@@ -30,13 +30,17 @@ class DatabaseSeeder extends Seeder
             'id' => UuidV3::uuid4(), 
             'email' => 'customer@admin.com',
             'username' => 'customer@admin.com',
+            'firstname' => 'John',
+            'lastname' => 'Doe',
             'password'=> Hash::make('password'),
             'user_type' => 'client'
         ]);
         User::create([
             'id' => UuidV3::uuid4(), 
-            'email' => ',merchant@admin.com',
+            'email' => 'merchant@admin.com',
             'username' => 'merchant@admin.com',
+            'firstname' => 'Merchant',
+            'lastname' => 'Merchant',
             'password'=> Hash::make('password'),
             'user_type' => 'merchant'
         ]);
