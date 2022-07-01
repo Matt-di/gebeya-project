@@ -98,8 +98,7 @@
                                         @empty
                                             <div class="text-center">
                                                 <img src="{{ url('images/products', '1655047549matt-logo1.png') }}" />
-                                                <h2>No Orders Made yet</h2>
-                                                <a href="{{ route('home') }}" class="btn btn-primary"> Go Shop</a>
+                                                <h2>No Products in the Order</h2>
                                             </div>
                                         @endforelse
 
@@ -122,7 +121,6 @@
 
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted mb-0">Invoice Date : {{ $order->created_at }}</p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> 123</p>
                                 </div>
 
                                 <div class="d-flex justify-content-between mb-5">

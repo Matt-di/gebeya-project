@@ -13,12 +13,12 @@
 
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <a class="navbar-brand mt-2 mt-lg-0" href="/admin/dashboard">
+                    <a class="navbar-brand mt-2 mt-lg-0" href="/">
                         Gebeya - Mat
                     </a>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('store.products') }}">All
+                        <a class="nav-link active" href="{{ route('products') }}">All
                             Products</a>
                     </li>
 
@@ -59,19 +59,24 @@
                             </div>
                         </li>
                     @endauth
-                    @auth('web')
+                    @auth()
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
                                 Products</a>
                         </li> --}}
-                        @if (auth()->user()->user_type == 'merchant')
+                        @if (auth()->user()->user_type)
                             @isset($categories)
                                 @foreach ($categories as $category)
                                     @if ($category->show_nav == 1)
                                         <li class="nav-item">
+                                            @if (auth()->user()->user_type == "client")
+                                            <a class="nav-link "
+                                                href="/?category_id={{$category->id}}">{{ $category->name }}</a>
+                                            @else
                                             <a class="nav-link"
                                                 href="{{ route('category.products', $category->id) }}">{{ $category->name }}</a>
-                                        </li>
+                                            @endif
+                                            </li>
                                     @endif
                                 @endforeach
                             @endisset

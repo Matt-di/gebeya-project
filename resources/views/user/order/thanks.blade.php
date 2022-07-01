@@ -11,7 +11,7 @@
                     @foreach (Request::segments() as $segment)
                         <?php $segments .= '/' . $segment; ?>
                         <li class="breadcrumb-item active">
-                            <a href="{{ $segments }}">{{ $segment }}</a>
+                            <a href="{{ $segments }}s">{{ $segment }}</a>
                         </li>
                     @endforeach
                 </ol>
