@@ -31,7 +31,8 @@ Route::get('/home', [ProductController::class, 'index'])->name('home');
 Route::get('/', [ProductController::class, 'index'])->name('/');
 
 Route::get('/login', [LoginContrller::class, 'index'])->name("login");
-Route::post('/login', [LoginContrller::class, 'store'])->name('login');
+Route::post('/login', [LoginContrller::class, 'store']);
+
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'index'])->name("register");
