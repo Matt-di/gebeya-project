@@ -89,7 +89,8 @@ Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])-
 
 Route::group(['middleware' => 'auth:web_admin'], function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-    Route::post('/admin', [AdminController::class, 'identify'])->name('admin');
+    Route::post('/admin', [AdminController::class, 'identify']);
+    
     Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.add');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::post('/admin/{admin}', [AdminController::class, 'users'])->name('admin.delete');
