@@ -27,7 +27,6 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/home', [ProductController::class, 'index'])->name('home');
-
 Route::get('/', [ProductController::class, 'index'])->name('/');
 
 Route::get('/login', [LoginContrller::class, 'index'])->name("login");
