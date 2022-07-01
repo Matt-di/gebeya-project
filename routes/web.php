@@ -38,6 +38,9 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 Route::get('/register', [RegisterController::class, 'index'])->name("register");
 Route::post('/register', [RegisterController::class, 'store']);
 
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+Route::post('/admin', [AdminController::class, 'identify']);
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/order', [OrderController::class, 'store'])->name('order.add');
@@ -66,7 +69,7 @@ Route::group(['middleware' => ['auth', 'checkUser']], function () {
 
     Route::get('/products', [MerchanProductController::class, 'index'])->name('products');
     Route::post('/products', [MerchanProductController::class, 'store']);
-    
+
     Route::get('/products/{product}', [MerchanProductController::class, 'index'])->name('products.get');
     Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])->name('product.get');
 
@@ -89,8 +92,7 @@ Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])-
 
 
 Route::group(['middleware' => 'auth:web_admin'], function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-    Route::post('/admin', [AdminController::class, 'identify']);
+
 
     Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.add');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
