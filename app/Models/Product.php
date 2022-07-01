@@ -19,6 +19,7 @@ class Product extends Model
         'category_id',
         'quantity',
         'price',
+        'tags',
         'image'
     ];
     public function scopeCategory($query,$categoryId){
@@ -27,7 +28,7 @@ class Product extends Model
     public function scopePrice($query,$price){
         return $query->where('price','<',$price);
     }
-    
+
     public function productAdded(User $user){
         return $this->carts->contains('user_id',$user->id);
     }

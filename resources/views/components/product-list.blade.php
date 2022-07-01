@@ -22,7 +22,7 @@
         @endforeach
         </td>
     @endif
-    <td class="pt-3-half">{{ $user ?? '' }}</td>
+    <td class="pt-3-half">{{ $product->tags}}</td>
     <td class="pt-3-half">{{ Str::substr($product->description, 10) }}</td>
     <td class="pt-3-half">{{ $product->price }}</td>
     <td class="pt-3-half">{{ $product->quantity }}</td>

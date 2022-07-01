@@ -55,6 +55,15 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-outline mb-4">
+                        <input type="text" id="tags" name="tags" placeholder="comma separated tags"
+                            class="form-control @error('tags') is-invalid @enderror"
+                            value="{{ old('tags') }}" />
+                        <label class="form-label" for="description">Product Tags</label>
+                        @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class=" mb-4">
                         <select class="select" multiple name="category[]" id="category">
                             <option>Category</option>
@@ -67,6 +76,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <button id="btnSubmitProduct" type="submit" class="btn btn-primary btn-block mb-4">
                         Add
                     </button>

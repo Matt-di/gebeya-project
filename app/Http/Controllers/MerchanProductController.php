@@ -43,6 +43,7 @@ class MerchanProductController extends Controller
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
+            'tags' => $request->tags,
             'image' => $fileName
         ]);
         $product->categories()->attach(Category::find($request->category));
