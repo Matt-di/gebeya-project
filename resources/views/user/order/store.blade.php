@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="p-4 p-md-5" style="
+    <section class="p-4 p-md-5"
+        style="
                     background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);
                   ">
         <div class="row d-flex justify-content-center">
@@ -78,7 +79,7 @@
                             </div>
                             <div class="form-outline mb-4">
                                 <label class="fw-bold mb-1 ml-2">Payment Method</label>
-                                <select class="form-control" name="provider" id="provider">
+                                <select class="form-control" name="provider" id="provider" required>
                                     <option value="telebirr">Telebirr</option>
                                     <option value="cbebirr">CBEbirr</option>
                                     <option value="banking">Banking</option>

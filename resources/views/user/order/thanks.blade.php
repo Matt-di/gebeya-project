@@ -9,15 +9,15 @@
                     <div class="card" style="border-radius: 10px;">
                         <div class="card-header px-4 py-5">
                             <h5 class="text-muted mb-0">Thanks for Shopping with us! </h5>
-                            <h5> Dear<span style="color: #a8729a;"> {{ auth()->user()->id }}</span> Order has been placed, !
+                            <h5> Dear<span style="color: #a8729a;"> {{ auth()->user()->firstname }}</span> Your order has been placed, !
                             </h5>
                         </div>
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <p class="lead fw-normal mb-0" style="color: #a8729a;">Order </p>
                                 <p class="small text-muted mb-0">Order has been made :
-                                    <a href="{{route('user.orders.single', $orders->id)}}">{{ $orders->firstname }}</a>
-                                <p>{{ $orders->total }}</p>
+                                    <a href="{{route('user.orders.single', $orders->id)}}">{{ $orders->id }}</a>
+                                <p>{{ $orders->orderItems()->count() }}</p>
                                 </p>
                             </div>
                             <div class="card shadow-0 border mb-4">
