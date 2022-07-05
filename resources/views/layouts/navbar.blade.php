@@ -53,7 +53,7 @@
                                         <a class="dropdown-item" href="{{ route('system.users') }}">Merchant</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('store.products') }}">Stores</a>
+                                        <a class="dropdown-item" href="{{ route('stores') }}">Stores</a>
                                     </li>
                                 </ul>
                             </div>

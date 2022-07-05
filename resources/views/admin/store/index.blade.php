@@ -4,45 +4,98 @@
 @section('content')
     <div class="container-fluid my-5 py-5">
         <div class="card">
+
             <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
-                All Products
+                Stores
             </h3>
             <div class="card-body">
-                <div id="dataTable" class="table">
-                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#confirmModal">
-                        Delete All
+                <div id="dataTable" class="table-editable">
+                    <button class="btn btn-primary table-add float-right mb-3 mr-2" data-mdb-toggle="modal"
+                        data-mdb-target="#addCategoryModal">
+                        <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
                     </button>
-                    @if ($products->count())
-                        <table class="table table-bordered table-responsive-md table-striped text-center">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Product</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Category</th>
-                                    <th class="text-center">Created By</th>
-                                    <th class="text-center">Description</th>
-                                    <th class="text-center">Price</th>
-                                    <th class="text-center">Qty</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($products as $product)
-                                    <x-product-list :product="$product" :user="$product->user->firstname" :name="$product->categories" />
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @else
-                        <h3 class="text-center font-weight-bold text-uppercase py-4">
-                            No Products Found..
-                        </h3>
-                    @endif
+                    <div class="table-responsive">
+                        @if (session('status'))
+                            <span>{{ session('status') }}</span>
+                        @endif
+                        @if ($stores->count())
+                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Store ID</th>
+                                        <th class="text-center">Categories</th>
+                                        <th class="text-center">Products</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Enable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{-- @props(['category']) --}}
+                                    @foreach ($stores as $store)
+                                        <tr>
+                                            <td class="pt-3-half">
+                                                <a href="stores/{{ $store->id }}">{{ $store->firstname }} </a>
+                                            </td>
+                                            <td class="pt-3-half">{{ $store->categories()->count() }}</td>
+                                            <td class="pt-3-half">{{ $store->products()->count() }}</td>
+                                            <td class="pt-3-half">
+                                                <form action=" {{ route('store.enable', $store->id) }} " method="POST">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="btn  @if ($store->store_status == 1) btn-warning @else btn-success @endif">
+                                                        @if ($store->store_status == 1)
+                                                            Disable
+                                                        @else
+                                                            Enable
+                                                        @endif
+                                                    </button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <span class="  table-remove mb-5">
+                                                    <button id="{{ $store->id }}" type="submit"
+                                                        class="btn btn-warning btn-rounded btn-sm my-0 edit">
+                                                        <i class="fas fa-edit mr-5" aria-hidden="true"> Edit</i>
+                                                    </button>
+                                                </span>
+                                                <span class="table-remove">
+                                                    <form action=" {{ route('store.delete', $store->id) }}"
+                                                        >
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-danger btn-rounded btn-sm my-0">
+                                                            <i class="fas fa-trash mr-5" aria-hidden="true"> Remove</i>
+                                                        </button>
+                                                    </form>
+                                                </span>
+
+
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <script></script>
+
+                                    {{-- @foreach ($categories as $category)
+                                        <x-category-list :category="$category" />
+                                    @endforeach
+                                </tbody> --}}
+                            </table>
+                    </div>
+                    {{ $stores->links() }}
                 </div>
             </div>
-            {{ $products->links() }}
+        @else
+            <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                No Categories Created
+            </h3>
+            @endif
         </div>
     </div>
+
 @endsection
+
 @section('modal')
-    @include('admin.store.delete')
+    @include('admin.store.store')
 @endsection

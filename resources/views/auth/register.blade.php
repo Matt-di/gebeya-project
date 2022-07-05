@@ -59,6 +59,14 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="username" name="username"
+                                        class="form-control @error('username') is-invalid @enderror" value="{{old('username')}}"/>
+                                    <label class="form-label" for="username">username </label>
+                                    @error('username')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 <div class="form-outline mb-4">
                                     <input type="password" id="password" name="password"

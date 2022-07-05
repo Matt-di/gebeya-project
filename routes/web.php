@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth:web_admin'], function () {
     Route::get('/system/users', [AdminController::class, 'users'])->name('system.users');
 
     Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
-
-    Route::get('/admin/store/product', [StoreController::class, 'index'])->name('store.products');
+    Route::get('/admin/stores', [StoreController::class, 'index'])->name('stores');
+    Route::post('/admin/stores/{user}', [StoreController::class, 'enable'])->name('store.enable');
+    Route::post('/admin/stores/{store_id}', [StoreController::class, 'destroy'])->name('store.delete');
 });
