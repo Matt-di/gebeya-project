@@ -30,7 +30,7 @@ class LoginContrller extends Controller
             return back()->with('status', 'Invalid login credentials');
         }
         if (auth()->user()->user_type == 'client')
-            return redirect()->route('home');
+            return redirect()->route('home',auth()->user()->id);
         else
             return redirect()->route('user.merchant.dashboard',auth()->user()->id);
     }
