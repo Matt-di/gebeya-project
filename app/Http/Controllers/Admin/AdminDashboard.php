@@ -12,13 +12,9 @@ use App\Http\Controllers\Controller;
 class AdminDashboard extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:web_admin');
-    }
+  
     public function index()
     {
-        // dd(auth()->user()->categories);
         $total_categories = Category::count();
         $total_users = User::count();
         $total_products = Product::count();
@@ -30,13 +26,13 @@ class AdminDashboard extends Controller
             [
                 'dashboard_data' => [
                     [
-                        'total' =>$total_categories,
+                        'total' => $total_categories,
                         'title' => "Total Categories",
                         'link' => "category",
                         'icon' => 'tasks'
                     ],
                     [
-                        'total' =>$total_user,
+                        'total' => $total_user,
                         'title' => "Store Users",
                         'link' => "users",
                         'icon' => 'user-plus'

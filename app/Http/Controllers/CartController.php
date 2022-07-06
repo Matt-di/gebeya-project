@@ -3,55 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\User;
+use Ramsey\Uuid\Uuid;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CartController extends Controller
 {
     use SoftDeletes;
 
-    public function __construct()
+
+    public function index(User $user)
     {
-        $this->middleware('auth');
-    }
-    public function index(){
         return view('user.cart.index');
     }
 
-    public function store(Product $product, Request $request){
-        if($product->productAdded($request->user()))
-        {
-            $cart = Cart::where('product_id',$product->id)
-                        ->where('user_id',$request->user()->id)->get()->first();
-            Cart::where('id',$cart->id)
-                ->update(['quantity'=>(($cart->quantity+1))]);
-           return back();
+    public function store(User $user, Product $product, Request $request)
+    {
+        if ($product->productAdded(auth()->user())) {
+            $cart = Cart::where('product_id', $product->id)
+                ->where('user_id', $request->user()->id)->get()->first();
+            if ($cart->quantity >= $cart->product->quantity) {
+                $output = array(['error' => 'Stock limit reached!']);
+                return response()->json($output);
+            } else {
+                $cart->update(['quantity' => (($cart->quantity + 1))]);
+                return response()->json($cart);
+            }
         }
-        $product->carts()->create([
-            'id'=>Uuid::uuid4(),
-            'user_id'=>$request->user()->id,
-            'quantity'=>1
+        $cart = $product->carts()->create([
+            'id' => Uuid::uuid4(),
+            'user_id' => $request->user()->id,
+            'quantity' => 1
         ]);
+        return response()->json($cart);
+    }
+
+    public function destroy(User $user, Cart $cart)
+    {
+        Cart::where('id', $cart->id)->delete();
         return back();
     }
 
-    public function destroy(Cart $cart){
-        Cart::where('id',$cart->id)->delete();
-        return back();
-    }
-
-    public function updateQuantity(Cart $cart,Request $request){
-        $this->validate($request,[
-            'quantity'=>'required'
+    public function updateQuantity(User $user, Cart $cart, Request $request)
+    {
+        $this->validate($request, [
+            'quantity' => 'required'
         ]);
-        if($request->quantity > $cart->product->quantity || $request->quantity <=0){
-            return back()->with('status',"Quantity not correct");
+        
+        if ($request->quantity > $cart->product->quantity || $request->quantity <= 0) {
+            $output = array(['error' => 'We don\' have that much amount in stock!']);
+            return response()->json($output);
+        } else {
+            $cart->update(['quantity' => $request->quantity]);
+            $output = array(['success' => 'Quantity Udated']);
+
+            return response()->json($output);
         }
-        $cart->update(['quantity'=>$request->quantity]);
-        return back()->with('status',"Quantity Udated");
     }
 }

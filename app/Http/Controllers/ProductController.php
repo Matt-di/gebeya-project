@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,9 +15,8 @@ class ProductController extends Controller
         if (!empty($request->category_id) && $request->category_id != "all") {
             $category = Category::where('id', $request->category_id)->first();
             $filtered = $category->name . " Products";
-            $products = $category->products()->paginate(10);
-        }
-        else if ($request->filter) {
+            $products = $category->products()->latest()->paginate(10);
+        } else if ($request->filter) {
             switch ($request->filter) {
                 case 'low_price':
                     $filtered = "Low to High Price Products";
@@ -56,10 +56,12 @@ class ProductController extends Controller
     }
 
 
-    public function getProduct(Product $product)
+    public function getProduct(User $user, Product $product)
     {
         return view('user.product.single', ['product' => $product]);
     }
+
+
 
     // public function removeCategory(Product $product,Request $request)
     // {

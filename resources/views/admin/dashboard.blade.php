@@ -9,10 +9,6 @@
             @endforeach
 
         </div>
-        <!-- Grid row -->
-
-       <!-- Section: Block Content -->
-
     </div>
 @endsection
 

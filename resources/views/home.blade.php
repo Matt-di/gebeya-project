@@ -38,16 +38,19 @@
                                 <a href="/" class="@if (request('filter') == 'default' || !request('filter')) active @endif">Default</a>
                             </li>
                             <li class="mb-2">
-                                <a href="/?filter=popular" class="@if (request('filter') == 'popular' ) active @endif">Popularity</a>
+                                <a href="/?filter=popular"
+                                    class="@if (request('filter') == 'popular') active @endif">Popularity</a>
                             </li>
                             {{-- <li class="mb-2">
-                                <a href="/?filter=rating" class="@if (request('filter') == 'rating' ) active @endif">Rating</a>
+                                <a href="/?filter=rating" class="@if (request('filter') == 'rating') active @endif">Rating</a>
                             </li> --}}
                             <li class="mb-2">
-                                <a href="/?filter=low_price" class="@if (request('filter') == 'low_price' ) active @endif">Price: low to high</a>
+                                <a href="/?filter=low_price" class="@if (request('filter') == 'low_price') active @endif">Price:
+                                    low to high</a>
                             </li>
                             <li class="mb-2">
-                                <a href="/?filter=high_price" class="@if (request('filter') == 'high_price' ) active @endif">Price: high to low</a>
+                                <a href="/?filter=high_price" class="@if (request('filter') == 'high_price') active @endif">Price:
+                                    high to low</a>
                             </li>
                         </ul>
                     </div>
@@ -83,19 +86,22 @@
 
                         <form class="range-field" action="/" method="GET">
                             @csrf
-                            <input type="range" min="{{$products->min('price')}}" max="{{$products->max('price')}}" name="price" value="{{request('price')?? 0}}"
+                            <input type="range" min="{{ $products->min('price') }}" max="{{ $products->max('price') }}"
+                                name="price" value="{{ request('price') ?? 0 }}"
                                 oninput="this.nextElementSibling.value = this.value">
-                            <output>{{request('price')}}</output>
+                            <output>{{ request('price') }}</output>
 
                             <div class="row justify-content-center">
 
                                 <!-- Grid column -->
                                 <div class="col-md-6 text-left">
-                                    <p class="dark-grey-text"><strong id="resellerEarnings">{{$products->min('price')}}</strong></p>
+                                    <p class="dark-grey-text"><strong
+                                            id="resellerEarnings">{{ $products->min('price') }}</strong></p>
                                 </div>
 
                                 <div class="col-md-6 text-right">
-                                    <p class="dark-grey-text"><strong id="clientPrice">{{$products->max('price')}}</strong></p>
+                                    <p class="dark-grey-text"><strong
+                                            id="clientPrice">{{ $products->max('price') }}</strong></p>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary"> Filter by Price </button>
@@ -114,18 +120,21 @@
     <div class="col-lg-8 col-md-10">
         <section style="background-color: #eee;">
             <div class="text-center container py-5">
-
+                <div id="message"></div>
                 <div class="row">
-                    <h3>{{$titleProduct}}</h3>
+                    <h3>{{ $titleProduct }}</h3>
                     @forelse ($products as $product)
-                    <x-product-card :product="$product" :tags="$product->categories()" />
+                        <x-product-card :product="$product" :tags="$product->categories()" />
                     @empty
                         <p>No Product Available</p>
-                    @endforelse 
+                    @endforelse
                 </div>
 
             </div>
         </section>
     </div>
     @include('layouts.contact')
+@endsection
+@section('modal')
+    @include('user.cart.popup')
 @endsection

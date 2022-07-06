@@ -28,7 +28,7 @@
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <p class="lead fw-normal mb-0" style="color: #a8729a;">Order </p>
                                     <p class="small text-muted mb-0">Order Code :
-                                        <a href="{{ route('user.orders.single', $orders->id) }}">#{{ $orders->id }}</a>
+                                        <a href="{{ route('user.orders.single', ['user'=>auth()->user()->id,'order'=>$orders->id]) }}">#{{ $orders->id }}</a>
                                     </p>
                                 </div>
                                 <div class="card shadow-0 border mb-4">

@@ -15,8 +15,24 @@
                         <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
                     </button>
                     <div class="table-responsive">
-                        @if (session('status'))
-                            <span>{{ session('status') }}</span>
+                        @if (session()->has('success'))
+                            <div id="alert_placeholder">
+                                <div class="alert alert-success">
+                                    {!! \Session::get('success') !!}
+
+                                </div>
+                            </div>
+                            <script>
+                                $(function() {
+                                    setTimeout(function() {
+                                        if ($(".alert").is(":visible")) {
+                                            //you may add animate.css class for fancy fadeout
+                                            $(".alert").fadeOut("fast");
+                                        }
+                                    }, 3000)
+
+                                });
+                            </script>
                         @endif
                         @if ($stores->count())
                             <table class="table table-bordered table-responsive-md table-striped text-center">
@@ -39,7 +55,7 @@
                                             <td class="pt-3-half">{{ $store->categories()->count() }}</td>
                                             <td class="pt-3-half">{{ $store->products()->count() }}</td>
                                             <td class="pt-3-half">
-                                                <form action=" {{ route('store.enable', $store->id) }} " method="POST">
+                                                <form action=" {{ route('admin.store.enable', $store->id) }} " method="POST">
                                                     @csrf
                                                     <button type="submit"
                                                         class="btn  @if ($store->store_status == 1) btn-warning @else btn-success @endif">
@@ -59,8 +75,8 @@
                                                     </button>
                                                 </span>
                                                 <span class="table-remove">
-                                                    <form action=" {{ route('store.delete', $store->id) }}"
-                                                        >
+                                                    <form action=" {{ route('admin.store.delete', $store->id) }}"
+                                                        method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         <button type="submit"
@@ -69,18 +85,9 @@
                                                         </button>
                                                     </form>
                                                 </span>
-
-
-
                                             </td>
                                         </tr>
                                     @endforeach
-                                    <script></script>
-
-                                    {{-- @foreach ($categories as $category)
-                                        <x-category-list :category="$category" />
-                                    @endforeach
-                                </tbody> --}}
                             </table>
                     </div>
                     {{ $stores->links() }}

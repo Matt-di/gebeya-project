@@ -17,10 +17,12 @@
                         Gebeya - Mat
                     </a>
 
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('products') }}">All
-                            Products</a>
-                    </li>
+                    @auth()
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{{ route('home', auth()->user()->id) }}">All
+                                Products</a>
+                        </li>
+                    @endauth
 
                     @auth('web_admin')
                         <li class="nav-item">
@@ -31,13 +33,11 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="anavbarDropdownMenuLink">
                                     <li class="nav-item">
-                                        <button class="dropdown-item btn nav-link" data-mdb-toggle="modal"
-                                            data-mdb-target="#addAdminModal">
-                                            <i class="fas fa-plus mr-5" aria-hidden="true"> Add Admin</i>
-                                        </button>
+
                                     </li>
                                     <li class="nav-item">
-                                        <a class="btn dropdown-item" href="{{ route('admin.users') }}">List</a>
+                                        <a class="btn dropdown-item"
+                                            href="{{ route('admin.users', auth()->user()->id) }}">List</a>
                                     </li>
                                 </ul>
                             </div>
@@ -50,33 +50,31 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="manageCustomerDropdown">
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('system.users') }}">Merchant</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('admin.system.users') }}">Merchant</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('stores') }}">Stores</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('admin.stores')}}">Stores</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     @endauth
                     @auth()
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
-                                Products</a>
-                        </li> --}}
                         @if (auth()->user()->user_type)
                             @isset($categories)
                                 @foreach ($categories as $category)
                                     @if ($category->show_nav == 1)
                                         <li class="nav-item">
-                                            @if (auth()->user()->user_type == "client")
-                                            <a class="nav-link "
-                                                href="/?category_id={{$category->id}}">{{ $category->name }}</a>
+                                            @if (auth()->user()->user_type == 'client')
+                                                <a class="nav-link "
+                                                    href="{{ auth()->user()->id }}/?category_id={{ $category->id }}">{{ $category->name }}</a>
                                             @else
-                                            <a class="nav-link"
-                                                href="{{ route('category.products', $category->id) }}">{{ $category->name }}</a>
+                                                <a class="nav-link"
+                                                    href="{{ route('user.category.products', ['user' => auth()->user()->id, 'category' => $category->id]) }}">{{ $category->name }}</a>
                                             @endif
-                                            </li>
+                                        </li>
                                     @endif
                                 @endforeach
                             @endisset
@@ -84,18 +82,9 @@
 
                     @endauth
 
-                    @guest()
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="{{ auth() == 'merchant' ? route('products') : route('home') }}">All
-                                Products</a>
-                        </li> --}}
-                    @endguest
                 </ul>
                 <!-- Left links -->
             </div>
-            <!-- Collapsible wrapper -->
-
-            <!-- Right elements -->
             <div class="d-flex align-items-center mr-2">
                 <form class="d-flex input-group w-auto" action="/" method="GET">
                     <input type="search" name="search" class="form-control rounded" placeholder="Search"
@@ -107,7 +96,7 @@
             </div>
             <div class="d-flex align-items-center mr-2">
                 @if (auth()->user() && auth()->user()->user_type == 'client')
-                    <a class="text-reset me-3" href="{{ route('cart') }}">
+                    <a class="text-reset me-3" href="{{ route('user.cart', auth()->user()->id) }}">
                         <i class="fas fa-shopping-cart fa-lg"></i>
                         <span
                             class="badge rounded-pill badge-notification bg-danger">{{ auth()->user()->carts()->count() }}</span>
@@ -144,7 +133,9 @@
                             </li>
                             @if (auth()->user()->user_type == 'client')
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('orders') }}">My Orders</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('user.orders.all', auth()->user()->id) }}">My
+                                        Orders</a>
                                 </li>
                             @endif
 
@@ -170,8 +161,8 @@
                             Sign up
                         </a>
 
-                    @endguest
-                </div>
+                    </div>
+                @endguest
                 <!-- Right elements -->
             </div>
         </div>

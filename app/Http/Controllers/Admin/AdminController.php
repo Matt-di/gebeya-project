@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-      public function index()
+
+    public function index()
     {
         if (auth('web_admin')->check()) {
             return redirect()->route('admin.dashboard');
@@ -31,7 +32,6 @@ class AdminController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request);
         $this->validate($request, [
             'username' => 'required',
             'email' => 'required|email',
@@ -55,5 +55,20 @@ class AdminController extends Controller
     {
         $users = Admin::paginate(10);
         return view('admin.list', ['users' => $users]);
+    }
+
+    public function getAdmin(Admin $admin)
+    {
+        $ad = Admin::where('id', $admin->id)->get(['id', 'username', 'admin_type', "email"])->first();
+        return $ad;
+    }
+
+    public function delete($admin_id)
+    {
+        $adminDeleted = Admin::findById($admin_id)->delete();
+        if ($adminDeleted) {
+            return back()->with('success', "Deleted Successfully");
+        }
+        return back()->with('success', "Sorry Error Occurresd!");
     }
 }

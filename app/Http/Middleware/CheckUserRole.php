@@ -17,7 +17,7 @@ class CheckUserRole
     public function handle(Request $request, Closure $next)
     {
         if (auth()->check()) {
-            if (auth()->user()->user_type=="merchant") {
+            if (auth()->user()->user_type == "merchant") {
                 return $next($request);
             }
         }

@@ -20,7 +20,7 @@
                         <div class="text-center mb-4">
                             <h3>Order Details</h3>
                         </div>
-                        <form action="{{ route('order.add') }}" method="POST">
+                        <form action="{{ route('user.order.add',auth()->user()->id) }}" method="POST">
                             @csrf
                             <p class="fw-bold mb-4 pb-2">Fill</p>
                             <div class="d-flex flex-row align-items-center mb-4 pb-1">

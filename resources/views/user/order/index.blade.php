@@ -62,3 +62,8 @@
         </div>
     </section>
 @endsection
+
+@section('modal')
+@include('user.cart.popup')
+@endsection
+

@@ -18,4 +18,6 @@ class Admin extends Authenticatable
         'admin_type',
         'username'
     ];
+
+    public $incrementing = false;
 }

@@ -4,19 +4,20 @@
     <div class="h-100 h-custom" style="background-color: #eee;">
         <section class="h-100 gradient-custom">
             <div class="container py-5 h-100">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="/"><i class="fa fa-dashboard "></i>Home</a></li>
-                    <?php $segments = ''; ?>
-                    @foreach (Request::segments() as $segment)
-                        <?php $segments .= '/' . $segment; ?>
-                        <li class="breadcrumb-item active">
-                            <a  href="{{ $segments }}">{{ $segment }}</a>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/"><i class="fa fa-dashboard "></i>Home</a>
                         </li>
-                    @endforeach
-                </ol>
-            </nav>
+                        <?php $segments = ''; ?>
+                        @foreach (Request::segments() as $segment)
+                            <?php $segments .= '/' . $segment; ?>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ $segments }}">{{ $segment }}</a>
+                            </li>
+                        @endforeach
+                    </ol>
+                </nav>
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-lg-10 col-xl-8">
                         <div class="card" style="border-radius: 10px;">
@@ -31,6 +32,7 @@
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Status</th>
+                                            <th>Payment Status</th>
                                             <th>Ordered At</th>
                                         </tr>
                                     </thead>
@@ -53,12 +55,11 @@
 
                                 <div class="d-flex justify-content-between pt-2">
                                     <p class="fw-bold mb-0">Order Details</p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span>{{ $order->total }}
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span>{{ (int)$order->total}}
                                         Products </p>
                                 </div>
 
                                 <div class="d-flex justify-content-between pt-2">
-                                    <p class="text-muted mb-0">Invoice Number : 788152</p>
                                     <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> None</p>
                                 </div>
 

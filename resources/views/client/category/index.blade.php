@@ -66,6 +66,7 @@
         </div>
     </div>
 @endsection
+
 @section('modal')
     @include('client.category.store')
 @endsection

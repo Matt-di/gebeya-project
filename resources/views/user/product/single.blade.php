@@ -19,6 +19,7 @@
             </nav>
 
         </div>
+        <div id="message"></div>
         <section class="text-center">
             <h3 class="font-weight-bold mb-5">Product Details</h3>
             <div class="row">
@@ -54,7 +55,7 @@
                         <p class="ml-xl-0 ml-4">
                             <strong>Size: </strong>Size
                         </p>
-                     
+
                         <p class="ml-xl-0 ml-4">
                             <strong>Availability: </strong>
                             @if ($product->quantity > 0)
@@ -84,15 +85,15 @@
                             </div>
                             <div class="row mt-3 mb-4">
                                 <div class="text-center">
+                                    <input type="hidden" id="userId" value="{{auth()->user()->id}}"/>
                                     @if ($product->quantity > 0)
-                                        <form method="post" action="{{ route('cart.store', $product->id) }}">
-                                            @csrf
-                                            <button type="submit" class="btn btn-block btn-primary flex-fill me-1" data-mdb-ripple-color="dark">
-                                                Add to cart
-                                            </button>
-                                        </form>
+                                    <button type="submit" class="btn btn-primary flex-fill me-1 addtocart" id="{{ $product->id }}"
+                                        data-mdb-ripple-color="dark">
+                                        Add to cart
+                                    </button>
                                     @else
-                                        <button type="button" disabled class="btn  flex-fill ms-1">Not Available In Stock</button>
+                                        <button type="button" disabled class="btn  flex-fill ms-1">Not Available In
+                                            Stock</button>
                                     @endif
                                 </div>
                             </div>
@@ -109,4 +110,7 @@
 
 
     </div>
+@endsection
+@section('modal')
+    @include('user.cart.popup')
 @endsection

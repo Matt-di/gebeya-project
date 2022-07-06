@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Ramsey\Uuid\Uuid;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Uuid;
 
 class CategoryController extends Controller
 {
@@ -32,29 +33,29 @@ class CategoryController extends Controller
         return back();
     }
 
-    public function destroy(Category $category){
+    public function destroy(User $user, Category $category){
         Category::destroy($category->id);
         return back();
     }
 
-    public function get(Category $category){
+    public function get(User $user, Category $category){
         return $category;
     }
-    public function update($id, Request $request){
-        // dd($id);
-        Category::where('id',$id)->update($request->only('name','description','show_nav'));
-        return redirect()->route('category');
+    public function update(User $user, Category $category, Request $request){
+        $category->update($request->only('name','description','show_nav'));
+        return redirect()->route('user.category',['user'=>auth()->user()->id]);
 
     }
-    public function showInNav(Category $category){
+    public function showInNav(User $user,Category $category){
+        // dd($category);
         $category->update([
             'show_nav'=>$category->show_nav==1?0:1
         ]);
-        return redirect()->route('category');
+        return redirect()->route('user.category',['user'=>$user->id]);
         // Category::get();
     }
 
-    public function getProducts(Category $category)
+    public function getProducts(User $user, Category $category)
     {
         $categories = Category::paginate(10);
         return view('client.product.category',[

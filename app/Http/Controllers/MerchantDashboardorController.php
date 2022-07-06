@@ -16,7 +16,6 @@ class MerchantDashboardorController extends Controller
     }
     public function index()
     {
-        // dd(auth()->user()->categories);
         $categories = Category::get();
         $your_categ = auth()->user()->categories()->count();
         $product_count = Product::count();
@@ -59,7 +58,7 @@ class MerchantDashboardorController extends Controller
                     [
                         'total' => $total_order,
                         'title' => "Total Orders",
-                        'link' => "merchant/orders",
+                        'link' => "merchant.orders",
                         'icon' => 'shopping-bag'
 
                     ],

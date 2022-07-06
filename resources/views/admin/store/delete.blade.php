@@ -10,7 +10,7 @@
             <div class="modal-body">Are you sure to delet all Products ?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">No</button>
-                <form action="{{route('products.delete.all')}}" method="POST">
+                <form action="{{ route('products.delete.all') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-primary">Yes</button>
                 </form>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Ramsey\Uuid\Uuid;
 use App\Models\Product;
 use App\Models\Category;
@@ -81,8 +82,9 @@ class MerchanProductController extends Controller
         return view('user.product.single', ['product' => $product]);
     }
 
-    public function update(Product $product, Request $request)
+    public function update(User $user,Product $product, Request $request)
     {
+        // dd($product);
         $fileName = $this->uploadImage($request);
         $retn = $product->update([
             'name' => $request->name,
@@ -93,14 +95,16 @@ class MerchanProductController extends Controller
         ]);
 
         $product->categories()->attach(Category::find($request->category));
-        return redirect()->route('products');
+        return redirect()->route('user.products',auth()->user()->id);
     }
 
-    public function removeCategory(Product $product, Request $request)
+    public function removeCategory(User $user, Category $category,Product $product, Request $request)
     {
-        $category = Category::find($request->category_id);
         $product->categories()->detach($category);
 
         return back();
+    }
+    public function findProduct(User $user, Product $product){
+        return $product;
     }
 }

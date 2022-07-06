@@ -13,13 +13,13 @@
                     @if (session('status'))
                         <div class="alert alert-warning">{{ session('status') }}</div>
                     @endif
-                    <form action="{{ route('admin') }}" method="POST">
+                    <form action="{{ route('admin.login') }}" method="POST">
                         @csrf
                         <!-- Email input -->
                         <div class="form-outline mb-4">
                             <input type="email" id="email" name="email"
                                 class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                placeholder="Enter a valid email address" value="{{old('email')}}" />
+                                placeholder="Enter a valid email address" value="{{ old('email') }}" />
                             <label class="form-label" for="email">Email address</label>
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>

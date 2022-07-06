@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
+use Ramsey\Uuid\Uuid;
+use App\Models\Payment;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Ramsey\Uuid\Uuid;
 
 class OrderController extends Controller
 {
@@ -21,18 +23,18 @@ class OrderController extends Controller
         return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
     }
 
-    public function store(Request $request)
+    public function store(User $user,Request $request)
     {
         return view('user.order.store');
     }
-    public function singleOrder($order_id)
+    public function singleOrder(User $user,Order $order)
     {
-        $order = Order::where('id', $order_id)->first();
+        // $order = Order::where('id', $order_id)->first();
         $ordersItems = $order->orderItems()->paginate(10);
         // dd($ordersItems);\
         return view('user.order.single', ['orderItems' => $ordersItems, "order" => $order]);
     }
-    public function addOrder(Request $request)
+    public function addOrder(User $user, Request $request)
     {
         // dd($request);
         $this->validate($request, [
@@ -84,11 +86,17 @@ class OrderController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, Order $order)
+    public function updateStatus(User $user, Order $order, Request $request)
     {
         Order::where('id',$order->id)->update(['status' => $request->order_status]);
         // $order->update();
         // dd($res);   
+        return back()->with("status", "updated");
+    }
+
+    public function updatePaymentStatus(User $user, Payment $payment, Request $request)
+    {
+        $payment->update(['status' => $request->payment_status]); 
         return back()->with("status", "updated");
     }
 }

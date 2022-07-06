@@ -17,7 +17,7 @@
     <td>{{ $order->created_at->diffForHumans() }} <br />
         {{ $order->created_at->format('j F, Y H:m:s') }}</td>
     <td>
-        <a href="{{route('user.orders.single',$order->id)}}" class="btn btn-link btn-sm btn-rounded">
+        <a href="/{{auth()->user()->id}}/orders/{{$order->id}}" class="btn btn-link btn-sm btn-rounded">
             Details
         </a>
     </td>

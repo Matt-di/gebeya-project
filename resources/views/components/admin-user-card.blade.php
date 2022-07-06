@@ -1,10 +1,9 @@
 @props(['user'])
+
 <tr>
     <td>
         <div class="d-flex align-items-center">
-            <a href="/orders/{{ $user->id }}"> {{ $user->id }}</a>
-            <img src="as" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
-
+            <a href="{{route('admin.view',$user->id) }}"> {{ $user->id }}</a>
         </div>
     </td>
     <td>
@@ -25,7 +24,7 @@
     <td>
         <span class="table-remove mb-5">
             <button id="{{ $user->id }}" type="button"
-                class="btn btn-warning btn-rounded btn-sm my-0 edituser">
+                class="btn btn-warning btn-rounded btn-sm my-0 editadmin">
                 <i class="fas fa-edit mr-5 ml-3" aria-hidden="true"> Edit</i>
             </button>
         </span>

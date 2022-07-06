@@ -1,11 +1,11 @@
 @props(['category'])
 <tr>
     <td class="pt-3-half">
-        <a href="category/{{ $category->id }}">{{ $category->name }} </a>
+        <a href="{{route('user.category.products',['user'=>auth()->user()->id,'category'=>$category->id]) }}">{{ $category->name }} </a>
     </td>
     <td class="pt-3-half">{{ $category->description }}</td>
     <td class="pt-3-half">
-        <form action=" {{ route('category.enable', $category->id) }} " method="POST">
+        <form action=" {{ route('user.category.enable',['user'=>auth()->user()->id, 'category'=>$category->id]) }} " method="POST">
             @csrf
             <button type="submit" class="btn  @if ($category->show_nav == 1) btn-warning @else btn-success @endif">
                 @if ($category->show_nav == 1)
@@ -19,12 +19,12 @@
     <td>
         @if (auth()->user()->categories->contains($category->id))
             <span class="  table-remove mb-5">
-                <button id="{{ $category->id }}" type="submit" class="btn btn-warning btn-rounded btn-sm my-0 edit">
+                <button id="{{ $category->id }}" type="submit" class="btn btn-warning btn-rounded btn-sm my-0 editcategory">
                     <i class="fas fa-edit mr-5" aria-hidden="true"> Edit</i>
                 </button>
             </span>
             <span class="table-remove">
-                <form action=" {{ route('category.delete', $category->id) }}" method="POST">
+                <form action=" {{ route('user.category.delete', ['user'=>auth()->user()->id,'category'=>$category->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-rounded btn-sm my-0">
