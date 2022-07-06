@@ -64,6 +64,7 @@ Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => 'auth'], functio
 Route::group(['as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('order', [OrderController::class, 'store'])->name('order.add');
 
     Route::get('userorders', [OrderController::class, 'getOrders'])->name('merchant.orders');
     Route::get('userorder/{order}', [OrderController::class, 'singleOrder'])->name('merchant.orders.single');
