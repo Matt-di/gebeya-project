@@ -41,7 +41,7 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.login');
 Route::post('/admin', [AdminController::class, 'identify']);
 
-Route::group(['prefix'=>'/client/{user}','as'=>'user.','middleware' => 'auth'], function () {
+Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => 'auth'], function () {
     Route::get("/", [ProductController::class, 'index'])->name('home');
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
     Route::post('order', [OrderController::class, 'addOrder']);
@@ -61,7 +61,7 @@ Route::group(['prefix'=>'/client/{user}','as'=>'user.','middleware' => 'auth'], 
     Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 });
 
-Route::group(['prefix'=>'/merchant/{user}','as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
+Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users');
 
