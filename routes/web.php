@@ -42,7 +42,7 @@ Route::get('/admin', [AdminController::class, 'index'])->name('admin.login');
 Route::post('/admin', [AdminController::class, 'identify']);
 
 Route::group(['prefix'=>'/user/{user}','as'=>'user.','middleware' => 'auth'], function () {
-    Route::get("/", [ProductController::class, 'index']);
+    Route::get("/", [ProductController::class, 'index'])->name('home');
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
     Route::post('order', [OrderController::class, 'addOrder']);
 
@@ -63,8 +63,6 @@ Route::group(['prefix'=>'/user/{user}','as'=>'user.','middleware' => 'auth'], fu
 
 Route::group(['prefix'=>'/user/{user}','as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.login');
-
     Route::get('users', [UserController::class, 'index'])->name('users');
 
     Route::get('userorders', [OrderController::class, 'getOrders'])->name('merchant.orders');
