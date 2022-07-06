@@ -61,7 +61,7 @@ Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => 'auth'], functio
     Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 });
 
-Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
+Route::group(['as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users');
 
@@ -89,7 +89,7 @@ Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => ['auth', 'checkU
 
 Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])->name('product.get');
 
-Route::group(['prefix'=>'/','as'=>'admin.','middleware'=>'auth:web_admin'],function () {
+Route::group(['prefix'=>'/a','as'=>'admin.','middleware'=>'auth:web_admin'],function () {
     Route::post('admin/add', [AdminController::class, 'store'])->name('add');
     Route::get('admin/users', [AdminController::class, 'users'])->name('users');
     Route::post('admin/{admin}', [AdminController::class, 'delete'])->name('delete');
