@@ -76,7 +76,8 @@ $(document).ready(function () {
         let userId = $("#userId").val();
         if (!userId) {
             $("#addToCartModal").modal("show");
-            $("#exampleModalLabel").text("Please Login First");
+            $("#notifyTitle").text("Please Login First");
+            $("#notifyMessage").html("<p>To make this action you need to <a href='/login'>login</a> first</p>");
             return;
         }
         console.log(userId);
@@ -96,7 +97,8 @@ $(document).ready(function () {
                     $("#totalPrice").text(
                         parseInt($("#priceProduct").text() * result.quantity)
                     );
-                    $("#exampleModalLabel").text("Your Shopping Cart");
+                    $("#notifyTitle").text("Product Added");
+                    $("#notifyMessage").text("Quantity Increased to "+result.quantity+" products.. Please checkout your cart page");
                     $("#addToCartModal").modal("show");
                 } else if (result[0].error) {
                     $("#message")
@@ -107,7 +109,7 @@ $(document).ready(function () {
                         $("#message").html("");
                     }, 4000);
                 } else {
-                    $("#exampleModalLabel").text("Added to Cart");
+                    $("#notifyMessage").text("Added to Cart");
                     $("#addToCartModal").modal("show");
                     setTimeout(function () {
                         location.reload();
