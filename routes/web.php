@@ -26,6 +26,7 @@ use App\Http\Controllers\MerchantDashboardorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', [ProductController::class, 'index'])->name('/');
 Route::get('/home', [ProductController::class, 'index'])->name('home');
 
@@ -42,6 +43,11 @@ Route::post('/admin', [AdminController::class, 'identify']);
 
 Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'auth'], function () {
     Route::get("/", [ProductController::class, 'index'])->name('/');
+    Route::get('cart', [CartController::class, 'index'])->name('cart');
+    Route::post('cart/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::delete('cart/{cart}', [CartController::class, 'destroy'])->name('cart.delete');
+    Route::put('cart/{cart}', [CartController::class, 'updateQuantity'])->name('cart.update');
+
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
     Route::post('order', [OrderController::class, 'addOrder']);
 
@@ -52,16 +58,13 @@ Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'auth'], f
     Route::put('{payment}', [OrderController::class, 'updatePaymentStatus'])->name('payment.update');
 
 
-    Route::get('cart', [CartController::class, 'index'])->name('cart');
-    Route::post('cart/{product}', [CartController::class, 'store'])->name('cart.store');
-    Route::delete('cart/{cart}', [CartController::class, 'destroy'])->name('cart.delete');
-    Route::put('cart/{cart}', [CartController::class, 'updateQuantity'])->name('cart.update');
+
 
     Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 });
 
 Route::group(['prefix' => '/store/{user}', 'as' => 'store.', 'middleware' => ['auth:web', 'checkUser']], function () {
-    
+
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
