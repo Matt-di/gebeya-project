@@ -26,9 +26,8 @@ use App\Http\Controllers\MerchantDashboardorController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/home', [ProductController::class, 'index'])->name('home');
 Route::get('/', [ProductController::class, 'index'])->name('/');
+Route::get('/home', [ProductController::class, 'index'])->name('home');
 
 Route::get('/login', [LoginContrller::class, 'index'])->name("login");
 Route::post('/login', [LoginContrller::class, 'store']);
@@ -41,8 +40,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.login');
 Route::post('/admin', [AdminController::class, 'identify']);
 
-Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => 'auth'], function () {
-    Route::get("/", [ProductController::class, 'index'])->name('home');
+Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'auth'], function () {
+    Route::get("/", [ProductController::class, 'index'])->name('/');
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
     Route::post('order', [OrderController::class, 'addOrder']);
 
@@ -61,7 +60,8 @@ Route::group(['prefix'=>'/{user}','as'=>'user.','middleware' => 'auth'], functio
     Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 });
 
-Route::group(['as'=>'user.','middleware' => ['auth', 'checkUser']], function () {
+Route::group(['prefix' => '/store/{user}', 'as' => 'store.', 'middleware' => ['auth:web', 'checkUser']], function () {
+    
     Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('order', [OrderController::class, 'store'])->name('order.add');
@@ -90,18 +90,18 @@ Route::group(['as'=>'user.','middleware' => ['auth', 'checkUser']], function () 
 
 Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])->name('product.get');
 
-Route::group(['prefix'=>'/a','as'=>'admin.','middleware'=>'auth:web_admin'],function () {
-    Route::post('admin/add', [AdminController::class, 'store'])->name('add');
-    Route::get('admin/users', [AdminController::class, 'users'])->name('users');
-    Route::post('admin/{admin}', [AdminController::class, 'delete'])->name('delete');
-    Route::get('admin/{admin}', [AdminController::class, 'getAdmin'])->name('view');
-    Route::get('system/users', [AdminController::class, 'users'])->name('system.users');
+Route::group(['prefix' => '/', 'as' => 'admin.', 'middleware' => 'auth:web_admin'], function () {
+    Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    Route::get('/admin/stores', [StoreController::class, 'index'])->name('stores');
 
-    Route::get('admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
-    Route::get('admin/stores', [StoreController::class, 'index'])->name('stores');
+    Route::get('/admin/store/product', [StoreController::class, 'index'])->name('store.products');
+    Route::post('/admin/stores', [StoreController::class, 'store'])->name('store.add');
+    Route::post('/admin/stores/{user}', [StoreController::class, 'enable'])->name('store.enable');
+    Route::delete('/admin/stores/{store}', [StoreController::class, 'destroy'])->name('store.delete');
 
-    Route::get('admin/store/product', [StoreController::class, 'index'])->name('store.products');
-    Route::post('admin/stores', [StoreController::class, 'store'])->name('store.add');
-    Route::post('admin/stores/{user}', [StoreController::class, 'enable'])->name('store.enable');
-    Route::post('admin/stores/{store_id}', [StoreController::class, 'destroy'])->name('store.delete');
+    Route::post('/admin/add', [AdminController::class, 'store'])->name('add');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('users');
+    Route::post('/admin/{admin}', [AdminController::class, 'delete'])->name('delete');
+    Route::get('/admin/{admin}', [AdminController::class, 'getAdmin'])->name('view');
+    Route::get('/admin/system/users', [AdminController::class, 'users'])->name('system.users');
 });

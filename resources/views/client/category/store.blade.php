@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form action="{{ route('user.category.add',auth()->user()->id) }}" method="POST" id="addCategoryForm" name="addCategoryForm">
+                <form action="{{ route('store.category.add',auth()->user()->id) }}" method="POST" id="addCategoryForm" name="addCategoryForm">
                     @csrf
                     <div class="form-outline mb-4">
                         <input type="text" id="name" name="name"

@@ -23,6 +23,10 @@ class CartController extends Controller
 
     public function store(User $user, Product $product, Request $request)
     {
+        if (auth()->user()->user_type == "merchant") {
+            $output = array(['error' => 'Sorry you are not allowed to do this!']);
+            return response()->json($output);
+        }
         if ($product->productAdded(auth()->user())) {
             $cart = Cart::where('product_id', $product->id)
                 ->where('user_id', $request->user()->id)->get()->first();
@@ -53,7 +57,7 @@ class CartController extends Controller
         $this->validate($request, [
             'quantity' => 'required'
         ]);
-        
+
         if ($request->quantity > $cart->product->quantity || $request->quantity <= 0) {
             $output = array(['error' => 'We don\' have that much amount in stock!']);
             return response()->json($output);

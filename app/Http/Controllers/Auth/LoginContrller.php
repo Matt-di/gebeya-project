@@ -32,6 +32,6 @@ class LoginContrller extends Controller
         if (auth()->user()->user_type == 'client')
             return redirect()->route('home',auth()->user()->id);
         else
-            return redirect()->route('user.merchant.dashboard',auth()->user()->id);
+            return redirect()->route('store.merchant.dashboard',auth()->user()->id);
     }
 }

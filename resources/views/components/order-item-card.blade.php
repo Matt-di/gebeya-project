@@ -5,7 +5,7 @@
 
     <td>
         <div class="d-flex align-items-center">
-            <a href="/product/{{ $orderitem->product_id }}">
+            <a href="/roducts/{{ $orderitem->product_id }}">
                 <img style="width: 100px; height:100px}}" src="{{ url('images/products', $product->image) }}"
                     alt="" class="img-thumbnail" />
             </a>

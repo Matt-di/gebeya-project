@@ -1,7 +1,7 @@
 @props(['product', 'name','user'])
 <tr>
     <td class="pt-3-half">
-        <a href="{{ route('user.products.get', ['user'=>auth()->user()->id,'product'=>$product->id]) }}" >
+        <a href="{{ route('store.products.get', ['user'=>auth()->user()->id,'product'=>$product->id]) }}" >
             <img src="{{ url('images/products/' . $product->image) }}" class="img-thumbnail" style="height: 100px; width:100px;" alt="Product Image" />
         </a>
     </td>
@@ -10,7 +10,7 @@
     <td class="pt-3-half">
         @foreach ($name as $n)
                 <span class="table-remove mb-5">
-                    <form action=" {{ route('user.category.product.delete', ['user'=>auth()->user()->id,'category'=>$n->id,'product'=>$product->id]) }}" method="POST">
+                    <form action=" {{ route('store.category.product.delete', ['user'=>auth()->user()->id,'category'=>$n->id,'product'=>$product->id]) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <input type="hidden" name="category_id" value="{{ $n->id }}" />
@@ -36,7 +36,7 @@
                 </button>
             </span>
             <span class="table-remove mt-2">
-                <form action=" {{ route('user.product.delete', ['user'=>auth()->user()->id,'product'=>$product->id]) }}" method="POST">
+                <form action=" {{ route('store.product.delete', ['user'=>auth()->user()->id,'product'=>$product->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-rounded btn-sm my-0">

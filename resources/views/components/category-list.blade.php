@@ -1,11 +1,11 @@
 @props(['category'])
 <tr>
     <td class="pt-3-half">
-        <a href="{{route('user.category.products',['user'=>auth()->user()->id,'category'=>$category->id]) }}">{{ $category->name }} </a>
+        <a href="{{route('store.category.products',['user'=>auth()->user()->id,'category'=>$category->id]) }}">{{ $category->name }} </a>
     </td>
     <td class="pt-3-half">{{ $category->description }}</td>
     <td class="pt-3-half">
-        <form action=" {{ route('user.category.enable',['user'=>auth()->user()->id, 'category'=>$category->id]) }} " method="POST">
+        <form action=" {{ route('store.category.enable',['user'=>auth()->user()->id, 'category'=>$category->id]) }} " method="POST">
             @csrf
             <button type="submit" class="btn  @if ($category->show_nav == 1) btn-warning @else btn-success @endif">
                 @if ($category->show_nav == 1)
@@ -24,7 +24,7 @@
                 </button>
             </span>
             <span class="table-remove">
-                <form action=" {{ route('user.category.delete', ['user'=>auth()->user()->id,'category'=>$category->id]) }}" method="POST">
+                <form action=" {{ route('store.category.delete', ['user'=>auth()->user()->id,'category'=>$category->id]) }}" method="POST">
                     @method('DELETE')
                     @csrf
                     <button type="submit" class="btn btn-danger btn-rounded btn-sm my-0">

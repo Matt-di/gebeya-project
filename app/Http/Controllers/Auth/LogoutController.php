@@ -13,7 +13,7 @@ class LogoutController extends Controller
     {
         // dd(auth('web_admin'));
         if (auth('web_admin')->check()){
-            $redirect = 'admin';
+            $redirect = 'admin.login';
             auth('web_admin')->logout();
         }
         else

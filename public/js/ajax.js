@@ -38,7 +38,7 @@ $(document).ready(function () {
                 $("#btnSubmitCat").text("Update");
                 $("#addCategoryForm").attr(
                     "action",
-                    "/user/" + userId + "/" + category + "/update"
+                    "/" + userId + "/" + category + "/update"
                 );
             },
         });
@@ -49,7 +49,7 @@ $(document).ready(function () {
         e.preventDefault();
         const userId = location.pathname.split("/")[1];
         $.ajax({
-            url: "/user/" + userId + "/products/" + product,
+            url: "/" + userId + "/products/" + product,
             method: "get",
             success: function (result) {
                 console.log(result);
@@ -64,7 +64,7 @@ $(document).ready(function () {
                 $("#btnSubmitProduct").text("Update");
                 $("#addProductForm").attr(
                     "action",
-                    "/user/" + userId + "/products/" + product + "/update"
+                    "/" + userId + "/products/" + product + "/update"
                 );
                 $("#addProductModal").modal("show");
             },
@@ -83,7 +83,7 @@ $(document).ready(function () {
         e.preventDefault();
         console.log(product);
         $.ajax({
-            url: "/user/" + userId + "/cart/" + product,
+            url: "/" + userId + "/cart/" + product,
             method: "post",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -92,7 +92,7 @@ $(document).ready(function () {
             success: function (result) {
                 console.log(result);
                 if (result.quantity > 1) {
-                    $("#quantity").val(result.quantity);
+                    $("#quantityUpdate").val(result.quantity);
                     $("#totalPrice").text(
                         parseInt($("#priceProduct").text() * result.quantity)
                     );
@@ -107,8 +107,8 @@ $(document).ready(function () {
                         $("#message").html("");
                     }, 4000);
                 } else {
-                    $("#addToCartModal").modal("show");
                     $("#exampleModalLabel").text("Added to Cart");
+                    $("#addToCartModal").modal("show");
                     setTimeout(function () {
                         location.reload();
                     }, 5000);
@@ -132,7 +132,7 @@ $(document).ready(function () {
         }
         let data = { quantity: quantity };
         $.ajax({
-            url: "/user/" + userId + "/cart/" + cart,
+            url: "/" + userId + "/cart/" + cart,
             method: "put",
             contentType: "application/json",
             headers: {

@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <a href="{{route('user.'.$data['link'],auth()->user()->id) }}" class="card-footer footer-hover black-text text-center border-0 p-2">More
+        <a href="{{route('store.'.$data['link'],auth()->user()->id) }}" class="card-footer footer-hover black-text text-center border-0 p-2">More
             info<i class="fas fa-arrow-circle-right pl-2"></i></a>
     </div>
 </div>

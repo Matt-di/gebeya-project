@@ -72,7 +72,7 @@
                                                     href="{{ auth()->user()->id }}/?category_id={{ $category->id }}">{{ $category->name }}</a>
                                             @else
                                                 <a class="nav-link"
-                                                    href="{{ route('user.category.products', ['user' => auth()->user()->id, 'category' => $category->id]) }}">{{ $category->name }}</a>
+                                                    href="{{ route('store.category.products', ['user' => auth()->user()->id, 'category' => $category->id]) }}">{{ $category->name }}</a>
                                             @endif
                                         </li>
                                     @endif
@@ -162,7 +162,7 @@
                         </a>
 
                     </div>
-                @endguest
+                @endguest   
                 <!-- Right elements -->
             </div>
         </div>
