@@ -9,6 +9,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Ramsey\Uuid\v1;
+
 class MerchanProductController extends Controller
 {
 
@@ -25,6 +27,14 @@ class MerchanProductController extends Controller
             "products" => $products
         ]);
     }
+
+    public function create()
+    {
+        $categories = Category::all();
+        return view('client.product.create', ["categories" => $categories]);
+    }
+
+
     public function store(Request $request)
     {
         // dd($request);
@@ -52,6 +62,12 @@ class MerchanProductController extends Controller
         return back();
     }
 
+    public function edit(User $user, Product $product)
+    {
+        // dd($product);
+        $categories = Category::all();
+        return view('client.product.edit', ['product'=>$product,"categories" => $categories]);
+    }
 
     protected function uploadImage($request)
     {
@@ -73,16 +89,16 @@ class MerchanProductController extends Controller
         return back();
     }
 
-    public function getProduct(Product $product)
+    public function show(User $user, Product $product)
     {
         if (Auth::check())
             if (auth()->user()->user_type == 'merchant')
-                return $product;
+                return view('client.product.single', ['product' => $product]);
 
-        return view('user.product.single', ['product' => $product]);
+        return view('user.product.show', ['product' => $product]);
     }
 
-    public function update(User $user,Product $product, Request $request)
+    public function update(User $user, Product $product, Request $request)
     {
         // dd($product);
         $fileName = $this->uploadImage($request);
@@ -91,20 +107,22 @@ class MerchanProductController extends Controller
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
-            'image' => $fileName == "default" ? $product->image : $fileName
+            'image' => $fileName == "default" ? $product->image : $fileName,
+            'tags'=>$request->tags
         ]);
 
         $product->categories()->attach(Category::find($request->category));
-        return redirect()->route('user.products',auth()->user()->id);
+        return redirect()->route('merchant.products.index', auth()->user()->id)->with('message','Product updated!.');
     }
 
-    public function removeCategory(User $user, Category $category,Product $product, Request $request)
+    public function removeCategory(User $user, Category $category, Product $product, Request $request)
     {
         $product->categories()->detach($category);
 
         return back();
     }
-    public function findProduct(User $user, Product $product){
+    public function findProduct(User $user, Product $product)
+    {
         return $product;
     }
 }

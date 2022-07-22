@@ -1,5 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
+@section('sidebar')
+    @include('layouts.admin_sidebar');
+@endsection
 
 @section('content')
     <div class="container-fluid my-5 py-5">
@@ -55,7 +58,8 @@
                                             <td class="pt-3-half">{{ $store->categories()->count() }}</td>
                                             <td class="pt-3-half">{{ $store->products()->count() }}</td>
                                             <td class="pt-3-half">
-                                                <form action=" {{ route('admin.store.enable', $store->id) }} " method="POST">
+                                                <form action=" {{ route('admin.store.enable', $store->id) }} "
+                                                    method="POST">
                                                     @csrf
                                                     <button type="submit"
                                                         class="btn  @if ($store->store_status == 1) btn-warning @else btn-success @endif">

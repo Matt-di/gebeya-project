@@ -1,22 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.main')
+
+@section('sidebar')
+    @include('layouts.merchant_sidebar')
+@endsection
 
 @section('content')
-    <div class="row g-4">
-        <div class="col-lg-2 col-md-2 my-5">
-            @include('layouts.client_sidenav')
-        </div>
-        <div class="col-lg-10 col-md-9">
-            <div class="container">
+    <div class="col-lg-10 col-md-9">
+        <div class="container">
+            <div class="container-fluid my-5">
                 <div class="card">
-                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                    <div class="card-header text-center font-weight-bold text-uppercase py-4">
                         Your Products
-                    </h3>
+                        <a href="{{route('merchant.dashboard',auth()->user()->id)}}" class="float-right">Back</a>
+                    </div>
                     <div class="card-body">
                         <div id="dataTable" class="table-editable">
-                            <button type="button" class="btn btn-primary mb-2" data-mdb-toggle="modal"
-                                data-mdb-target="#addProductModal">
+                            <a type="button" class="btn btn-primary mb-2"
+                                href="{{ route('merchant.products.create', auth()->user()->id) }}">
                                 Add New
-                            </button>
+                            </a>
                             <div class="table-responsive">
                                 @if (session('status'))
                                     <span>{{ session('status') }}</span>
@@ -48,15 +50,12 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                     {{ $products->links() }}
                 </div>
             </div>
+        </div>
     </div>
-    </div>
-@endsection
 
-@section('modal')
-    @include('client.product.store')
 @endsection

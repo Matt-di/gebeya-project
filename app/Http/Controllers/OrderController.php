@@ -27,6 +27,13 @@ class OrderController extends Controller
     {
         return view('user.order.store');
     }
+    public function userOrder(User $user,Order $order)
+    {
+        // $order = Order::where('id', $order_id)->first();
+        $ordersItems = $order->orderItems()->paginate(10);
+        // dd($ordersItems);\
+        return view('client.orders.single', ['orderItems' => $ordersItems, "order" => $order]);
+    }
     public function singleOrder(User $user,Order $order)
     {
         // $order = Order::where('id', $order_id)->first();

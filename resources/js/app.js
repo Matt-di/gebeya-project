@@ -1,1 +1,1 @@
-require('./bootstrap');
+window.$ = require('./bootstrap');

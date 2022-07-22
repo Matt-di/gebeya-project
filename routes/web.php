@@ -41,6 +41,9 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.login');
 Route::post('/admin', [AdminController::class, 'identify']);
 
+Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
+
+
 Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'auth'], function () {
     Route::get("/", [ProductController::class, 'index'])->name('/');
     Route::get('cart', [CartController::class, 'index'])->name('cart');
@@ -57,41 +60,44 @@ Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'auth'], f
 
     Route::put('{payment}', [OrderController::class, 'updatePaymentStatus'])->name('payment.update');
 
-
-
-
     Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 });
 
-Route::group(['prefix' => '/store/{user}', 'as' => 'store.', 'middleware' => ['auth:web', 'checkUser']], function () {
+Route::group(['prefix' => '/{user}', 'as' => 'merchant.', 'middleware' => ['auth:web', 'checkUser']], function () {
 
-    Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('merchant.dashboard');
+    Route::get('/', [MerchantDashboardorController::class, 'index']);
+    Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('dashboard');
+
     Route::get('users', [UserController::class, 'index'])->name('users');
-    Route::get('order', [OrderController::class, 'store'])->name('order.add');
 
-    Route::get('userorders', [OrderController::class, 'getOrders'])->name('merchant.orders');
-    Route::get('userorder/{order}', [OrderController::class, 'singleOrder'])->name('merchant.orders.single');
-    Route::post('userorders/{order}', [OrderController::class, 'updateStatus'])->name('merchant.orders.update');
+    Route::get('userorders', [OrderController::class, 'store'])->name('order.add');
+    Route::get('userorders', [OrderController::class, 'getOrders'])->name('orders');
+    Route::get('userorders/{order}', [OrderController::class, 'userOrder'])->name('orders.single');
+    Route::post('userorders/{order}', [OrderController::class, 'updateStatus'])->name('orders.update');
 
-    Route::get('products', [MerchanProductController::class, 'index'])->name('products');
-    Route::post('products', [MerchanProductController::class, 'store']);
-    Route::get('products/{product}', [MerchanProductController::class, 'findProduct'])->name('products.find');
-    Route::get('products/{product}/get', [ProductController::class, 'getProduct'])->name('products.get');
-    Route::delete('products/{product}', [MerchanProductController::class, 'destroy'])->name('product.delete');
-    Route::post('products/{product}/update', [MerchanProductController::class, 'update'])->name('product.update');
-    Route::post('products/delete', [StoreController::class, 'destroy'])->name('products.delete.all');
 
-    Route::get('category', [CategoryController::class, 'index'])->name('category');
-    Route::post('category', [CategoryController::class, 'store'])->name('category.add');
-    Route::get('{category}', [CategoryController::class, 'get'])->name('category.get');
-    Route::delete('{category}', [CategoryController::class, 'destroy'])->name('category.delete');
-    Route::get('{category}/product', [CategoryController::class, 'getProducts'])->name('category.products');
+    Route::resource('products',MerchanProductController::class);
+    Route::resource('categories',CategoryController::class);
+    // Route::get('products', [MerchanProductController::class, 'index'])->name('products.index');
+    // Route::post('products', [MerchanProductController::class, 'store'])->name('products.store');
+    // Route::get('products', [MerchanProductController::class, 'create'])->name('products.create');
+
+    // Route::get('products/{product}', [MerchanProductController::class, 'findProduct'])->name('products.find');
+    // Route::delete('products/{product}', [MerchanProductController::class, 'destroy'])->name('product.delete');
+    // Route::post('products/{product}/update', [MerchanProductController::class, 'update'])->name('product.update');
+    // Route::post('products/delete', [StoreController::class, 'destroy'])->name('products.delete.all');
+
+
+    // Route::get('category', [CategoryController::class, 'index'])->name('category.index');
+    // Route::post('category', [CategoryController::class, 'store'])->name('category.store');
+    // Route::get('{category}', [CategoryController::class, 'get'])->name('category.get');
+    // Route::delete('{category}', [CategoryController::class, 'destroy'])->name('category.delete');
+    Route::get('{category}/', [CategoryController::class, 'getProducts'])->name('category.products');
     Route::delete('{category}/{product}', [MerchanProductController::class, 'removeCategory'])->name('category.product.delete');
     Route::post('{category}/update', [CategoryController::class, 'update'])->name('category.update');
     Route::post('{category}/enable', [CategoryController::class, 'showInNav'])->name('category.enable');
 });
 
-Route::get('/products/{product}/get', [ProductController::class, 'getProduct'])->name('product.get');
 
 Route::group(['prefix' => '/', 'as' => 'admin.', 'middleware' => 'auth:web_admin'], function () {
     Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');

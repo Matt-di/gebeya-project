@@ -2,7 +2,7 @@
 <tr>
     <td>
         <div class="d-flex align-items-center">
-            <a href="{{route('store.merchant.orders.single',['user'=>auth()->user()->id,'order'=>$order->id ])}}"> {{ $order->id }}</a>
+            <a href="{{route('merchant.orders.single',['user'=>auth()->user()->id,'order'=>$order->id ])}}"> {{ $order->id }}</a>
             
         </div>
     </td>
@@ -23,7 +23,7 @@
     <td>
         <p class="text-muted mb-0">{{ $order->status }}</p>
 
-    <form action="{{ route('store.merchant.orders.update', ['user'=>auth()->user()->id,'order'=>$order->id]) }}" method="POST">
+    <form action="{{ route('merchant.orders.update', ['user'=>auth()->user()->id,'order'=>$order->id]) }}" method="POST">
             @csrf
             <select class="form-input" name="order_status" id="order_status">
                 <option value="ordered">Ordered</option>

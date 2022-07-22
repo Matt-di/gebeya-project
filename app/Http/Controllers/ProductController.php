@@ -61,13 +61,4 @@ class ProductController extends Controller
         return view('user.product.single', ['product' => $product]);
     }
 
-
-
-    // public function removeCategory(Product $product,Request $request)
-    // {
-    //     $category = Category::find($request->category_id);
-    //     $product->categories()->detach($category);
-
-    //     return back();
-    // }
 }

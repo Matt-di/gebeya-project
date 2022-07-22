@@ -1,6 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-
+@section('sidebar')
+    @include('layouts.admin_sidebar');
+@endsection
 @section('content')
     <div class="container-fluid my-5 py-5">
         <table class="table align-middle mb-0 bg-white">

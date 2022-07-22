@@ -1,31 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-
-@section('sidenav')
-<div class="col-lg-2 col-md-4">
-    @include('layouts.client_sidenav')
-</div>
+@section('sidebar')
+    @include('layouts.merchant_sidebar')
 @endsection
 @section('content')
-<div class="col-lg-8 col-md-8">
+<div class="col-lg-10 col-md-9">
     <div class="container">
-        <div class="container-fluid my-5 py-5">
-            <section>
+        <div class="container-fluid my-5">
                 <div class="card">
-                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                    <h3 class="card-header text-center weight-bold py-4">
                         @if ($title ?? '')
                             {{ $title ?? ('' ?? '') }}
                         @else
                             Your Products
                         @endif
+                        <a href="{{route('merchant.categories.index',auth()->user()->id)}}" class="float-right">Back</a>
+
                     </h3>
                     <div class="card-body">
                         <div id="dataTable" class="table-editable">
-                            <button class="btn btn-primary table-add float-right mb-3 mr-2" data-mdb-toggle="modal"
-                                data-mdb-target="#addProductModal">
-                                <i class="fas fa-plus mr-5" aria-hidden="true"> Add New</i>
-                            </button>
-                            @if ($products->count())
+                                 @if ($products->count()> 0)
                                 <table class="table table-bordered table-responsive-md table-striped text-center">
                                     <thead>
                                         <tr>
@@ -60,8 +54,6 @@
                     </div>
                     {{ $products->links() }}
                 </div>
-            </section>
-
         </div>
     </div>
     </div>

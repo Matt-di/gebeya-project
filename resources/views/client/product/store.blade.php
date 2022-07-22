@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form enctype="multipart/form-data" action="{{ route('store.products',auth()->user()->id) }}" method="POST"
+                <form enctype="multipart/form-data" action="{{ route('merchant.products.store',auth()->user()->id) }}" method="POST"
                     id="addProductForm" name="addProductForm">
                     @csrf
                     <div class="form-outline mb-4">
