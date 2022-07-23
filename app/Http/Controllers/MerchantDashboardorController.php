@@ -19,7 +19,7 @@ class MerchantDashboardorController extends Controller
         $your_prod = auth()->user()->products()->count();
 
         $total_order = Order::count();
-        $total_user = User::where('user_type', 'client')->count();
+        $total_user = User::where('role', 3)->count();
         return view(
             'client.dashboard',
             [

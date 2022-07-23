@@ -25,7 +25,7 @@
                 <div class="modal-footer border-top-0 d-flex justify-content-between">
                     <button id="addToCartModal" type="button" class="btn btn-secondary closeModal "
                         data-dismiss="modal">Close</button>
-                    <a href="{{ route('user.cart', ['user' => auth()->user()->id]) }}" class="btn btn-success">
+                    <a href="{{ route('user.carts.index', ['user' => auth()->user()->id]) }}" class="btn btn-success">
                         Checkout <i class="fa fa-angle-right right">
                         </i>
                     </a>

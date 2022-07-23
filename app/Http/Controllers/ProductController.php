@@ -16,7 +16,7 @@ class ProductController extends Controller
             $category = Category::where('id', $request->category_id)->first();
             $filtered = $category->name . " Products";
             $products = $category->products()->latest()->paginate(10);
-        } else if ($request->filter) {
+        } else if ($request->has('filter')) {
             switch ($request->filter) {
                 case 'low_price':
                     $filtered = "Low to High Price Products";

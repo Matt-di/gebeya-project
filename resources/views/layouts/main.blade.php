@@ -21,6 +21,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
 
 </head>
 
@@ -124,10 +126,9 @@
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Bootstrap core JavaScript--> --}}
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 
     <script src="{{ asset('js/sb-admin.min.js') }}"></script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
 
 </body>
 

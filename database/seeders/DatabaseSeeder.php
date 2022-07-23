@@ -18,31 +18,31 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Admin::create([
+        User::create([
             'id' => UuidV3::uuid4(), 
             'email' => 'admin@admin.com',
-            'username' => 'admin@admin.com',
             'password'=> Hash::make('password'),
-            'admin_type' => 'super'
+            'is_admin' => true,
+            'role' => '1',
+            'firstname' => 'Admin',
+            'lastname' => 'Admin',
     
         ]);
         User::create([
             'id' => UuidV3::uuid4(), 
             'email' => 'customer@admin.com',
-            'username' => 'customer@admin.com',
             'firstname' => 'John',
             'lastname' => 'Doe',
             'password'=> Hash::make('password'),
-            'user_type' => 'client'
+            'role' => '3'
         ]);
         User::create([
             'id' => UuidV3::uuid4(), 
             'email' => 'merchant@admin.com',
-            'username' => 'merchant@admin.com',
             'firstname' => 'Merchant',
             'lastname' => 'Merchant',
             'password'=> Hash::make('password'),
-            'user_type' => 'merchant'
+            'role' => '2'
         ]);
     }
 }

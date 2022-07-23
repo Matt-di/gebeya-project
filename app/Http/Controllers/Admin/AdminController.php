@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Admin;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -13,7 +15,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        if (auth('web_admin')->check()) {
+        if (auth('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
         return view('admin.login');
@@ -25,7 +27,7 @@ class AdminController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-        if (!auth('web_admin')->attempt($request->only('email', 'password'))) {
+        if (!auth('admin')->attempt($request->only('email', 'password'))) {
             return redirect()->back()->with('status', 'Invalid Credentials');
         }
         return redirect()->route('admin.dashboard');
@@ -37,7 +39,7 @@ class AdminController extends Controller
             'email' => 'required|email',
             'admin_type' => 'required'
         ]);
-        if (auth('web_admin')->check()) {
+        if (auth('admin')->check()) {
             Admin::create([
                 'id' => Uuid::uuid4(),
                 'email' => $request->email,
@@ -70,5 +72,29 @@ class AdminController extends Controller
             return back()->with('success', "Deleted Successfully");
         }
         return back()->with('success', "Sorry Error Occurresd!");
+    }
+
+
+    public function impersonate($id)
+    {
+        $user = User::find($id);
+
+        // Guard against administrator impersonate
+        if (!$user->isAdministrator()) {
+            Auth::user()->setImpersonating($user->id);
+        } else {
+            // flash()->error('Impersonate disabled for this user.');
+        }
+
+        return redirect()->back();
+    }
+
+    public function stopImpersonate()
+    {
+        Auth::user()->stopImpersonating();
+
+        // flash()->success('Welcome back!');
+
+        return redirect()->back();
     }
 }

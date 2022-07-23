@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Models\Product;
 use App\Models\Category;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
@@ -24,9 +27,8 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'email',
-        'username',
         'password',
-        'user_type'
+        'role',
     ];
 
     /**
@@ -52,6 +54,24 @@ class User extends Authenticatable
         return $this->hasOne(Store::class);
     }
 
+    public function isAdminstrator(){
+        return false;
+    }
+
+    public function setImpersonating($id)
+    {
+        Session::put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        Session::forget('impersonate');
+    }
+
+    public function isImpersonating()
+    {
+        return Session::has('impersonate');
+    }
     public function orders(){
         return $this->hasMany(Order::class);
     }

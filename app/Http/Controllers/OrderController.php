@@ -23,18 +23,19 @@ class OrderController extends Controller
         return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
     }
 
-    public function store(User $user,Request $request)
+    public function store(User $user, Request $request)
     {
-        return view('user.order.store');
+        $orders = auth()->user()->orders()->paginate();
+        return view('user.order.store', ['orders' => $orders]);
     }
-    public function userOrder(User $user,Order $order)
+    public function userOrder(User $user, Order $order)
     {
         // $order = Order::where('id', $order_id)->first();
         $ordersItems = $order->orderItems()->paginate(10);
         // dd($ordersItems);\
         return view('client.orders.single', ['orderItems' => $ordersItems, "order" => $order]);
     }
-    public function singleOrder(User $user,Order $order)
+    public function singleOrder(User $user, Order $order)
     {
         // $order = Order::where('id', $order_id)->first();
         $ordersItems = $order->orderItems()->paginate(10);
@@ -95,7 +96,7 @@ class OrderController extends Controller
 
     public function updateStatus(User $user, Order $order, Request $request)
     {
-        Order::where('id',$order->id)->update(['status' => $request->order_status]);
+        Order::where('id', $order->id)->update(['status' => $request->order_status]);
         // $order->update();
         // dd($res);   
         return back()->with("status", "updated");
@@ -103,7 +104,7 @@ class OrderController extends Controller
 
     public function updatePaymentStatus(User $user, Payment $payment, Request $request)
     {
-        $payment->update(['status' => $request->payment_status]); 
+        $payment->update(['status' => $request->payment_status]);
         return back()->with("status", "updated");
     }
 }

@@ -11,8 +11,6 @@ use App\Http\Controllers\Controller;
 
 class AdminDashboard extends Controller
 {
-
-  
     public function index()
     {
         $total_categories = Category::count();

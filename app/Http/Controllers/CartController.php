@@ -18,18 +18,20 @@ class CartController extends Controller
 
     public function index(User $user)
     {
-        return view('user.cart.index');
+        $carts = auth()->user()->carts();
+        return view('user.cart.index', compact('carts'));
     }
 
-    public function store(User $user, Product $product, Request $request)
+    public function store(User $user, Request $request)
     {
+        $product = Product::find($request->product_id);
         if (auth()->user()->user_type == "merchant") {
             $output = array(['error' => 'Sorry you are not allowed to do this!']);
             return response()->json($output);
         }
         if ($product->productAdded(auth()->user())) {
             $cart = Cart::where('product_id', $product->id)
-                ->where('user_id', $request->user()->id)->get()->first();
+                ->where('user_id', $user->id)->get()->first();
             if ($cart->quantity >= $cart->product->quantity) {
                 $output = array(['error' => 'Stock limit reached!']);
                 return response()->json($output);
@@ -40,10 +42,10 @@ class CartController extends Controller
         }
         $cart = $product->carts()->create([
             'id' => Uuid::uuid4(),
-            'user_id' => $request->user()->id,
+            'user_id' => $user->id,
             'quantity' => 1
         ]);
-        return response()->json($cart);
+        return redirect()->back();
     }
 
     public function destroy(User $user, Cart $cart)
@@ -52,20 +54,25 @@ class CartController extends Controller
         return back();
     }
 
-    public function updateQuantity(User $user, Cart $cart, Request $request)
+    public function show(Cart $cart)
+    {
+    }
+
+
+    public function update(User $user, Cart $cart, Request $request)
     {
         $this->validate($request, [
             'quantity' => 'required'
         ]);
 
-        if ($request->quantity > $cart->product->quantity || $request->quantity <= 0) {
-            $output = array(['error' => 'We don\' have that much amount in stock!']);
-            return response()->json($output);
+        if ($request->quantity <= 0) {
+            $output = 'Below 1 is not allowed. Please Correcr!';
+        } elseif ($request->quantity > $cart->product->quantity) {
+            $output = 'We don\'t have that much amount in stock!';
         } else {
             $cart->update(['quantity' => $request->quantity]);
-            $output = array(['success' => 'Quantity Udated']);
-
-            return response()->json($output);
+            $output = 'Quantity Udated';
         }
+        return redirect()->back()->with('message', $output);
     }
 }

@@ -18,8 +18,9 @@
                 </ol>
             </nav>
             <div class="table-responsive">
-                @if (session('status'))
-                    <span>{{ session('status') }}</span>
+                @if (session('message'))
+                    <span class="alert alert-success" role="alert">
+                        {{ session('message') }}</span>
                 @endif
                 <div id="message"></div>
                 @if (auth()->user()->carts->count() > 0)
@@ -49,10 +50,12 @@
                                 <td>
                                     <h4><strong>Total</strong></h4>
                                 </td>
-                                <td>
+                                <td colspan="4" class="float-right">
                                     <h4><strong> ${{ $total }}</strong></h4>
                                 </td>
-                                <td colspan="3">
+                            </tr>
+                            <tr>
+                                <td colspan="5">
                                     <a href="{{ route('user.order.add', auth()->user()->id) }}" class="btn btn-primary">
                                         Checkout <i class="fa fa-angle-right right">
                                         </i>

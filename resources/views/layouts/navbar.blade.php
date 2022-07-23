@@ -45,7 +45,7 @@
                         <li class="nav-item">
                             <div class="dropdown nav-link">
                                 <a class="text-reset me-3 dropdown-toggle " href="#" id="manageCustomerDropdown"
-                                    role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                     Manage Customer
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="manageCustomerDropdown">

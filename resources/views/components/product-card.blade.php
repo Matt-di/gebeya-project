@@ -8,10 +8,7 @@
             <img class="card-img-top" src="{{ url('images/products', $product->image) }}" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
-                @auth
-                    <input type="hidden" id="userId" value="{{ auth()->user()->id }}" />
-                @endauth
-                <div class="text-center">
+                        <div class="text-center">
                     <!-- Product name-->
                     <div><span>
                             @foreach ($tags as $tag)
@@ -30,8 +27,17 @@
             @if ($product->quantity > 0)
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                        <button class="addtocart btn btn-outline-dark mt-auto" id=" id="{{ $product->id }}">Add to
-                            cart</button>
+                        @auth
+                            <form action="{{ route('user.carts.store', auth()->user()->id) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button class="btn btn-outline-dark mt-auto" type="submit">
+                                    Add to cart</button>
+                            </form>
+                        @else
+                            <button class="btn btn-outline-dark mt-auto" type="submit">
+                                Add to cart</button>
+                        @endauth
                     </div>
                 </div>
             @else

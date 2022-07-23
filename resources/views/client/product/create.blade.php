@@ -9,8 +9,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Add Product') }}
-                        <a href="{{route('merchant.dashboard',auth()->user()->id)}}" class="float-right">Back</a>
-                    
+                        <a href="{{ route('merchant.dashboard', auth()->user()->id) }}" class="float-right">Back</a>
+
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('merchant.products.store', auth()->user()->id) }}">

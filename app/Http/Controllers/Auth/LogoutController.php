@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LogoutController extends Controller
 {
@@ -11,14 +13,10 @@ class LogoutController extends Controller
 
     public function store(Request $request)
     {
-        // dd(auth('web_admin'));
-        if (auth('web_admin')->check()){
-            $redirect = 'admin.login';
-            auth('web_admin')->logout();
-        }
-        else
-            $redirect = 'home';
-        auth()->logout();
-        return redirect()->route($redirect);
+        Session::flush();
+        
+        Auth::logout();
+
+        return redirect('home');
     }
 }

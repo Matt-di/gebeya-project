@@ -16,23 +16,28 @@
         @auth
             <input type="hidden" id="userId" value="{{ auth()->user()->id }}" />
         @endauth
-        <input class="form-control-inline" min=0 value="{{ $cart->quantity }}"
-            max="{{ $product->price }}" required type="number" class="form-input" id="quantityUpdate"
-            name="quantity" />
-        <button id="{{ $cart->id }}" type="submit"
-            class="btn btn-rounded btn-sm btn-primary btn-rounded updateQuantity">
-            Update
-        </button>
+
+        <form action="{{ route('user.carts.update', ['user' => auth()->user()->id, 'cart' => $cart->id]) }}"
+            method="post">
+            @csrf
+            @method('PUT')
+            <input class="form-input" min=0 value="{{ $cart->quantity }}" max="{{ $product->price }}" required
+                type="number" class="form-input" id="quantityUpdate" name="quantity" />
+            <button type="submit" class="btn btn-rounded btn-sm btn-success btn-rounded updateQuantity">
+                Update
+            </button>
+        </form>
+
 
     </td>
     <td id="totalPrice">{{ $product->price * $cart->quantity }}</td>
     <td>
 
-        <form action="{{ route('user.cart.delete', ['user' => auth()->user()->id, 'cart' => $cart->id]) }}"
+        <form action="{{ route('user.carts.destroy', ['user' => auth()->user()->id, 'cart' => $cart->id]) }}"
             method="POST">
             @method('DELETE')
             @csrf
-            <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
+            <button type="submit" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top"
                 title="Remove item">X
             </button>
         </form>

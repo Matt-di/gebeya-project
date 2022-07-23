@@ -17,8 +17,7 @@ class CreateUsersTable extends Migration
             $table->uuid('id')->primary();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('username',20)->unique();
-            $table->enum('user_type',['merchant','client']);
+            $table->tinyInteger('role')->default(1); //client
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

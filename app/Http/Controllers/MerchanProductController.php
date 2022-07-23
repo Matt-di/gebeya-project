@@ -92,7 +92,7 @@ class MerchanProductController extends Controller
     public function show(User $user, Product $product)
     {
         if (Auth::check())
-            if (auth()->user()->user_type == 'merchant')
+            if (auth()->user()->role == 2)
                 return view('client.product.single', ['product' => $product]);
 
         return view('user.product.show', ['product' => $product]);
