@@ -9,16 +9,17 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminDashboard extends Controller
+class AdminDashboardController extends Controller
 {
     public function index()
     {
+    
         $total_categories = Category::count();
         $total_users = User::count();
         $total_products = Product::count();
         $total_order = Order::count();
-        $total_user = User::where('user_type', 'merchant')->count();
-        $total_client = User::where('user_type', 'client')->count();
+        $total_user = User::count();
+        $total_client = User::where('role', 1)->count();
         return view(
             'admin.dashboard',
             [

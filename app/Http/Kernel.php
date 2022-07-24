@@ -21,6 +21,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \App\Http\Middleware\IsAdmin::class,
+
     ];
 
     /**
@@ -44,10 +46,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-        'admin' => [
-            'auth',
-            \App\Http\Middleware\IsAdmin::class
-        ],
+        
     ];
 
     /**
@@ -70,6 +69,7 @@ class Kernel extends HttpKernel
         'impersonate' => \App\Http\Middleware\Impersonate::class,
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         'checkUser' => \App\Http\Middleware\CheckUserRole::class,
+        'clientRole' => \App\Http\Middleware\ClientMiddleware::class,
 
     ];
 }

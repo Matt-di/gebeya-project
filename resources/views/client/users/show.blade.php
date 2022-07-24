@@ -1,15 +1,15 @@
 @extends('layouts.main')
 
 @section('sidebar')
-    @include('layouts.admin_sidebar')
+    @include('layouts.merchant_sidebar')
 @endsection
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card">
-                    <div class="card-header">{{ __('Add Admin') }}
+                    <div class="card-header">{{ __('Profile') }}
                     </div>
 
                     <div class="card-body">
@@ -18,14 +18,14 @@
 
                             <div class="row mb-3">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                                    class="col-md-4 col-form-label text-md-end my-3">{{ __('Name') }}</label>
 
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-6 my-3">
                                             <input id="firstname" type="text"
                                                 class="form-control @error('firstname') is-invalid @enderror"
-                                                name="firstname" value="{{ old('firstname') }}" required
+                                                name="firstname" value="{{ old('firstname', $user->firstname) }}" required
                                                 autocomplete="firstname" autofocus placeholder="Firstname">
 
                                             @error('firstname')
@@ -35,11 +35,11 @@
                                             @enderror
 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 my-3">
                                             <input id="lastname" type="text"
                                                 class="form-control @error('lastname') is-invalid @enderror" name="lastname"
-                                                value="{{ old('lastname') }}" required autocomplete="lastname" autofocus
-                                                placeholder="Last Name">
+                                                value="{{ old('lastname', $user->lastname) }}" required
+                                                autocomplete="lastname" autofocus placeholder="Last Name">
 
                                             @error('lastname')
                                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email">
+                                        value="{{ old('email', $user->email) }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -69,6 +69,41 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Update') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ __('Change Password') }}
+
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('admin.users.store') }}">
+                            @csrf
+                            <div class="row mb-3">
+                                <label for="old-password"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Old password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="old-password" type="old-password"
+                                        class="form-control @error('old-password') is-invalid @enderror" name="old-password"
+                                        required autocomplete="new-old-password">
+
+                                    @error('old-password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label for="password"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
@@ -98,7 +133,7 @@
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
+                                        {{ __('Change') }}
                                     </button>
                                 </div>
                             </div>

@@ -1,36 +1,69 @@
-<!-- Full Height Modal Right -->
-<div class="modal fade right" id="showCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
+@extends('layouts.main')
 
-    <div class="modal-dialog modal-full-height modal-right" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Card -->
+@section('sidebar')
+    @include('layouts.merchant_sidebar')
+@endsection
+
+@section('content')
+    <div class="col-lg-10 col-md-9">
+        <div class="container">
+            <div class="container-fluid my-5">
                 <div class="card">
-                    <div class="view overlay">
-                        <img class="card-img-top"
-                            src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).webp"
-                            alt="Card image cap">
-                        <a href="#!">
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
+                    <div class="card-header text-center font-weight-bold text-uppercase py-4">
+                        Products
+                        <a href="{{ route('merchant.products.index', auth()->user()->id) }}" class="float-right">Back</a>
                     </div>
                     <div class="card-body">
-                        <p class="card-text" id="cardBody">Some quick example text to build on the card title and</p>
-                        <p class="card-text" id="cardBody2"></p>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="text-center text-md-left" role="listbox">
+                                    <img style="" src="{{ url('images/products', $product->image) }}" alt=" slide"
+                                        class="img-thumbnail">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-6 text-center text-md-left">
+
+                                <h2
+                                    class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
+                                    {{ $product->name }}</h2>
+
+                                @foreach (explode(',', $product->tags) as $tags)
+                                    <span class="badge badge-success product mb-4 ml-2">{{ $tags }}</span>
+                                @endforeach
+
+                                <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                                    <span class="red-text font-weight-bold">
+                                        <strong>${{ $product->price }}</strong>
+                                    </span>
+
+                                </h3>
+
+                                <div class="font-weight-normal">
+
+                                    <p class="ml-xl-0 ml-4">{{ $product->description }}</p>
+
+                                    <p class="ml-xl-0 ml-4">
+                                        <strong>Size: </strong>Size
+                                    </p>
+
+                                    <p class="ml-xl-0 ml-4">
+                                        <strong>Availability: </strong>
+                                        @if ($product->quantity > 0)
+                                            {{ $product->quantity }} Available In stock
+                                        @else
+                                            <span class="text-danger">Not Available<span>
+                                        @endif
+                                    </p>
+
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
         </div>
     </div>
-</div>
-<!-- Full Height Modal Right -->
+@endsection

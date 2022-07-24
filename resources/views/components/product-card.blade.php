@@ -2,13 +2,15 @@
     <div class="col mb-5">
         <div class="card h-100">
             <!-- Sale badge-->
-            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
-            </div>
+                @foreach ($tags as $tag)
+                    <span class="badge bg-dark text-white position-absolute"
+                        style="top: 0.5rem; right: 0.5rem">{{ $tag }}</span>
+                @endforeach
             <!-- Product image-->
-            <img class="card-img-top" src="{{ url('images/products', $product->image) }}" alt="..." />
+            <img class="portrait" src="{{ url('images/products', $product->image) }}" alt="..." />
             <!-- Product details-->
             <div class="card-body p-4">
-                        <div class="text-center">
+                <div class="text-center">
                     <!-- Product name-->
                     <div><span>
                             @foreach ($tags as $tag)
@@ -35,8 +37,8 @@
                                     Add to cart</button>
                             </form>
                         @else
-                            <button class="btn btn-outline-dark mt-auto" type="submit">
-                                Add to cart</button>
+                            <a href="/login" class="btn btn-outline-dark mt-auto" type="submit">
+                                Add to cart</a>
                         @endauth
                     </div>
                 </div>

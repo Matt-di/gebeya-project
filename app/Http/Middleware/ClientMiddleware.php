@@ -6,24 +6,20 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class IsAdmin
+class ClientMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(2);
-
-        if (Auth::check() && Auth::user()->role == 1) {
-            // dd(29);
+        if (Auth::check() &&  Auth::user()->role == 3) {
             return $next($request);
         }
-
-        return redirect('login')->with('message', "You don't have admin access.");
+        return redirect('/');
     }
 }

@@ -8,14 +8,12 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Auth\LoginContrller;
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MerchanProductController;
 use App\Http\Controllers\MerchantDashboardorController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,33 +27,30 @@ use App\Http\Controllers\MerchantDashboardorController;
 */
 
 Route::get('/', [ProductController::class, 'index'])->name('/');
-Route::get('/home', [ProductController::class, 'index'])->name('home');
+// Route::get('/home', [ProductController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-// Route::get('/login/admin', [LoginContrller::class, 'adminIndex'])->name('admin.login');
-Route::get('/login', [LoginContrller::class, 'index'])->name('login');
-
-// Route::post('/login/admin', [LoginContrller::class, 'adminLogin']);
-Route::post('/login', [LoginContrller::class, 'clientLogin']);
-
-// Route::get('/register', [RegisterController::class,'index'])->name('register');
-// Route::post('/register', [RegisterController::class, 'store']);
-
 
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
+Route::get('userstore/{id}', [ProductController::class, 'getProducts'])->name('userstore');
 
+Route::get('stores/{id}', [StoreController::class, 'products'])->name('stores.products');
 
-Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => ['auth','checkUser']], function () {
-    Route::get("/", [ProductController::class, 'index'])->name('/');
-
+Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'clientRole'], function () {
+    Route::get("/", [ProductController::class, 'index'])->name('storefront');
+    Route::get("/home", [ProductController::class, 'index'])->name('home');
     Route::resource('carts', CartController::class);
 
-    Route::get('order', [OrderController::class, 'store'])->name('order.add');
+    Route::get('order', [OrderController::class, 'create'])->name('order.add');
+
+    Route::post('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
+
     Route::post('order', [OrderController::class, 'addOrder']);
 
     Route::get('orders', [OrderController::class, 'index'])->name("orders");
-
+    
     Route::get('orders/{order}', [OrderController::class, 'singleOrder'])->name("orders.single");
 
     Route::put('{payment}', [OrderController::class, 'updatePaymentStatus'])->name('payment.update');
@@ -64,36 +59,50 @@ Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => ['auth','c
 });
 
 
-    Route::group(['prefix' => '/{user}', 'as' => 'merchant.', 'middleware' => ['auth','checkUser']], function () {
-        Route::resource('products', MerchanProductController::class);
-        Route::resource('categories', CategoryController::class);
-        Route::get('/', [MerchantDashboardorController::class, 'index']);
-        Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('dashboard');
-        Route::get('users', [UserController::class, 'index'])->name('users');
-        Route::get('userorders', [OrderController::class, 'store'])->name('order.add');
-        Route::get('userorders', [OrderController::class, 'getOrders'])->name('orders');
-        Route::get('userorders/{order}', [OrderController::class, 'userOrder'])->name('orders.single');
-        Route::post('userorders/{order}', [OrderController::class, 'updateStatus'])->name('orders.update');
+Route::group(['prefix' => '/store/{user}', 'as' => 'merchant.', 'middleware' => 'checkUser'], function () {
+    Route::resource('products', MerchanProductController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('orders', OrderController::class);
+    Route::get("/", [ProductController::class, 'index'])->name('storefront');
+    
+    // Route::get('/', [MerchantDashboardorController::class, 'index']);
 
-        Route::get('{category}/', [CategoryController::class, 'getProducts'])->name('category.products');
-        Route::delete('{category}/{product}', [MerchanProductController::class, 'removeCategory'])->name('category.product.delete');
-        Route::post('{category}/update', [CategoryController::class, 'update'])->name('category.update');
-        Route::post('{category}/enable', [CategoryController::class, 'showInNav'])->name('category.enable');
-    });
+    Route::get('dashboard', [MerchantDashboardorController::class, 'index'])->name('dashboard');
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('userorders', [OrderController::class, 'index'])->name('order.get');
+    Route::get('userorders', [OrderController::class, 'store'])->name('order.add');
+    // Route::get('userorders', [OrderController::class, 'getOrders'])->name('orders');
+    Route::get('profiles', [UserController::class, 'show'])->name('profile');
+    // Route::get('userorders/{order}', [OrderController::class, 'userOrder'])->name('orders.single');
+    Route::post('userorders/{order}', [OrderController::class, 'updateStatus'])->name('userorders.update');
+    Route::put('/payment/{payment}', [OrderController::class, 'updatePaymentStatus'])->name('payment.update');
 
+    Route::get('{category}/', [CategoryController::class, 'getProducts'])->name('category.products');
+    Route::delete('{category}/{product}', [MerchanProductController::class, 'removeCategory'])->name('category.product.delete');
+    Route::post('{category}/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('{category}/enable', [CategoryController::class, 'showInNav'])->name('category.enable');
+});
+Route::get('/leave-impersonate', [UserController::class, 'leaveImpersonate'])->name('users.leave-impersonate');
 
-    Route::middleware('admin')->group(['prefix' => '/', 'as' => 'admin.'], function () {
-        Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
-        Route::get('/admin/stores', [StoreController::class, 'index'])->name('stores');
+Route::group(["prefix" => 'admin/', 'as' => 'admin.', "middleware" => 'isAdmin'], function () {
+    Route::get('dashoard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('users', UserController::class);
+    Route::resource('stores', StoreController::class);
+    Route::get('/{user}/impersonate', [UserController::class, 'impersonate'])->name('users.impersonate');
+    Route::get('/admins', [UserController::class, 'admins'])->name('admins.users');
 
-        Route::get('/admin/store/product', [StoreController::class, 'index'])->name('store.products');
-        Route::post('/admin/stores', [StoreController::class, 'store'])->name('store.add');
-        Route::post('/admin/stores/{user}', [StoreController::class, 'enable'])->name('store.enable');
-        Route::delete('/admin/stores/{store}', [StoreController::class, 'destroy'])->name('store.delete');
+    Route::get('stores/product', [StoreController::class, 'index'])->name('stores.products');
+    Route::delete('stores/{id}/wipe', [StoreController::class, 'wipe'])->name('stores.wipe');
+    Route::post('stores/{user}/enable', [StoreController::class, 'enable'])->name('store.enable');
+    // Route::delete('stores/{user}/delete', [StoreController::class, 'destroy'])->name('store.delete');
+    // Route::post('stores/add', [StoreController::class, 'store'])->name('store.add');
 
-        Route::post('/admin/add', [AdminController::class, 'store'])->name('add');
-        Route::get('/admin/users', [AdminController::class, 'users'])->name('users');
-        Route::post('/admin/{admin}', [AdminController::class, 'delete'])->name('delete');
-        Route::get('/admin/{admin}', [AdminController::class, 'getAdmin'])->name('view');
-        Route::get('/admin/system/users', [AdminController::class, 'users'])->name('system.users');
+    // Route::post('add', [AdminController::class, 'store'])->name('add');
+    // Route::get('users', [AdminController::class, 'users'])->name('users');
+
+    // Route::post('{user}', [UserController::class, 'delete'])->name('delete');
+    // Route::get('{user}', [UserController::class, 'show'])->name('view');
+    // Route::get('system/users', [UserController::class, 'users'])->name('system.users');
+    // Route::get('system/stores', [StoreController::class, 'index'])->name('system.stores');
 });

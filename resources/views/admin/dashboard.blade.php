@@ -14,6 +14,6 @@
     </div>
 @endsection
 
-@section('modal')
+{{-- @section('modal')
     @include('admin.store')
-@endsection
+@endsection --}}

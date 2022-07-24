@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('merchant.products.update', ['user'=>auth()->user()->id,'product'=>$product->id]) }}">
+                        <form enctype="multipart/form-data" method="POST" action="{{ route('merchant.products.update', ['user'=>auth()->user()->id,'product'=>$product->id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">

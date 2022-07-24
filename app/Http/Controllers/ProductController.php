@@ -6,11 +6,19 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        if (Auth::check()) {
+            $role = Auth::User()->role;
+
+            if ($role == 1) {
+                return redirect()->route('admin.dashboard');
+            }
+        }
         $filtered = "Latest Products";
         if (!empty($request->category_id) && $request->category_id != "all") {
             $category = Category::where('id', $request->category_id)->first();
@@ -60,5 +68,14 @@ class ProductController extends Controller
     {
         return view('user.product.single', ['product' => $product]);
     }
-
+    public function getProducts(User $user, $id)
+    {
+        $categories = Category::all();
+        $store = Category::find($id);
+        // dd($store);
+        return view('home', [
+            'products' => $store->products()->paginate(10),
+            'categories' => $categories
+        ])->with('title', $store->name . " Products");
+    }
 }

@@ -13,25 +13,6 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
 
-    public function index()
-    {
-        if (auth('admin')->check()) {
-            return redirect()->route('admin.dashboard');
-        }
-        return view('admin.login');
-    }
-
-    public function identify(Request $request)
-    {
-        $credentials = $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-        if (!auth('admin')->attempt($request->only('email', 'password'))) {
-            return redirect()->back()->with('status', 'Invalid Credentials');
-        }
-        return redirect()->route('admin.dashboard');
-    }
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -40,11 +21,10 @@ class AdminController extends Controller
             'admin_type' => 'required'
         ]);
         if (auth('admin')->check()) {
-            Admin::create([
+            User::create([
                 'id' => Uuid::uuid4(),
                 'email' => $request->email,
-                'username' => $request->username,
-                'admint_type' => $request->admin_type,
+                'role' => 1,
                 'password' => Hash::make('password'),
 
             ]);
@@ -55,19 +35,19 @@ class AdminController extends Controller
 
     public function users()
     {
-        $users = Admin::paginate(10);
+        $users = User::where('role', 1)->paginate(10);
         return view('admin.list', ['users' => $users]);
     }
 
     public function getAdmin(Admin $admin)
     {
-        $ad = Admin::where('id', $admin->id)->get(['id', 'username', 'admin_type', "email"])->first();
+        $ad = User::where('id', $admin->id)->get(['id', 'username',  "email"])->first();
         return $ad;
     }
 
     public function delete($admin_id)
     {
-        $adminDeleted = Admin::findById($admin_id)->delete();
+        $adminDeleted = User::findById($admin_id)->delete();
         if ($adminDeleted) {
             return back()->with('success', "Deleted Successfully");
         }

@@ -14,24 +14,29 @@ use function Ramsey\Uuid\v1;
 class MerchanProductController extends Controller
 {
 
-    public function __construct()
+    // public function create()
+    // {
+
+    // }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $this->middleware('auth');
+        $categories = Category::all();
+        return view('client.product.create', compact('categories'));
     }
+
     public function index()
     {
         $category = Category::get();
-        $products = auth()->user()->products()->paginate(10);
+        $products = Product::paginate(10);
         return view('client.product.index', [
             "categories" => $category,
             "products" => $products
         ]);
-    }
-
-    public function create()
-    {
-        $categories = Category::all();
-        return view('client.product.create', ["categories" => $categories]);
     }
 
 
@@ -66,24 +71,24 @@ class MerchanProductController extends Controller
     {
         // dd($product);
         $categories = Category::all();
-        return view('client.product.edit', ['product'=>$product,"categories" => $categories]);
+        return view('client.product.edit', ['product' => $product, "categories" => $categories]);
     }
 
     protected function uploadImage($request)
     {
+        // dd($request->file('image'));
+        
         if ($request->file('image')) {
-            if ($request->file('image')) {
-                $image = $request->file('image');
-                if ($image->isValid()) {
-                    $fileName = time() . $image->getClientOriginalName();
-                    $image->move(public_path("images/products"), $fileName);
-                    return $fileName;
-                }
+            $image = $request->file('image');
+            if ($image->isValid()) {
+                $fileName = time() . $image->getClientOriginalName();
+                $image->move(public_path("images/products"), $fileName);
+                return $fileName;
             }
         }
         return "default";
     }
-    public function destroy(Product $product)
+    public function destroy(User $user, Product $product)
     {
         Product::destroy($product->id);
         return back();
@@ -93,14 +98,14 @@ class MerchanProductController extends Controller
     {
         if (Auth::check())
             if (auth()->user()->role == 2)
-                return view('client.product.single', ['product' => $product]);
+                return view('client.product.show', ['product' => $product]);
 
         return view('user.product.show', ['product' => $product]);
     }
 
     public function update(User $user, Product $product, Request $request)
     {
-        // dd($product);
+        // dd($request);
         $fileName = $this->uploadImage($request);
         $retn = $product->update([
             'name' => $request->name,
@@ -108,11 +113,17 @@ class MerchanProductController extends Controller
             'quantity' => $request->quantity,
             'price' => $request->price,
             'image' => $fileName == "default" ? $product->image : $fileName,
-            'tags'=>$request->tags
+            'tags' => $request->tags
         ]);
 
-        $product->categories()->attach(Category::find($request->category));
-        return redirect()->route('merchant.products.index', auth()->user()->id)->with('message','Product updated!.');
+        $categories = $request->category;
+        if($categories)
+        foreach ($categories as $category) {
+            if (!($product->categories->contains($category))) {
+                $product->categories()->attach(Category::find($category));
+            }
+        }
+        return redirect()->route('merchant.products.index', auth()->user()->id)->with('message', 'Product updated!.');
     }
 
     public function removeCategory(User $user, Category $category, Product $product, Request $request)

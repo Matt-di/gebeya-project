@@ -9,21 +9,21 @@
 <hr class="sidebar-divider">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('admin.system.users') }}">
+    <a class="nav-link" href="{{ route('admin.users.index') }}">
         <span>Users</span></a>
 </li>
 
 <hr class="sidebar-divider">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('admin.stores') }}">
+    <a class="nav-link" href="{{ route('admin.stores.index') }}">
         <span>Stores</span></a>
 </li>
 <!-- Divider -->
 <hr class="sidebar-divider">
 <!-- Nav Item - Dashboard -->
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('admin.users') }}">
+    <a class="nav-link" href="{{ route('admin.admins.users') }}">
         <span>Admins</span></a>
 </li>
 

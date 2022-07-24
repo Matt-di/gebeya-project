@@ -14,7 +14,7 @@ class AddStoreStatusToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer("store_status",)->default(0);
+            $table->integer("store_status",)->default(1);
         });
     }
 

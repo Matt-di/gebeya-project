@@ -13,7 +13,7 @@
 
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('merchant.products.store', auth()->user()->id) }}">
+                        <form enctype="multipart/form-data" method="POST" action="{{ route('merchant.products.store', auth()->user()->id) }}">
                             @csrf
                             <div class="row mb-3">
                                 <label for="name"
@@ -68,18 +68,33 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Product Quantity') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="Quantity" type="number"
-                                        class="form-control @error('Quantity') is-invalid @enderror" name="Quantity"
-                                        value="{{ old('Quantity') }}" required autocomplete="Quantity" autofocus>
+                                    <input id="quantity" type="number"
+                                        class="form-control @error('quantity') is-invalid @enderror" name="quantity"
+                                        value="{{ old('quantity') }}" required autocomplete="quantity" autofocus>
 
-                                    @error('Quantity')
+                                    @error('quantity')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <label for="tags"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Product tags') }}</label>
 
+                                <div class="col-md-6">
+                                    <input id="tags" type="text"
+                                        class="form-control @error('tags') is-invalid @enderror" name="tags"
+                                        value="{{ old('tags') }}" required autofocus>
+
+                                    @error('tags')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label for="image"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Product image') }}</label>
@@ -97,22 +112,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <label for="tags"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Product tags') }}</label>
 
-                                <div class="col-md-6">
-                                    <input id="tags" type="file"
-                                        class="form-control @error('tags') is-invalid @enderror" name="tags"
-                                        value="{{ old('tags') }}" required autofocus>
-
-                                    @error('tags')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
 
 
                             <div class="row mb-3">

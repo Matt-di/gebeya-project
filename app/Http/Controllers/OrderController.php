@@ -7,6 +7,7 @@ use App\Models\Order;
 use Ramsey\Uuid\Uuid;
 use App\Models\Payment;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
@@ -15,12 +16,36 @@ class OrderController extends Controller
     //
     public function index()
     {
-        $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->paginate(10);
-        foreach ($orders as $order) {
-            $ordersItems[] = $order->orderItems()->get();
+        if (auth()->user()->role == 2) {
+            $ordres = Order::latest()->paginate(10);
+            return view('client.orders.index', [
+                'orders' => $ordres
+            ]);
+        } else {
+            $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->paginate(10);
+            foreach ($orders as $order) {
+                $ordersItems[] = $order->orderItems()->get();
+            }
+            // dd($orders);
+            return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
         }
-        // dd($orders);
-        return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
+    }
+
+    public function create()
+    {
+        // dd(2);
+        $carts = auth()->user()->carts;
+        return view('user.order.store', compact('carts'));
+    }
+
+    public function update(User $user, Order $Order)
+    {
+    }
+
+    public function show(User $user, Order $order)
+    {
+        $ordersItems = $order->orderItems()->paginate(10);
+        return view('client.orders.show', ['orderItems' => $ordersItems, "order" => $order]);
     }
 
     public function store(User $user, Request $request)

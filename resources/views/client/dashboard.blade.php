@@ -8,7 +8,6 @@
     <div class="col-lg-10 vstack gap-4 col-md-9">
         <div class="container-fluid">
             <section>
-
                 <div class="row">
                     @foreach ($dashboard_data as $data)
                         <x-dashboard-card :data="$data" />

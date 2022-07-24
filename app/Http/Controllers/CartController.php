@@ -37,7 +37,7 @@ class CartController extends Controller
                 return response()->json($output);
             } else {
                 $cart->update(['quantity' => (($cart->quantity + 1))]);
-                return response()->json($cart);
+                return redirect()->back()->with('message',"Product quantity updated");
             }
         }
         $cart = $product->carts()->create([

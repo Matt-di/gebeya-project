@@ -22,18 +22,23 @@
         <span class="badge-success ">{{ $orderitem->status }}</span>
     </td>
     <td>
+        <?php auth()->user()->role == 3 ? ($path = 'user') : ($path = 'merchant'); ?>
         <span class="badge-success rounded-pill d-inline">{{ $orderitem->order->payment->status }}</span>
-        <form action="{{ route('user.payment.update', ['user'=>auth()->user()->id,'payment'=>$orderitem->order->payment->id]) }}" method="POST">
-            @csrf
-            @method("PUT")
-            <select class="form-input" name="payment_status" id="payment_status">
-                <option value="Awaiting">Awaiting</option>
-                <option value="Completed">Completed</option>
-                <option value="Failed">Failed</option>
-                <option value="Canceled">Canceled</option>
-            </select>
-            <button type="submit" class="btn btn-primary btn-sm">Update</button>
-        </form>
+        @if ($orderitem->order->status !== 'reached')
+            <form
+                action="{{ route($path . '.payment.update', ['user' => auth()->user()->id, 'payment' => $orderitem->order->payment->id]) }}"
+                method="POST">
+                @csrf
+                @method('PUT')
+                <select class="form-input" name="payment_status" id="payment_status">
+                    <option value="Awaiting">Awaiting</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Failed">Failed</option>
+                    <option value="Canceled">Canceled</option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+            </form>
+        @endif
     </td>
     <td>{{ $orderitem->created_at }}</td>
 </tr>

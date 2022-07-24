@@ -14,42 +14,32 @@
                 @endforeach
             </ol>
             <div class="row my-3 d-flex justify-content-center">
-                <div class="col-md-6 col-lg-6">
-                    <div class="table-responsive">
-                        <table class="table product-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Product</th>
-                                    <th>Color</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>QTY</th>
-                                    <th>Amount</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $total = 0;
-                                @endphp
-                                @foreach (auth()->user()->carts as $cart)
-                                    <?php $total += $cart->product->price * $cart->quantity; ?>
-                                    <x-cart-order :cart="$cart" :product="$cart->product" />
-                                @endforeach
-                                <tr>
-                                    <td colspan="3"></td>
-                                    <td>
-                                        <h4><strong>Total</strong></h4>
-                                    </td>
-                                    <td colspan="4" class="float-right">
-                                        <h4><strong> ${{ $total }}</strong></h4>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-md-4 order-md-2 mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-muted">Your cart</span>
+                        <span class="badge badge-secondary badge-pill">3</span>
+                    </h4>
+                    <ul class="list-group mb-3 sticky-top">
+                        <?php $total = 0; ?>
+                        @foreach ($carts as $cart)
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">{{ $cart->product->name }}</h6>
+                                    <small class="text-muted">{{ $cart->quantity }}</small>
+                                </div>
+                                <span class="text-muted">${{ $cart->quantity * $cart->product->price }}</span>
+                            </li>
+                            <?php $total += $cart->product->price * $cart->quantity; ?>
+                        @endforeach
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total ()</span>
+                            <strong>${{ $total }}</strong>
+                        </li>
+                    </ul>
                 </div>
+                <?php $total += $cart->product->price * $cart->quantity; ?>
                 <div class="col-md-6 col-lg-6 col-xl-5">
                     <div class="card rounded-3">
                         <div class="card-body p-4">

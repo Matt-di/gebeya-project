@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\StoreProduct;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class StoreProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('user_type','client')->get();
-        // dd($users[0]->order);
-        return view("client.users.index",['users'=>$users]);
+        //
     }
 
     /**
@@ -44,10 +41,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\StoreProduct  $storeProduct
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(StoreProduct $storeProduct)
     {
         //
     }
@@ -55,10 +52,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\StoreProduct  $storeProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(StoreProduct $storeProduct)
     {
         //
     }
@@ -67,10 +64,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\StoreProduct  $storeProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, StoreProduct $storeProduct)
     {
         //
     }
@@ -78,25 +75,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\StoreProduct  $storeProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(StoreProduct $storeProduct)
     {
         //
     }
-
-    public function impersonate(User $user) 
-{
-    auth()->user()->impersonate($user);
-
-    return redirect()->route('home.index');
-}
-
-public function leaveImpersonate() 
-{
-    auth()->user()->leaveImpersonation();
-
-    return redirect()->route('home.index'); 
-}
 }

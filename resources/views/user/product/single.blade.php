@@ -1,32 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container my-5 py-5 z-depth-1">
-        <div class="mr-auto">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/"><i class="fa fa-dashboard "></i>Home</a>
-                    </li>
-                    <?php $segments = ''; ?>
-                    @foreach (Request::segments() as $segment)
-                        <?php $segments .= '/' . $segment; ?>
-                        <li class="breadcrumb-item active">
-                            <a href="{{ $segments }}">{{ $segment }}</a>
+    <div class="container-fluid my-5 py-5 z-depth-1">
+        <div class="row m-3">
+            <div class="col-md-3 sm-6">
+
+            </div>
+            <div class="col-md-7">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/"><i class="fa fa-dashboard "></i>Home</a>
                         </li>
-                    @endforeach
-                </ol>
-            </nav>
+                        <?php $segments = ''; ?>
+                        @foreach (Request::segments() as $segment)
+                            <?php $segments .= '/' . $segment; ?>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ $segments }}">{{ $segment }}</a>
+                            </li>
+                        @endforeach
+                    </ol>
+                </nav>
+            </div>
 
         </div>
+
         <div id="message"></div>
         <section class="text-center">
             <h3 class="font-weight-bold mb-5">Product Details</h3>
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="carousel-inner text-center text-md-left" role="listbox">
-                        <img style="" src="{{ url('images/products', $product->image) }}" alt=" slide"
-                            class="img-thumbnail">
+                        <img style="landscape" src="{{ url('images/products', $product->image) }}"
+                            alt=" slide" class="portrait img-thumbnail">
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6 text-center text-md-left">
@@ -34,29 +41,25 @@
                     <h2
                         class="h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4">
                         {{ $product->name }}</h2>
-                    <span class="badge badge-danger product mb-4 ml-xl-0 ml-4">bestseller</span>
-                    <span class="badge badge-success product mb-4 ml-2">SALE</span>
+                    By: <a href="{{ route('stores.products', $product->user->id) }}"
+                        class="float-right">{{ $product->user->firstname }}</a>
+                    @foreach (explode(',', $product->tags) as $tag)
+                        <span class="badge bg-dark text-white position-absolute"
+                            style="top: 0.5rem; right: 0.5rem">{{ $tag }}</span>
+                    @endforeach
 
-                    <h3 class="h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4">
+                    <h3 class="h3-responsive text-center text-md-left ">
                         <span class="red-text font-weight-bold">
                             <strong>${{ $product->price }}</strong>
                         </span>
-                        <span class="grey-text">
-                            <small>
-                                <s>$549</s>
-                            </small>
-                        </span>
+
                     </h3>
 
                     <div class="font-weight-normal">
 
-                        <p class="ml-xl-0 ml-4">{{ $product->description }}</p>
+                        <p class="">{{ $product->description }}</p>
 
-                        <p class="ml-xl-0 ml-4">
-                            <strong>Size: </strong>Size
-                        </p>
-
-                        <p class="ml-xl-0 ml-4">
+                        <p class="">
                             <strong>Availability: </strong>
                             @if ($product->quantity > 0)
                                 In stock
@@ -66,31 +69,20 @@
                         </p>
 
                         <div class="mt-5">
-                            <p class="grey-text">Choose your color</p>
-                            <div class="row text-center text-md-left">
-                                <div class="col-md-4 col-12 ">
-                                    <div class="form-group">
-                                        <input class="form-check-input" name="group100" type="radio" id="radio100"
-                                            checked="checked">
-                                        <label for="radio100" class="form-check-label dark-grey-text">White</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input class="form-check-input" name="group100" type="radio" id="radio101">
-                                        <label for="radio101" class="form-check-label dark-grey-text">Black</label>
-                                    </div>
-                                </div>
-
-                            </div>
                             <div class="row mt-3 mb-4">
                                 <div class="text-center">
-                                    <input type="hidden" id="userId" value="{{auth()->user()->id}}"/>
                                     @if ($product->quantity > 0)
-                                    <button type="submit" class="btn btn-primary flex-fill me-1 addtocart" id="{{ $product->id }}"
-                                        data-mdb-ripple-color="dark">
-                                        Add to cart
-                                    </button>
+                                        @auth <form action="{{ route('user.carts.store', auth()->user()->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                <button class="btn btn-outline-dark mt-auto" type="submit">
+                                                    Add to cart</button>
+                                            </form>
+                                        @else
+                                            <a class="btn btn-outline-dark" href="/login">
+                                                Add to cart</a>
+                                        @endauth
                                     @else
                                         <button type="button" disabled class="btn  flex-fill ms-1">Not Available In
                                             Stock</button>
@@ -105,10 +97,6 @@
             </div>
 
         </section>
-
-        <!--Section: Content-->
-
-
     </div>
 @endsection
 @section('modal')

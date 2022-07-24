@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-                <form action="{{route('admin.store.add')}}" method="POST" id="addstore" name="addstore">
+                <form action="{{route('admin.stores.store')}}" method="POST" id="addstore" name="addstore">
                     @csrf
                     <div class="form-outline mb-4">
                         <input type="text" id="firstname" name="firstname"

@@ -15,7 +15,7 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,Impersonate;
 
     /**
      * The attributes that are mass assignable.
@@ -50,48 +50,47 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function store(){
+    public function store()
+    {
         return $this->hasOne(Store::class);
     }
-
-    public function isAdminstrator(){
-        return false;
-    }
-
-    public function setImpersonating($id)
+    public function canImpersonate()
     {
-        Session::put('impersonate', $id);
+        // For example
+        return $this->role == 1;
+    }
+    public function canBeImpersonated()
+    {
+        // For example
+        return $this->role != 1;
     }
 
-    public function stopImpersonating()
-    {
-        Session::forget('impersonate');
-    }
 
-    public function isImpersonating()
+    public function orders()
     {
-        return Session::has('impersonate');
-    }
-    public function orders(){
         return $this->hasMany(Order::class);
     }
-    public function orderItems(){
+    public function orderItems()
+    {
         return $this->hasMany(OrderItem::class);
     }
-    public function payments(){
+    public function payments()
+    {
         return $this->hasMany(Payment::class);
     }
 
-    public function categories(){
-        return $this->hasMany(Category::class);      
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
     }
-    public function products(){
-        return $this->hasMany(Product::class);      
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
-    public function carts(){
+    public function carts()
+    {
         return $this->hasMany(Cart::class);
     }
     public $incrementing = false;
-
 }

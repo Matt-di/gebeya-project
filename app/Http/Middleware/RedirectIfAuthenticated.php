@@ -28,10 +28,11 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() && Auth::user()->role == 1) {
                 return redirect()->route('admin.dashboard');
             } elseif (Auth::guard()->check() && Auth::user()->role == 2) {
-                return redirect()->route('merchant.dashboard',Auth::user()->id);
+                return redirect()->route('merchant.dashboard', Auth::user()->id);
+            } elseif (Auth::guard()->check() && Auth::user()->role == 3) {
+                return redirect()->route('home');
             }
         }
-
 
         return $next($request);
     }
