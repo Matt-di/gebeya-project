@@ -57,7 +57,7 @@
 
                         @impersonating
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.leave-impersonate') }}">Back to Admin</a>
+                                <a class="nav-link" href="{{ route('users.leave-impersonate') }}">Leave User</a>
                             </li>
                         @endImpersonating
                         <li class="nav-item">

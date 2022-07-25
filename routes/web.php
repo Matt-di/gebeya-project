@@ -80,13 +80,13 @@ Route::group(['prefix' => '/merchant/{user}', 'as' => 'merchant.', 'middleware' 
     Route::post('{category}/update', [CategoryController::class, 'update'])->name('category.update');
     Route::post('{category}/enable', [CategoryController::class, 'showInNav'])->name('category.enable');
 });
-Route::get('/leave-impersonate', [UserController::class, 'leaveImpersonate'])->name('users.leave-impersonate');
+Route::get('/back-to-admin', [UserController::class, 'leaveImpersonate'])->name('users.leave-impersonate');
 
 Route::group(["prefix" => 'admin/', 'as' => 'admin.', "middleware" => 'isAdmin'], function () {
     Route::get('dashoard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
     Route::resource('stores', StoreController::class);
-    Route::get('/{user}/impersonate', [UserController::class, 'impersonate'])->name('users.impersonate');
+    Route::get('/{user}/login', [UserController::class, 'impersonate'])->name('users.impersonate');
     Route::get('/admins', [UserController::class, 'admins'])->name('admins.users');
 
     Route::get('stores/product', [StoreController::class, 'index'])->name('stores.products');
