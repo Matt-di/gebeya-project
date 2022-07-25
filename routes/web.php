@@ -92,14 +92,5 @@ Route::group(["prefix" => 'admin/', 'as' => 'admin.', "middleware" => 'isAdmin']
     Route::get('stores/product', [StoreController::class, 'index'])->name('stores.products');
     Route::delete('stores/{id}/wipe', [StoreController::class, 'wipe'])->name('stores.wipe');
     Route::post('stores/{user}/enable', [StoreController::class, 'enable'])->name('store.enable');
-    // Route::delete('stores/{user}/delete', [StoreController::class, 'destroy'])->name('store.delete');
-    // Route::post('stores/add', [StoreController::class, 'store'])->name('store.add');
 
-    // Route::post('add', [AdminController::class, 'store'])->name('add');
-    // Route::get('users', [AdminController::class, 'users'])->name('users');
-
-    // Route::post('{user}', [UserController::class, 'delete'])->name('delete');
-    // Route::get('{user}', [UserController::class, 'show'])->name('view');
-    // Route::get('system/users', [UserController::class, 'users'])->name('system.users');
-    // Route::get('system/stores', [StoreController::class, 'index'])->name('system.stores');
 });

@@ -28,41 +28,49 @@ class AdminDashboardController extends Controller
                         'total' => $total_categories,
                         'title' => "Total Categories",
                         'link' => "category",
-                        'icon' => 'tasks'
+                        'icon' => 'tasks',
+                        'color'=>'green'
                     ],
                     [
                         'total' => $total_user,
                         'title' => "Store Users",
                         'link' => "users",
-                        'icon' => 'user-plus'
+                        'icon' => 'user-plus',
+                        'color'=>'yellow'
 
                     ],
                     [
                         'total' => $total_products,
                         'title' => "Total Products",
                         'link' => "products",
-                        'icon' => 'product-hunt'
+                        'icon' => 'product-hunt',
+                        'color'=>'pink'
 
                     ],
                     [
                         'total' => $total_order,
                         'title' => "Total Order",
                         'link' => "products",
-                        'icon' => 'user-circle'
+                        'icon' => 'user-circle',
+                        'color'=>'blue'
+
 
                     ],
                     [
                         'total' =>  $total_client,
                         'title' => "Total Client",
                         'link' => "order",
-                        'icon' => 'shopping-bag'
+                        'icon' => 'shopping-bag',
+                        'color'=>'green'
+
 
                     ],
                     [
                         'total' => $total_users,
                         'title' => "Total Sytem Users",
                         'link' => "users",
-                        'icon' => 'user'
+                        'icon' => 'user',
+                        'color'=>'green-yellow'
 
                     ]
                 ]

@@ -29,41 +29,53 @@ class MerchantDashboardorController extends Controller
                         'total' => $categories->count(),
                         'title' => "Total Categories",
                         'link' => "category",
-                        'icon' => 'tasks'
+                        'icon' => 'tasks',
+                        'color'=>'green'
+
                     ],
                     [
                         'total' => $your_categ,
                         'title' => "Your Categories",
                         'link' => "category",
-                        'icon' => 'user-plus'
+                        'icon' => 'user-plus',
+                        'color'=>'yellow'
+
 
                     ],
                     [
                         'total' => $product_count,
                         'title' => "Total Products",
                         'link' => "products",
-                        'icon' => 'product-hunt'
+                        'icon' => 'product-hunt',
+                        'color'=>'pink'
+
 
                     ],
                     [
                         'total' => $your_prod,
                         'title' => "Your Products",
                         'link' => "products",
-                        'icon' => 'user-circle'
+                        'icon' => 'user-circle',
+                        'color'=>'blue'
+
 
                     ],
                     [
                         'total' => $total_order,
                         'title' => "Total Orders",
                         'link' => "merchant.orders",
-                        'icon' => 'shopping-bag'
+                        'icon' => 'shopping-bag',
+                        'color'=>'green'
+
 
                     ],
                     [
                         'total' => $total_user,
                         'title' => "Total Customer",
                         'link' => "users",
-                        'icon' => 'user'
+                        'icon' => 'user',
+                        'color'=>'green-yellow'
+
 
                     ]
                 ]

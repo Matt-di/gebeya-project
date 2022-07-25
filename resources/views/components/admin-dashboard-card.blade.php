@@ -1,22 +1,10 @@
    @props(['data'])
-   <!-- Grid column -->
-   <div class="col-md-6 col-lg-3 mb-4">
 
-    <!-- Card -->
-    <div class="card primary-color white-text">
-        <div class="card-body d-flex justify-content-between align-items-center">
-            <div>
-                <p class="h2-responsive font-weight-bold mt-n2 mb-0">{{$data['total']}}</p>
-                <p class="mb-0">{{$data['title']}}</p>
-            </div>
-            <div>
-                <i class="fas fa-shopping-bag fa-4x text-black-40"></i>
-            </div>
+   <div class="col-md-4 col-xl-3">
+    <div class="card bg-c-{{$data['color']}} order-card">
+        <div class="card-block">
+            <h6 class="m-b-20">{{ $data['title'] }}</h6>
+            <h2 class="text-right"><i class="fa fa-{{$data['icon']}} f-left"></i><span>{{ $data['total'] }}</span></h2>
         </div>
-        <a class="card-footer footer-hover small text-center white-text border-0 p-2">More info<i
-                class="fas fa-arrow-circle-right pl-2"></i></a>
     </div>
-    <!-- Card -->
-
 </div>
-<!-- Grid column -->
