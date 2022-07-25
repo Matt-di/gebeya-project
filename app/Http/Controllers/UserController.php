@@ -84,7 +84,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, $id)
+    public function show($id)
     {
         $user  = User::find($id);
         if ($id == auth()->user()->id) {
