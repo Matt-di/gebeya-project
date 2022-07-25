@@ -130,7 +130,7 @@ class MerchanProductController extends Controller
     {
         $product->categories()->detach($category);
 
-        return back();
+        return redirect()->route('merchant.products.index',auth()->user()->id);
     }
     public function findProduct(User $user, Product $product)
     {
