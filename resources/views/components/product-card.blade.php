@@ -21,7 +21,7 @@
                             {{ $product->name }}
                         </a></h5>
                     <!-- Product price-->
-                    <span class="text-muted text-decoration-line-through">${{ $product->price }}</span>
+                    {{-- <span class="text-muted text-decoration-line-through">${{ $product->price }}</span> --}}
                     ${{ $product->price }}
                 </div>
             </div>
