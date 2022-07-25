@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'id'=>UuidV4::uuid4(),
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
-            'role' => $data['role'],
+            'role' => 2,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

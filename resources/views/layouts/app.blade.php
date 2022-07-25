@@ -11,8 +11,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -20,20 +18,22 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" />
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </head>
 
 <body>
     <div id="app">
         @include('layouts.navigation')
-        
-        <main>
-            @yield('content')
-        </main>
+      
+    <main>
+        @yield('content')
+    </main>
 
-        @include('layouts.footer')
+    @include('layouts.footer')
     </div>
+    @yield('footer-script')
 </body>
-<script src="{{ asset('js/scripts.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </html>

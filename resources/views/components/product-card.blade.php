@@ -2,10 +2,10 @@
     <div class="col mb-5">
         <div class="card h-100">
             <!-- Sale badge-->
-                @foreach ($tags as $tag)
-                    <span class="badge bg-dark text-white position-absolute"
-                        style="top: 0.5rem; right: 0.5rem">{{ $tag }}</span>
-                @endforeach
+            @foreach ($tags as $tag)
+                <span class="badge bg-dark text-white position-absolute"
+                    style="top: 0.5rem; right: 0.5rem">{{ $tag }}</span>
+            @endforeach
             <!-- Product image-->
             <img class="portrait" src="{{ url('images/products', $product->image) }}" alt="..." />
             <!-- Product details-->
@@ -17,7 +17,7 @@
                                 {{ $tag }}
                             @endforeach
                         </span> </div>
-                    <h5 class="fw-bolder"> <a href="{{ route('product.get', $product->id) }}" class="link">
+                    <h5 class="fw-bolder"> <a href="{{ route('product.get', ['id'=>$product->user->id,'product'=>$product->id]) }}" class="link">
                             {{ $product->name }}
                         </a></h5>
                     <!-- Product price-->
@@ -29,17 +29,23 @@
             @if ($product->quantity > 0)
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                        @auth
-                            <form action="{{ route('user.carts.store', auth()->user()->id) }}" method="POST">
+                        {{-- @auth --}}
+                        {{-- <form action="{{ route('user.carts.store', auth()->user()->id) }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <button class="btn btn-outline-dark mt-auto" type="submit">
                                     Add to cart</button>
-                            </form>
-                        @else
+                            </form> --}}
+                        <div class="btn-group" role="group">
+                            <input class="form-input m-2" type="number" value="1" min="1" max="100">
+                            <button type="button" class="add-to-cart btn btn-sm m-2 btn-primary"
+                                data-id="{{ $product->id }}" data-name="{{ $product->name }}"
+                                data-price="{{ $product->price }}">Add to Cart</button>
+                        </div>
+                        {{-- @else
                             <a href="/login" class="btn btn-outline-dark mt-auto" type="submit">
                                 Add to cart</a>
-                        @endauth
+                        @endauth --}}
                     </div>
                 </div>
             @else

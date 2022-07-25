@@ -19,7 +19,7 @@
 
                     @auth()
                         <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('home', auth()->user()->id) }}">All
+                            <a class="nav-link active" href="{{ route('home') }}">All
                                 Products</a>
                         </li>
                     @endauth

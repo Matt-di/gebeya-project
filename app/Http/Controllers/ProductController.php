@@ -19,6 +19,9 @@ class ProductController extends Controller
                 return redirect()->route('admin.dashboard');
             }
         }
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
         $filtered = "Latest Products";
         if (!empty($request->category_id) && $request->category_id != "all") {
             $category = Category::where('id', $request->category_id)->first();
@@ -60,22 +63,30 @@ class ProductController extends Controller
             $products = Product::paginate(10);
         }
         $categories = Category::paginate(10)->sortBy("created_at");
-        return view("home", ['products' => $products, 'categories' => $categories, "titleProduct" => $filtered]);
+        return view("home", ['products' => $products, 'categories' => $categories, "titleProduct" => $filtered, 'cart' => $carts]);
     }
 
 
-    public function getProduct(User $user, Product $product)
+    public function getProduct($id, $product_id)
     {
-        return view('user.product.single', ['product' => $product]);
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
+        $product = Product::find($product_id);
+        return view('user.product.single', ['product' => $product, 'cart' => $carts]);
     }
-    public function getProducts(User $user, $id)
+    public function getProducts($id, $category)
     {
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
         $categories = Category::all();
-        $store = Category::find($id);
+        $store = User::find($id);
         // dd($store);
         return view('home', [
             'products' => $store->products()->paginate(10),
-            'categories' => $categories
+            'categories' => $categories,
+            'cart' => $carts
         ])->with('title', $store->name . " Products");
     }
 }

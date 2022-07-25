@@ -32,8 +32,8 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6">
                     <div class="carousel-inner text-center text-md-left" role="listbox">
-                        <img style="landscape" src="{{ url('images/products', $product->image) }}"
-                            alt=" slide" class="portrait img-thumbnail">
+                        <img style="landscape" src="{{ url('images/products', $product->image) }}" alt=" slide"
+                            class="portrait img-thumbnail">
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6 text-center text-md-left">
@@ -72,17 +72,13 @@
                             <div class="row mt-3 mb-4">
                                 <div class="text-center">
                                     @if ($product->quantity > 0)
-                                        @auth <form action="{{ route('user.carts.store', auth()->user()->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                                <button class="btn btn-outline-dark mt-auto" type="submit">
-                                                    Add to cart</button>
-                                            </form>
-                                        @else
-                                            <a class="btn btn-outline-dark" href="/login">
-                                                Add to cart</a>
-                                        @endauth
+                                        <div class="btn-group" role="group">
+                                            <input class="form-input m-2" type="number" value="1" min="1"
+                                                max="100">
+                                            <button type="button" class="add-to-cart btn btn-sm m-2 btn-primary"
+                                                data-id="{{ $product->id }}" data-name="{{ $product->name }}"
+                                                data-price="{{ $product->price }}">Add to Cart</button>
+                                        </div>
                                     @else
                                         <button type="button" disabled class="btn  flex-fill ms-1">Not Available In
                                             Stock</button>
@@ -99,6 +95,52 @@
         </section>
     </div>
 @endsection
-@section('modal')
-    @include('user.cart.popup')
+@section('footer-script')
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            window.cart = {!! json_encode($cart) !!};
+            updateCartButton();
+            console.log(cart);
+            $('.add-to-cart').on('click', function(event) {
+
+                var cart = window.cart || [];
+                let item = cart.findIndex((item => item.id == $(this).data('id')));
+                console.log(item, cart);
+                if (item == -1) {
+                    cart.push({
+                        'id': $(this).data('id'),
+                        'name': $(this).data('name'),
+                        'price': $(this).data('price'),
+                        'qty': $(this).prev('input').val()
+                    });
+                } else {
+                    cart[item]['qty'] = $(this).prev('input').val();
+                }
+                window.cart = cart;
+                $.ajax("{{ route('carts.store') }}", {
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "cart": cart
+                    },
+                    success: function(data, status, xhr) {
+
+                    }
+                });
+
+                updateCartButton();
+            });
+        });
+
+        function updateCartButton() {
+
+            var count = 0;
+            window.cart.forEach(function(item, i) {
+
+                count += Number(item.qty);
+            });
+
+            $('#items-in-cart').html(count);
+        }
+    </script>
 @endsection

@@ -24,12 +24,12 @@
                         @foreach ($carts as $cart)
                             <li class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
-                                    <h6 class="my-0">{{ $cart->product->name }}</h6>
-                                    <small class="text-muted">{{ $cart->quantity }}</small>
+                                    <h6 class="my-0">{{ $cart['name'] }}</h6>
+                                    <small class="text-muted">{{ $cart['qty'] }}</small>
                                 </div>
-                                <span class="text-muted">${{ $cart->quantity * $cart->product->price }}</span>
+                                <span class="text-muted">${{ $cart['qty'] * $cart['price'] }}</span>
                             </li>
-                            <?php $total += $cart->product->price * $cart->quantity; ?>
+                            <?php $total += $cart['price'] * $cart['qty']; ?>
                         @endforeach
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
 
@@ -39,32 +39,68 @@
                         </li>
                     </ul>
                 </div>
-                <?php $total += $cart->product->price * $cart->quantity; ?>
                 <div class="col-md-6 col-lg-6 col-xl-5">
                     <div class="card rounded-3">
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
                                 <h3>Customer Details</h3>
                             </div>
-                            <form action="{{ route('user.order.add', auth()->user()->id) }}" method="POST">
+                            <form action="{{ route('order.add', 1) }}" method="POST">
                                 @csrf
                                 <p class="fw-bold mb-4 pb-2">Fill</p>
                                 <div class="d-flex flex-row align-items-center mb-4 pb-1">
-                                    <div class="flex-fill mx-3">
-                                        <div class="form-outline">
-                                            <input type="text" id="formControlLgXc" class="form-control form-control-lg"
-                                                placeholder="Your Full name on ID" />
-                                            <label class="form-label" for="formControlLgXc">Full Name</label>
-                                        </div>
+                                    <div class="col-md-6 m-2">
+                                        <input id="firstname" type="text"
+                                            class="form-control @error('firstname') is-invalid @enderror" name="firstname"
+                                            value="{{ old('firstname') }}" required autocomplete="firstname" autofocus
+                                            placeholder="Firstname">
+
+                                        @error('firstname')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input id="lastname" type="text"
+                                            class="form-control @error('lastname') is-invalid @enderror" name="lastname"
+                                            value="{{ old('lastname') }}" required autocomplete="lastname" autofocus
+                                            placeholder="Last Name">
+
+                                        @error('lastname')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+
                                     </div>
                                 </div>
-
                                 <div class="d-flex flex-row align-items-center mb-4 pb-1">
                                     <div class="flex-fill mx-3">
                                         <div class="form-outline">
-                                            <input type="text" id="formControlLgXs" class="form-control form-control-lg"
-                                                placeholder="Shipping Address" />
-                                            <label class="form-label" for="formControlLgXs">Shipping Address</label>
+                                            <input type="email" id="email" name="email"
+                                                class="form-control form-control-lg" value="null"
+                                                placeholder="Email Address" />
+                                            <label class="form-label" for="formControlLgXs">Email Address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                                    <div class="flex-fill mx-3">
+                                        <div class="form-outline">
+                                            <input type="text" id="phone_number" name="phone_number"
+                                                class="form-control form-control-lg" placeholder="Phone" />
+                                            <label class="form-label" for="formControlLgXs">Phone Number</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                                    <div class="flex-fill mx-3">
+                                        <div class="form-outline">
+                                            <input type="text" id="address_line" name="address_line"
+                                                class="form-control form-control-lg" placeholder="Shipping Address" />
+                                            <label class="form-label" for="formControlLgXs">Address Line</label>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +110,7 @@
                                     <div class="col-lg-4 col-md-12 mb-4">
 
                                         <label for="country">Country</label>
-                                        <select class="form-control d-block w-100" id="country" required>
+                                        <select class="form-control d-block w-100" name="country" id="country" required>
                                             <option value="">Choose...</option>
                                             <option>Ethiopia</option>
                                         </select>
@@ -89,7 +125,7 @@
                                     <div class="col-lg-4 col-md-6 mb-4">
 
                                         <label for="state">State</label>
-                                        <select class="form-control d-block w-100" id="state" required>
+                                        <select class="form-control d-block w-100" name="state" id="state" required>
                                             <option value="">Choose...</option>
                                             <option>Addis Ababa</option>
                                             <option>Oromia</option>
@@ -104,7 +140,8 @@
                                     <div class="col-lg-4 col-md-6 mb-4">
 
                                         <label for="zip">Zip</label>
-                                        <input type="text" class="form-control" id="zip" placeholder="" required>
+                                        <input type="text" name="zipcode" class="form-control" id="zip"
+                                            placeholder="" required>
                                         <div class="invalid-feedback">
                                             Zip code required.
                                         </div>
@@ -133,15 +170,10 @@
                                     <label class="form-check-label" for="safeTheInfo">Save this information for next
                                         time</label>
                                 </div>
-                                <div class="mb-1">
-                                    <input type="checkbox" class="form-check-input filled-in" id="subscribeNewsletter"
-                                        required>
-                                    <label class="form-check-label" for="subscribeNewsletter">Subscribe to the
-                                        newsletter</label>
-                                </div>
+
 
                                 <hr>
-                                <button type="submit" class="btn btn-success btn-lg btn-block">Order</button>
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Place Order</button>
                             </form>
                         </div>
                     </div>

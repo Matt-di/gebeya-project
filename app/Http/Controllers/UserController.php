@@ -53,7 +53,6 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        dd($request);
 
         if (auth()->check()) {
             $created = User::create([
@@ -88,8 +87,8 @@ class UserController extends Controller
     public function show(User $user, $id)
     {
         if ($id) {
-            $usera  = User::find($id);
-            return $usera;
+            $user  = User::find($id);
+            return view('client.users.single',compact('user'));
         }
         return view('client.users.show', compact("user"));
     }
@@ -147,13 +146,14 @@ class UserController extends Controller
     public function impersonate(User $user)
     {
         auth()->user()->impersonate($user);
-
+        // session()->put('impersonate_admin_id', Auth::id());
         return redirect()->route('merchant.dashboard', $user->id);
     }
 
     public function leaveImpersonate()
     {
-        dd(Auth::user()->leaveImpersonation());
+        Auth::user()->leaveImpersonation();
+        // Auth::loginUsingId(session()->get('impersonate_admin_id'));
         return redirect()->route('admin.dashboard');
     }
 }

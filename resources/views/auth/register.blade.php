@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container my-5 py-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -43,8 +43,6 @@
 
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -91,18 +89,7 @@
                                         name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="password"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Register As') }}</label>
 
-                                <div class="col-md-6">
-                                    <select class="form-select" name="role" id="role" aria-label="Default select example">
-                                        <option selected>Select</option>
-                                        <option value="3">Client</option>
-                                        <option value="2">Merchant</option>
-                                    </select>
-                                </div>
-                            </div>
 
 
                             <div class="row mb-0">

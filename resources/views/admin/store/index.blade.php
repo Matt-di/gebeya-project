@@ -133,7 +133,7 @@
 
                                                         <a href="{{ route('admin.users.impersonate', $store->id) }}"
                                                             class="btn btn-primary btn-rounded btn-sm m-2">
-                                                            <i class="fas fa-login mr-2" aria-hidden="true"></i>Impersonate
+                                                            <i class="fas fa-login mr-2" aria-hidden="true"></i>Login 
                                                         </a>
                                                     </div>
                                                     @endCanImpersonate

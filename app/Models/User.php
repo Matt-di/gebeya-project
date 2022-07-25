@@ -4,14 +4,15 @@ namespace App\Models;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\UserShippment;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\LaratrustUserTrait;
 use Lab404\Impersonate\Models\Impersonate;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
@@ -54,6 +55,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Store::class);
     }
+    public function userShippment()
+    {
+        return $this->hasOne(UserShippment::class);
+    }
+    
     public function canImpersonate()
     {
         // For example

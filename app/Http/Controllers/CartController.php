@@ -18,34 +18,42 @@ class CartController extends Controller
 
     public function index(User $user)
     {
-        $carts = auth()->user()->carts();
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
+        // $carts = auth()->user()->carts();
         return view('user.cart.index', compact('carts'));
     }
 
     public function store(User $user, Request $request)
     {
-        $product = Product::find($request->product_id);
-        if (auth()->user()->user_type == "merchant") {
-            $output = array(['error' => 'Sorry you are not allowed to do this!']);
-            return response()->json($output);
-        }
-        if ($product->productAdded(auth()->user())) {
-            $cart = Cart::where('product_id', $product->id)
-                ->where('user_id', $user->id)->get()->first();
-            if ($cart->quantity >= $cart->product->quantity) {
-                $output = array(['error' => 'Stock limit reached!']);
-                return response()->json($output);
-            } else {
-                $cart->update(['quantity' => (($cart->quantity + 1))]);
-                return redirect()->back()->with('message',"Product quantity updated");
-            }
-        }
-        $cart = $product->carts()->create([
-            'id' => Uuid::uuid4(),
-            'user_id' => $user->id,
-            'quantity' => 1
+        session()->put('cart', $request->post('cart'));
+
+        return response()->json([
+            'status' => 'added'
         ]);
-        return redirect()->back();
+        // $product = Product::find($request->product_id);
+        // if (auth()->user()->user_type == "merchant") {
+        //     $output = array(['error' => 'Sorry you are not allowed to do this!']);
+        //     return response()->json($output);
+        // }
+        // if ($product->productAdded(auth()->user())) {
+        //     $cart = Cart::where('product_id', $product->id)
+        //         ->where('user_id', $user->id)->get()->first();
+        //     if ($cart->quantity >= $cart->product->quantity) {
+        //         $output = array(['error' => 'Stock limit reached!']);
+        //         return response()->json($output);
+        //     } else {
+        //         $cart->update(['quantity' => (($cart->quantity + 1))]);
+        //         return redirect()->back()->with('message',"Product quantity updated");
+        //     }
+        // }
+        // $cart = $product->carts()->create([
+        //     'id' => Uuid::uuid4(),
+        //     'user_id' => $user->id,
+        //     'quantity' => 1
+        // ]);
+        // return redirect()->back();
     }
 
     public function destroy(User $user, Cart $cart)

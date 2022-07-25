@@ -4,9 +4,9 @@
 @endsection
 
 @section('content')
-    <div class="col-lg-10 col-md-9">
-        <div class="container">
-            <div class="container-fluid my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header text-center font-weight-bold text-uppercase py-4">
                         Orders
@@ -51,20 +51,14 @@
 
                                 <div class="d-flex justify-content-between pt-2">
                                     <p class="fw-bold mb-0">Order Details</p>
-                                    <p class="text-muted mb-0"><span
-                                            class="fw-bold me-4">Total</span>{{ (int) $order->total }}
-                                        Products </p>
+                      
                                 </div>
 
-                                <div class="d-flex justify-content-between pt-2">
-                                    <p class="fw-bold mb-0">User Inforamtion</p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4"> {{ $order->user->id }} </span>
-                                </div>
                                 <div class="d-flex justify-content-between pt-2">
                                     <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> None</p>
                                 </div>
 
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between pt-2">
                                     <p class="text-muted mb-0">Invoice Date : {{ $order->created_at }}</p>
                                 </div>
 
@@ -83,7 +77,51 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-4 my-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">User Information</span>
+                        </h4>
+                    </div>
+                    <ul class="list-group mb-3 sticky-top">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">Name</h6>
+                                <small class="text-muted"></small>
+                            </div>
+                            <span class="text-muted">{{ $order->user->fistname }} {{ $order->user->lastname }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">Country</h6>
+                                <small class="text-muted"></small>
+                            </div>
+                            <span class="text-muted">{{ $order->user->userShippment->country }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">State</h6>
+                                <small class="text-muted"></small>
+                            </div>
+                            <span class="text-muted">{{ $order->user->userShippment->state }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">ZipCode</h6>
+                                <small class="text-muted"></small>
+                            </div>
+                            <span class="text-muted">{{ $order->user->userShippment->zip }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
 
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total {{ (int) $order->total }} Product</span>
+                            <strong></strong>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

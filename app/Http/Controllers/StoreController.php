@@ -17,14 +17,18 @@ class StoreController extends Controller
     {
         return "Hello";
     }
-
+    
     public function products($id)
     {
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
         $categories = Category::all();
         $store = User::find($id);
         return view('home', [
             'products' => $store->products()->paginate(10),
-            'categories' => $categories
+            'categories' => $categories,
+            'cart'=>$carts
         ])->with('title', $store->name . " Products");
     }
     /**

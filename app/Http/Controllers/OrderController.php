@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Models\Order;
 use Ramsey\Uuid\Uuid;
 use App\Models\Payment;
-use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Rfc4122\UuidV4;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
@@ -33,8 +35,9 @@ class OrderController extends Controller
 
     public function create()
     {
-        // dd(2);
-        $carts = auth()->user()->carts;
+        $carts = session()->get('cart');
+
+        // $carts = auth()->user()->carts;
         return view('user.order.store', compact('carts'));
     }
 
@@ -73,36 +76,56 @@ class OrderController extends Controller
         $this->validate($request, [
             'provider' => "required"
         ]);
+        $user = User::create([
+            'id' => UuidV4::uuid4(),
+            'firstname' => $request['firstname'],
+            'lastname' => $request['lastname'],
+            'role' => 3,
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        $shippment =  $user->userShippment()->create(
+            [
+                'phone_number' => $request->phone_number,
+                'address_line' => $request->address_line,
+                'country' => $request->country,
+                'state' => $request->state,
+                'zip' => $request->zipcode,
+            ]
+        );
 
-        $carts = $request->user()->carts;
+        // $carts = $request->user()->carts;
+        $carts = session()->get('cart');
         $total = 0;
         foreach ($carts as $cart) {
-            if ($cart->quantity > $cart->product->quantity) {
+            $product = Product::find($cart['id']);
+            if ($cart['qty'] > $product->quantity) {
                 return redirect()->route('home')->with("status", "We don have that much quantity in stock");
             }
-            $total += $cart->product->price * $cart->quantity;
+            $total += $cart['price'] * $cart['qty'];
         }
-        $payed = $request->user()->payments()->create([
+        $payed = $user->payments()->create([
             'id' => Uuid::uuid4(),
             'provider' => $request->provider,
             'amount' => $total,
             'status' => "Awaiting"
         ]);
-        $order = $request->user()->orders()->create([
+        $order = $user->orders()->create([
             'id' => Uuid::uuid4(),
             'payment_id' => $payed->id,
-            'total' => $carts->count(),
+            'total' => count($carts),
         ]);
         foreach ($carts as $cart) {
+            $product = Product::find($cart['id']);
             $order->orderItems()->create([
                 'id' => Uuid::uuid4(),
-                'product_id' => $cart->product->id,
-                'quantity' => $cart->quantity,
+                'product_id' => $cart['id'],
+                'quantity' => $cart['qty'],
                 'status' => "Ordered"
             ]);
-            $remain = $cart->product->quantity - $cart->quantity;
-            $cart->product->update(['quantity' => $remain]);
-            $cart->delete();
+            $remain = $product->quantity - $cart['qty'];
+            $product->update(['quantity' => $remain]);
+            session()->forget('cart');
         }
         // dd($order->payment());
 

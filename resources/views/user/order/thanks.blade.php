@@ -19,7 +19,7 @@
                     <div class="card" style="border-radius: 10px;">
                         <div class="card-header px-4 py-5">
                             <h5 class="text-muted mb-0">Thanks for Shopping with us! </h5>
-                            <h5> Dear<span style="color: #a8729a;"> {{ auth()->user()->firstname }}</span> Your order
+                            <h5> Dear<span style="color: #a8729a;"> User</span> Your order
                                 has been placed, !
                             </h5>
                         </div>
@@ -28,7 +28,7 @@
                                 <p class="lead fw-normal mb-0" style="color: #a8729a;">Order </p>
                                 <p class="small text-muted mb-0">Order Code :
                                     <a
-                                        href="{{ route('user.orders.single', ['user' => auth()->user()->id, 'order' => $orders->id]) }}">#{{ $orders->id }}</a>
+                                        href="4">#{{ $orders->id }}</a>
                                 </p>
                             </div>
                             <div class="card shadow-0 border mb-4">

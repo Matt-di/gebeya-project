@@ -14,21 +14,21 @@
                             @foreach ($categories as $category)
                                 @if ($category->show_nav == 1)
                                     <li class="nav-item">
-                                        <a href="{{ route('userstore', $category->id) }}"
+                                        <a href="{{ route('userstore', ['id'=>$category->user->id,'category'=>$category->id]) }}"
                                             class="nav-link">{{ $category->name }}</a>
                                     </li>
                                 @endif
                             @endforeach
                         @endisset
-                        <li class="nav-item">
-                            <form class="form-inline" action="{{ route('/') }}">
+                        {{-- <li class="nav-item">
+                            <form class="form-inline" action="{{ route('home') }}">
 
 
                                 <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search"
                                     aria-label="Search">
                             </form>
 
-                        </li>
+                        </li> --}}
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @guest
@@ -40,19 +40,19 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
 
+                            
+                                                    <li class="nav-item">
+                                                        <a class="btn btn-outline-light " href="{{ route('carts.index', 1) }}"
+                                                            type="submit">
+                                                            <i class="bi-cart-fill me-1"></i>
+                                                            <i class="fas fa-shopping-cart"></i>
+                                                            Cart
+                                                            <span id="items-in-cart"
+                                                                class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                                                        </a>
+                                                    </li>
                         @endguest
-                        @auth()
-                            <li class="nav-item">
-
-                                <a class="btn btn-outline-light " href="{{ route('user.carts.index', auth()->user()->id) }}"
-                                    type="submit">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Cart
-                                    <span
-                                        class="badge bg-dark text-white ms-1 rounded-pill">{{ auth()->user()->carts()->count() }}</span>
-                                </a>
-                            </li>
+                        @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -70,7 +70,7 @@
                                             </a>
                                         </a>
                                     @endif
-                                    @if (auth()->user()->role == 3)
+                                    {{-- @if (auth()->user()->role == 3)
                                         <a class="dropdown-item success" href="#"
                                             onclick="event.preventDefault();
                                         document.getElementById('upgrade-form').submit();">
@@ -79,7 +79,7 @@
                                         <a class="dropdown-item" href="{{ route('user.orders', auth()->user()->id) }}">
                                             {{ __('Orders') }}
                                         </a>
-                                    @endif
+                                    @endif --}}
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
@@ -89,10 +89,10 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                    <form id="upgrade-form" action="{{ route('user.upgrade', auth()->user()->id) }}"
+                                    {{-- <form id="upgrade-form" action="{{ route('user.upgrade', auth()->user()->id) }}"
                                         method="POST" class="d-none">
                                         @csrf
-                                    </form>
+                                    </form> --}}
                                 </div>
                             </li>
                         @endauth
