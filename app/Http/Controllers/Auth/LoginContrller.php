@@ -41,8 +41,11 @@ class LoginContrller extends Controller
             if (auth()->user()->role == 1) {
                 // dd(auth()->user());
                 return redirect()->route('admin.dashboard');
-            } elseif (auth()->user()->role == '3')
-                return redirect()->route('home', auth()->user()->id);
+            } elseif (auth()->user()->role == '3'){
+                auth()->logout();
+                return redirect()->route('home');
+            }
+
             else
                 return redirect()->route('merchant.dashboard', auth()->user()->id);
         }

@@ -60,7 +60,7 @@ class ProductController extends Controller
                 ->paginate(10);
             $filtered = "Search Products :" . $request->search;
         } else {
-            $products = Product::paginate(10);
+            $products = Product::latest()->paginate(10);
         }
         $categories = Category::paginate(10)->sortBy("created_at");
         return view("home", ['products' => $products, 'categories' => $categories, "titleProduct" => $filtered, 'cart' => $carts]);
@@ -80,8 +80,8 @@ class ProductController extends Controller
         $carts = session()->get('cart');
         if ($carts == null)
             $carts = [];
-        $categories = Category::all();
-        $store = User::find($id);
+        $categories = Category::paginate(10);
+        $store = Category::find($category);
         // dd($store);
         return view('home', [
             'products' => $store->products()->paginate(10),

@@ -45,7 +45,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                                 <div class="dropdown-menu">
                                     @foreach ($categories as $category)
-                                        <a href="/?filter=popular" class="dropdown-item">{{ $category->name }}</a>
+                                        <a href="/?category_id={{$category->id}}" class="dropdown-item">{{ $category->name }}</a>
                                     @endforeach
                                 </div>
                             </li>

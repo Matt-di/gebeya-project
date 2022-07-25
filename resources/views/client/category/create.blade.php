@@ -53,7 +53,7 @@
                                 <div class="col-md-6">
                                     <input id="show_nav" type="checkbox"
                                         class="form-check-input @error('show_nav') is-invalid @enderror" name="show_nav"
-                                        value="{{ old('show_nav') }}" required autocomplete="show_nav" autofocus>
+                                        value="{{ old('show_nav') }}"  autocomplete="show_nav" autofocus>
 
                                     @error('show_nav')
                                         <span class="invalid-feedback" role="alert">
