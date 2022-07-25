@@ -86,8 +86,8 @@ class UserController extends Controller
      */
     public function show(User $user, $id)
     {
-        if ($id) {
-            $user  = User::find($id);
+        $user  = User::find($id);
+        if ($id == auth()->user()->id) {
             return view('client.users.single',compact('user'));
         }
         return view('client.users.show', compact("user"));
