@@ -2,18 +2,27 @@
 
 
 @section('content')
-    <div class="container py-5 h-100">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard "></i>Home</a></li>
-                <?php $segments = ''; ?>
-                @foreach (Request::segments() as $segment)
-                    <?php $segments .= '/' . $segment; ?>
-                    <li class="breadcrumb-item active">
-                        <a href="{{ $segments }}s">{{ $segment }}</a>
-                    </li>
-                @endforeach
-            </ol>
+    <section class="h-100 h-custom" style="background-color: #eee;">
+        <div class="container h-100 my-5 py-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item pl-0">
+                            <a class="nav-link active" href="{{ route('home') }}">Home</a>
+                        </li>
+                        @for ($i = 1; $i <= count(Request::segments()); $i++)
+                            <li class="nav-item">
+                                @if (($i == count(Request::segments())) & ($i > 0))
+                                    <a class="nav-link disabled" href="">{{ Request::segment($i) }}</a>
+                                @else
+                                    <a class="nav-link active" href="">{{ Request::segment($i) }}</a>
+                                @endif
+                            </li>
+                        @endfor
+                    </ul>
+
+                </div>
+            </nav>
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-10 col-xl-8">
                     <div class="card" style="border-radius: 10px;">
@@ -27,8 +36,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <p class="lead fw-normal mb-0" style="color: #a8729a;">Order </p>
                                 <p class="small text-muted mb-0">Order Code :
-                                    <a
-                                        href="4">#{{ $orders->id }}</a>
+                                    <a href="4">#{{ $orders->id }}</a>
                                 </p>
                             </div>
                             <div class="card shadow-0 border mb-4">
@@ -61,5 +69,6 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
+    </section>
 @endsection

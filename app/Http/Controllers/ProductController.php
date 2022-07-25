@@ -12,6 +12,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        User::where('store_status',1);
         if (Auth::check()) {
             $role = Auth::User()->role;
 

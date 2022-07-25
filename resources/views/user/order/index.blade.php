@@ -3,17 +3,24 @@
 @section('content')
     <section class="h-100 h-custom" style="background-color: #eee;">
         <div class="container h-100 py-5">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/"><i class="fa fa-dashboard "></i>Home</a></li>
-                    <?php $segments = ''; ?>
-                    @foreach (Request::segments() as $segment)
-                        <?php $segments .= '/' . $segment; ?>
-                        <li class="breadcrumb-item active">
-                            <a href="{{ $segments }}">{{ $segment }}</a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item pl-0">
+                            <a class="nav-link active" href="{{ route('home') }}">Home</a>
                         </li>
-                    @endforeach
-                </ol>
+                        @for ($i = 1; $i <= count(Request::segments()); $i++)
+                            <li class="nav-item">
+                                @if (($i == count(Request::segments())) & ($i > 0))
+                                    <a class="nav-link disabled" href="">{{ Request::segment($i) }}</a>
+                                @else
+                                    <a class="nav-link active" href="">{{ Request::segment($i) }}</a>
+                                @endif
+                            </li>
+                        @endfor
+                    </ul>
+
+                </div>
             </nav>
             <div class="table-responsive">
                 @if (session('status'))

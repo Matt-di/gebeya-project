@@ -70,7 +70,7 @@ Route::group(['prefix' => '/merchant/{user}', 'as' => 'merchant.', 'middleware' 
     Route::get('userorders', [OrderController::class, 'index'])->name('order.get');
     Route::get('userorders', [OrderController::class, 'store'])->name('order.add');
     // Route::get('userorders', [OrderController::class, 'getOrders'])->name('orders');
-    Route::get('profiles', [UserController::class, 'show'])->name('profile');
+    Route::get('profiles', [UserController::class, 'profile'])->name('profile');
     // Route::get('userorders/{order}', [OrderController::class, 'userOrder'])->name('orders.single');
     Route::post('userorders/{order}', [OrderController::class, 'updateStatus'])->name('userorders.update');
     Route::put('/payment/{payment}', [OrderController::class, 'updatePaymentStatus'])->name('payment.update');

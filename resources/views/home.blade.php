@@ -73,8 +73,6 @@
                     </div>
                 </div>
             </nav>
-            {{-- <div class="col-md-9 col-lg-10"> --}}
-
             <h2>{{ $title ?? 'Latest' }} Products</h2>
             <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-4 justify-content-center">
                 @forelse ($products as $product)

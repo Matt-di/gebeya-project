@@ -29,23 +29,14 @@
             @if ($product->quantity > 0)
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center">
-                        {{-- @auth --}}
-                        {{-- <form action="{{ route('user.carts.store', auth()->user()->id) }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button class="btn btn-outline-dark mt-auto" type="submit">
-                                    Add to cart</button>
-                            </form> --}}
+            
                         <div class="btn-group" role="group">
                             <input class="form-input m-2" type="number" value="1" min="1" max="100">
                             <button type="button" class="add-to-cart btn btn-sm m-2 btn-primary"
                                 data-id="{{ $product->id }}" data-name="{{ $product->name }}"
                                 data-price="{{ $product->price }}">Add to Cart</button>
                         </div>
-                        {{-- @else
-                            <a href="/login" class="btn btn-outline-dark mt-auto" type="submit">
-                                Add to cart</a>
-                        @endauth --}}
+     
                     </div>
                 </div>
             @else

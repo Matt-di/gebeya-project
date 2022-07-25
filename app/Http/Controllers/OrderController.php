@@ -19,17 +19,19 @@ class OrderController extends Controller
     public function index()
     {
         if (auth()->user()->role == 2) {
-            $ordres = Order::latest()->paginate(10);
+            $ordres = Order::orderBy('created_at', 'desc')->paginate(10);
+            // dd(2);
             return view('client.orders.index', [
                 'orders' => $ordres
             ]);
         } else {
-            $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->paginate(10);
-            foreach ($orders as $order) {
-                $ordersItems[] = $order->orderItems()->get();
-            }
-            // dd($orders);
-            return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
+            // $orders = auth()->user()->orders()->orderBy('created_at', 'desc')->paginate(10);
+            // foreach ($orders as $order) {
+            //     $ordersItems[] = $order->orderItems()->get();
+            // }
+            // // dd($orders);
+            // return view('user.order.index', ['orderItems' => $orders, 'orders' => $orders]);
+            return back();
         }
     }
 

@@ -9,7 +9,6 @@
         <div class="card">
             <div class="card-header text-center font-weight-bold text-uppercase py-4">
                 Orders
-
                 <a href="{{ route('merchant.dashboard', auth()->user()->id) }}" class="float-right">Back</a>
 
             </div>

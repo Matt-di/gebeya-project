@@ -36,8 +36,3 @@
 <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>
 </div>
-
-<!-- Sidebar Message -->
-<div class="sidebar-card d-none d-lg-flex">
-    <p>Message</p>
-</div>
