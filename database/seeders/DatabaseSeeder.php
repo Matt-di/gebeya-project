@@ -17,32 +17,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Eloquent::unguard();
+
         // \App\Models\User::factory(10)->create();
-        User::create([
-            'id' => UuidV3::uuid4(), 
-            'email' => 'admin@admin.com',
-            'password'=> Hash::make('password'),
-            'is_admin' => true,
-            'role' => '1',
-            'firstname' => 'Admin',
-            'lastname' => 'Admin',
+        // User::create([
+        //     'id' => UuidV3::uuid4(), 
+        //     'email' => 'admin@admin.com',
+        //     'password'=> Hash::make('password'),
+        //     'is_admin' => true,
+        //     'role' => '1',
+        //     'firstname' => 'Admin',
+        //     'lastname' => 'Admin',
     
-        ]);
-        User::create([
-            'id' => UuidV3::uuid4(), 
-            'email' => 'customer@admin.com',
-            'firstname' => 'John',
-            'lastname' => 'Doe',
-            'password'=> Hash::make('password'),
-            'role' => '3'
-        ]);
-        User::create([
-            'id' => UuidV3::uuid4(), 
-            'email' => 'merchant@admin.com',
-            'firstname' => 'Merchant',
-            'lastname' => 'Merchant',
-            'password'=> Hash::make('password'),
-            'role' => '2'
-        ]);
+        // ]);
+        // User::create([
+        //     'id' => UuidV3::uuid4(), 
+        //     'email' => 'customer@admin.com',
+        //     'firstname' => 'John',
+        //     'lastname' => 'Doe',
+        //     'password'=> Hash::make('password'),
+        //     'role' => '3'
+        // ]);
+        // User::create([
+        //     'id' => UuidV3::uuid4(), 
+        //     'email' => 'merchant@admin.com',
+        //     'firstname' => 'Merchant',
+        //     'lastname' => 'Merchant',
+        //     'password'=> Hash::make('password'),
+        //     'role' => '2'
+        // ]);
+        $this->call(UserSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }
