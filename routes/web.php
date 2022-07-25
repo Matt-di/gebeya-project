@@ -35,7 +35,7 @@ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 // Route::get('products/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 Route::get('store/{id}/{category}', [ProductController::class, 'getProducts'])->name('userstore');
 
-Route::get('stores/{id}', [StoreController::class, 'products'])->name('stores.products');
+Route::get('store/{id}', [StoreController::class, 'products'])->name('stores.products');
 Route::get('stores/{id}/{product}', [ProductController::class, 'getProduct'])->name('product.get');
 
 // Route::group(['prefix' => '/{user}', 'as' => 'user.', 'middleware' => 'clientRole'], function () {
