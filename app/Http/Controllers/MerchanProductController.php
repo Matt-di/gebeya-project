@@ -64,7 +64,7 @@ class MerchanProductController extends Controller
         ]);
         $product->categories()->attach(Category::find($request->category));
 
-        return back();
+        return redirect()->route('merchant.products.index',auth()->user());
     }
 
     public function edit(User $user, Product $product)
@@ -130,7 +130,7 @@ class MerchanProductController extends Controller
     {
         $product->categories()->detach($category);
 
-        return redirect()->route('merchant.products.index',auth()->user()->id);
+        return back();
     }
     public function findProduct(User $user, Product $product)
     {
