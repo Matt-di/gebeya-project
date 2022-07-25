@@ -88,9 +88,9 @@ class UserController extends Controller
     {
         $user  = User::find($id);
         if ($user->role == 2) {
-            return view('client.users.single',compact('user'));
+            return view('client.users.show', compact("user"));
         }
-        return view('client.users.show', compact("user"));
+        return view('client.users.single',compact('user'));
     }
 
     /**
