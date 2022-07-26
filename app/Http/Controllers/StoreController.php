@@ -40,7 +40,7 @@ class StoreController extends Controller
     public function show($id)
     {
         $store = User::find($id);
-        if (auth()->check()) {
+        if (auth()->user()->id == 1) {
             return view('admin.store.show', compact('store'));
         }
         $carts = session()->get('cart');
@@ -77,7 +77,7 @@ class StoreController extends Controller
     }
     public function index()
     {
-        if (auth()->check())
+        if (auth()->user()->id == 1)
             return view('admin.store.index', [
                 'stores' => User::where('role', 2)->paginate(20)
             ]);

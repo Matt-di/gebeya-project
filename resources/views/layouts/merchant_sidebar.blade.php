@@ -47,7 +47,7 @@
     <hr class="sidebar-divider">
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('merchant.storefront', auth()->user()->id) }}">
+        <a class="nav-link" href="{{ route('user.stores.show', auth()->user()->id) }}">
             <i class="fas fa-fw fa-user"></i>
             <span>Your Store</span></a>
     </li>
