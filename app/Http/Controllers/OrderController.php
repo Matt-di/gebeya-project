@@ -19,7 +19,7 @@ class OrderController extends Controller
     public function index()
     {
         if (auth()->user()->role == 2) {
-            $ordres = Order::orderBy('created_at', 'desc')->paginate(10);
+            $ordres = Order::where('store_id',auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
             // dd(2);
             return view('client.orders.index', [
                 'orders' => $ordres
@@ -101,6 +101,7 @@ class OrderController extends Controller
         $total = 0;
         foreach ($carts as $cart) {
             $product = Product::find($cart['id']);
+            $store_id = $product->user->id;
             if ($cart['qty'] > $product->quantity) {
                 return redirect()->route('home')->with("status", "We don have that much quantity in stock");
             }
@@ -114,6 +115,7 @@ class OrderController extends Controller
         ]);
         $order = $user->orders()->create([
             'id' => Uuid::uuid4(),
+            'store_id'=>$store_id,
             'payment_id' => $payed->id,
             'total' => count($carts),
         ]);
