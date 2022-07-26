@@ -17,7 +17,7 @@ class StoreController extends Controller
     {
         return "Hello";
     }
-    
+
     public function products($id)
     {
         $carts = session()->get('cart');
@@ -28,7 +28,7 @@ class StoreController extends Controller
         return view('home', [
             'products' => $store->products()->paginate(10),
             'categories' => $categories,
-            'cart'=>$carts
+            'cart' => $carts
         ])->with('title', $store->name . " Products");
     }
     /**
@@ -40,9 +40,18 @@ class StoreController extends Controller
     public function show($id)
     {
         $store = User::find($id);
-        return view('admin.store.show', compact('store'));
+        if (auth()->check()) {
+            return view('admin.store.show', compact('store'));
+        }
+        $carts = session()->get('cart');
+        if ($carts == null)
+            $carts = [];
+        return view('home', [
+            'products' => $store->products()->paginate(10),
+            'categories' => $store->categories()->paginate(10),
+            'cart' => $carts
+        ])->with('title', $store->name . " Products");
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -68,9 +77,16 @@ class StoreController extends Controller
     }
     public function index()
     {
-        return view('admin.store.index', [
-            'stores' => User::where('role', 2)->paginate(20)
-        ]);
+        if (auth()->check())
+            return view('admin.store.index', [
+                'stores' => User::where('role', 2)->paginate(20)
+            ]);
+        $cart = session()->get('cart');
+        if ($cart == null)
+            $cart = [];
+        $stores = User::where('role', 2)
+            ->where('store_status', 1)->paginate();
+        return view('user.store.index', compact('stores', 'cart'));
     }
     public function wipe($store_id)
     {
@@ -78,10 +94,9 @@ class StoreController extends Controller
             $user = User::find($store_id);
             $user->categories()->delete();
             $user->products()->delete();
-            return redirect()->back()->with('message',"Users data wiped out!");
+            return redirect()->back()->with('message', "Users data wiped out!");
         }
-        return redirect()->back()->with('message',"Only Admins can do that!");
-
+        return redirect()->back()->with('message', "Only Admins can do that!");
     }
     public function destroy($user_id)
     {

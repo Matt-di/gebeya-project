@@ -52,7 +52,7 @@ Route::put('{payment}', [OrderController::class, 'updatePaymentStatus'])->name('
 
 Route::post('upgrade', [UserController::class, 'upgrade'])->name('upgrade');
 
-
+Route::resource('stores', StoreController::class,['as'=>'user']);
 
 
 

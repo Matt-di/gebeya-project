@@ -31,8 +31,8 @@ class MerchanProductController extends Controller
 
     public function index()
     {
-        $category = Category::get();
-        $products = Product::paginate(10);
+        $category = auth()->user()->categories->all();
+        $products = auth()->user()->products()->paginate(10);
         return view('client.product.index', [
             "categories" => $category,
             "products" => $products
@@ -70,7 +70,7 @@ class MerchanProductController extends Controller
     public function edit(User $user, Product $product)
     {
         // dd($product);
-        $categories = Category::all();
+        $categories = auth()->user()->categories->all();
         return view('client.product.edit', ['product' => $product, "categories" => $categories]);
     }
 
@@ -90,8 +90,8 @@ class MerchanProductController extends Controller
     }
     public function destroy(User $user, Product $product)
     {
-        Product::destroy($product->id);
-        return back();
+        auth()->user()->products()->delete($product->id);
+        return back()->with('message','Product deleted');
     }
 
     public function show(User $user, Product $product)
