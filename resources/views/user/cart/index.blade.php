@@ -110,9 +110,8 @@
                         "cart": cart
                     },
                     success: function(data, status, xhr) {
-                        if (cart.length == 0) {
-                            location.reload();
-                        }
+                        location.reload();
+
                     }
                 });
                 updateCartButton();

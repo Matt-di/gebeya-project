@@ -114,48 +114,7 @@
                                         "cart": cart
                                     },
                                     success: function(data, status, xhr) {
-                                        $table = `<div class="table-responsive ">
-                                            <table class="table table-bordered table-responsive-md  ">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col">Product</th>
-                                                    <th scope="col">Price</th>
-                                                    <th scope="col">Qty</th>
-                                                    <th scope="col">Update</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>`;
-                                        for (let i = 0; i < cart.length; i++) {
-                                            $table += `<tr>                            
-                                        <td>${cart[i]['name'] }</td>
-                                        <td>${cart[i]['price'] }</td>
-                                        <td id="${cart[i]['id'] }">${cart[i]['qty'] }</td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <input class="form-input m-2" type="number" value="1" min="1"
-                                                    max="100">
-                                                <button type="button"
-                                                    class="add-to-cart[i] btn btn-rounded btn-sm m-2 btn-primary"
-                                                    data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
-                                                    data-price="${cart[i]['price'] }">Update</button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="remove-from-cart[i] btn btn-danger btn-sm m-2"
-                                                data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
-                                                data-price="${cart[i]['price'] }">X</button>
-                                        </td>
-                                    </tr>`;
-                                        }
-                                        $table += '</table></div>'
-                                        $('#modalDatas').html(
-                                            $table
-                                        )
-                                        $('#staticBackdrop').modal('show');
-
-                                        setTimeout(function() {
-                                            $('#staticBackdrop').modal('hide');
-                                        }, 5000);
+                                        showCartPopup(cart);
                                     }
                                 });
 
@@ -172,6 +131,7 @@
                             "cart": cart
                         },
                         success: function(data, status, xhr) {
+                            showCartPopup(cart);
                             if (cart.length == 0) {
                                 location.reload();
                             }
@@ -180,6 +140,50 @@
                     updateCartButton();
 
                 });
+                function showCartPopup(cart) {
+                $table = `<div class="table-responsive ">
+                                <table class="table table-bordered table-responsive-md table-striped ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+                for (let i = 0; i < cart.length; i++) {
+                    $table += `<tr>                            
+                                            <td>${cart[i]['name'] }</td>
+                                            <td>${cart[i]['price'] }</td>
+                                            <td id="${cart[i]['id'] }">${cart[i]['qty'] }</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <input class="form-input m-2" type="number" value="1" min="1"
+                                                        max="100">
+                                                    <button type="button"
+                                                        class="add-to-cart btn btn-rounded btn-sm m-2 btn-primary"
+                                                        data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
+                                                        data-price="${cart[i]['price'] }">Update</button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="remove-from-cart btn btn-danger btn-sm m-2"
+                                                    data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
+                                                    data-price="${cart[i]['price'] }">X</button>
+                                            </td>
+                                        </tr>`;
+                }
+                $table += "</table></div>"
+                $('#modalDatas').html(
+                    $table
+                )
+                $('#staticBackdrop').modal('show');
+
+                setTimeout(function() {
+                    $('#staticBackdrop').modal('hide');
+                }, 7000);
+            }
 
                 function updateCartButton() {
 

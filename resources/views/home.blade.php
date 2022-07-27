@@ -12,25 +12,25 @@
 
 
         <div class="container mt-5">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item pl-0">
-                                <a class="nav-link active" href="{{ route('home') }}">Home</a>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item pl-0">
+                            <a class="nav-link active" href="{{ route('home') }}">Home</a>
+                        </li>
+                        @for ($i = 1; $i <= count(Request::segments()); $i++)
+                            <li class="nav-item">
+                                @if (($i == count(Request::segments())) & ($i > 0))
+                                    <a class="nav-link disabled" href="">{{ Request::segment($i) }}</a>
+                                @else
+                                    <a class="nav-link active" href="">{{ Request::segment($i) }}</a>
+                                @endif
                             </li>
-                            @for ($i = 1; $i <= count(Request::segments()); $i++)
-                                <li class="nav-item">
-                                    @if (($i == count(Request::segments())) & ($i > 0))
-                                        <a class="nav-link disabled" href="">{{ Request::segment($i) }}</a>
-                                    @else
-                                        <a class="nav-link active" href="">{{ Request::segment($i) }}</a>
-                                    @endif
-                                </li>
-                            @endfor
-                        </ul>
+                        @endfor
+                    </ul>
 
-                    </div>
-                </nav>
+                </div>
+            </nav>
             <!-- Example single danger button -->
             <nav class="navbar navbar-expand-sm navbar-light bg-light">
                 <div class="container-fluid">
@@ -45,7 +45,8 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
                                 <div class="dropdown-menu">
                                     @foreach ($categories as $category)
-                                        <a href="/?category_id={{$category->id}}" class="dropdown-item">{{ $category->name }}</a>
+                                        <a href="/?category_id={{ $category->id }}"
+                                            class="dropdown-item">{{ $category->name }}</a>
                                     @endforeach
                                 </div>
                             </li>
@@ -66,7 +67,8 @@
                                 <div class="input-group">
                                     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search"
                                         aria-label="Search">
-                                    <button type="submit" class="btn btn-secondary"><i class="fa-brands fa-searchengin"></i>Search</button>
+                                    <button type="submit" class="btn btn-secondary"><i
+                                            class="fa-brands fa-searchengin"></i>Search</button>
                                 </div>
                             </form>
                         </ul>
@@ -117,7 +119,38 @@
                             "cart": cart
                         },
                         success: function(data, status, xhr) {
-                            $table = `<div class="table-responsive ">
+                            showCartPopup(cart);
+                        }
+                    });
+
+                    updateCartButton();
+                });
+            });
+            $('.remove-from-cart').on('click', function(event) {
+                var cart = window.cart || [];
+                cart = cart.filter((item => item.id != $(this).data('id')));
+                window.cart = cart;
+                $.ajax("{{ route('carts.store') }}", {
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "cart": cart
+                    },
+                    success: function(data, status, xhr) {
+                        $('#staticBackdrop').modal('hide');
+                        showCartPopup(cart);
+
+                        if (cart.length == 0) {
+                            location.reload();
+                        }
+                    }
+                });
+                updateCartButton();
+
+            });
+
+            function showCartPopup(cart) {
+                $table = `<div class="table-responsive ">
                                 <table class="table table-bordered table-responsive-md table-striped ">
                         <thead class="thead-dark">
                             <tr>
@@ -128,8 +161,8 @@
                             </tr>
                         </thead>
                         <tbody>`;
-                            for (let i = 0; i < cart.length; i++) {
-                                $table += `<tr>                            
+                for (let i = 0; i < cart.length; i++) {
+                    $table += `<tr>                            
                                             <td>${cart[i]['name'] }</td>
                                             <td>${cart[i]['price'] }</td>
                                             <td id="${cart[i]['id'] }">${cart[i]['qty'] }</td>
@@ -149,41 +182,17 @@
                                                     data-price="${cart[i]['price'] }">X</button>
                                             </td>
                                         </tr>`;
-                            }
-                            $table += "</table></div>"
-                            $('#modalDatas').html(
-                                $table
-                            )
-                            $('#staticBackdrop').modal('show');
+                }
+                $table += "</table></div>"
+                $('#modalDatas').html(
+                    $table
+                )
+                $('#staticBackdrop').modal('show');
 
-                            setTimeout(function() {
-                                $('#staticBackdrop').modal('hide');
-                            }, 5000);
-                        }
-                    });
-
-                    updateCartButton();
-                });
-            });
-            $('.remove-from-cart').on('click', function(event) {
-                var cart = window.cart || [];
-                cart = cart.filter((item => item.id != $(this).data('id')));
-                window.cart = cart;
-                $.ajax("{{ route('carts.store') }}", {
-                    type: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "cart": cart
-                    },
-                    success: function(data, status, xhr) {
-                        if (cart.length == 0) {
-                            location.reload();
-                        }
-                    }
-                });
-                updateCartButton();
-
-            });
+                setTimeout(function() {
+                    $('#staticBackdrop').modal('hide');
+                }, 7000);
+            }
 
             function updateCartButton() {
 
