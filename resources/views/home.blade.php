@@ -104,7 +104,7 @@
                             'id': $(this).data('id'),
                             'name': $(this).data('name'),
                             'price': $(this).data('price'),
-                            'qty': $(this).prev('input').val()
+                            'qty': $('#cart-quantity').val()
                         });
                     } else {
                         cart[item]['qty'] = $('#cart-quantity').val();
