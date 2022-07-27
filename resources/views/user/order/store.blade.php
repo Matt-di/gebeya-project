@@ -85,16 +85,7 @@
 
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center mb-4 pb-1">
-                                    <div class="flex-fill mx-3">
-                                        <div class="form-outline">
-                                            <input type="email" id="email" name="email"
-                                                class="form-control form-control-lg" value="null"
-                                                placeholder="Email Address" />
-                                            <label class="form-label" for="formControlLgXs">Email Address</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="d-flex flex-row align-items-center mb-4 pb-1">
                                     <div class="flex-fill mx-3">
                                         <div class="form-outline">
