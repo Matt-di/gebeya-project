@@ -33,7 +33,7 @@
                     <div class="text-center">
 
                         <div class="input-group" role="group">
-                            <input class="form-control mr-2" type="number" value="1" min="1" max="100">
+                            <input id="cart-quantity" class="form-control mr-2" type="number" value="1" min="1" max="100">
                             <div class="input-group-append">
                                 <button type="button" class="add-to-cart btn btn-primary"
                                     data-id="{{ $product->id }}" data-name="{{ $product->name }}"

@@ -98,7 +98,7 @@
 
                     var cart = window.cart || [];
                     let item = cart.findIndex((item => item.id == $(this).data('id')));
-                    console.log(item, cart);
+                    // console.log(item, cart,$(this).prev('input').val());
                     if (item == -1) {
                         cart.push({
                             'id': $(this).data('id'),
@@ -107,7 +107,7 @@
                             'qty': $(this).prev('input').val()
                         });
                     } else {
-                        cart[item]['qty'] = $(this).prev('input').val();
+                        cart[item]['qty'] = $('#cart-quantity').val();
                     }
                     window.cart = cart;
                     $.ajax("{{ route('carts.store') }}", {
@@ -117,7 +117,8 @@
                             "cart": cart
                         },
                         success: function(data, status, xhr) {
-                            $table = `<table class="table">
+                            $table = `<div class="table-responsive ">
+                                <table class="table table-bordered table-responsive-md table-striped ">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">Product</th>
@@ -137,18 +138,19 @@
                                                     <input class="form-input m-2" type="number" value="1" min="1"
                                                         max="100">
                                                     <button type="button"
-                                                        class="add-to-cart[i] btn btn-rounded btn-sm m-2 btn-primary"
+                                                        class="add-to-cart btn btn-rounded btn-sm m-2 btn-primary"
                                                         data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
                                                         data-price="${cart[i]['price'] }">Update</button>
                                                 </div>
                                             </td>
                                             <td>
-                                                <button type="button" class="remove-from-cart[i] btn btn-danger btn-sm m-2"
+                                                <button type="button" class="remove-from-cart btn btn-danger btn-sm m-2"
                                                     data-id="${cart[i]['id'] }" data-name="${cart[i]['name'] }"
                                                     data-price="${cart[i]['price'] }">X</button>
                                             </td>
                                         </tr>`;
                             }
+                            $table += "</table></div>"
                             $('#modalDatas').html(
                                 $table
                             )

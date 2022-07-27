@@ -77,7 +77,8 @@ class StoreController extends Controller
     }
     public function index()
     {
-        if (auth()->user()->role == 1)
+        if (auth()->check())
+            if (auth()->user()->role == 1)
             return view('admin.store.index', [
                 'stores' => User::where('role', 2)->paginate(20)
             ]);
