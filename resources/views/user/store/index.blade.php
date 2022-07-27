@@ -116,15 +116,15 @@
                                     success: function(data, status, xhr) {
                                         $table = `<div class="table-responsive ">
                                             <table class="table table-bordered table-responsive-md  ">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Product</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Qty</th>
+                                                    <th scope="col">Update</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>`;
                                         for (let i = 0; i < cart.length; i++) {
                                             $table += `<tr>                            
                                         <td>${cart[i]['name'] }</td>
