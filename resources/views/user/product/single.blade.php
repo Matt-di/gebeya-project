@@ -122,11 +122,25 @@
                             "cart": cart
                         },
                         success: function(data, status, xhr) {
-                            showCartPopup(cart);
+                            console.log(data, status);
+                            if (data[0].success) {
+                                showCartPopup(cart);
+                                updateCartButton();
+                            } else {
+                                $('#modalDatas').html(
+                                    `<div class="alert alert-warning">${data[0].error}</div>`
+                                );
+                                $('#staticBackdrop').modal('show');
+
+                                setTimeout(function() {
+                                    $('#staticBackdrop').modal('hide');
+                                }, 4000);
+                            }
+                        },
+                        error: function(error, status) {
+                            console.log(error);
                         }
                     });
-
-                    updateCartButton();
                 });
             });
             $('.remove-from-cart').on('click', function(event) {

@@ -27,12 +27,26 @@ class CartController extends Controller
 
     public function store(User $user, Request $request)
     {
+        // dd($request->cart);
+        $output = "";
+        $cartData = $request->cart;
+        foreach ($cartData as $data) {
+            $product = Product::find($data['id']);
+            if ($product->quantity < $data['qty']) {
+                $output = array('error' => "We don have " . $data['qty'] . ' in stock for ' . $product->name);
+                break;
+            }
+        }
+        if ($output == "")
+            $output = array('success' => "added");
+        return response()->json([
+            $output
+        ]);
         session()->put('cart', $request->post('cart'));
 
         return response()->json([
             'status' => 'added'
         ]);
-        // $product = Product::find($request->product_id);
         // if (auth()->user()->user_type == "merchant") {
         //     $output = array(['error' => 'Sorry you are not allowed to do this!']);
         //     return response()->json($output);

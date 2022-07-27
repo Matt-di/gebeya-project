@@ -114,11 +114,25 @@
                                         "cart": cart
                                     },
                                     success: function(data, status, xhr) {
-                                        showCartPopup(cart);
+                                        console.log(data, status);
+                                        if (data[0].success) {
+                                            showCartPopup(cart);
+                                            updateCartButton();
+                                        } else {
+                                            $('#modalDatas').html(
+                                                `<div class="alert alert-warning">${data[0].error}</div>`
+                                            );
+                                            $('#staticBackdrop').modal('show');
+
+                                            setTimeout(function() {
+                                                $('#staticBackdrop').modal('hide');
+                                            }, 4000);
+                                        }
+                                    },
+                                    error: function(error, status) {
+                                        console.log(error);
                                     }
                                 });
-
-                                updateCartButton();
                             });
                     }); $('.remove-from-cart').on('click', function(event) {
                     var cart = window.cart || [];
@@ -140,8 +154,9 @@
                     updateCartButton();
 
                 });
+
                 function showCartPopup(cart) {
-                $table = `<div class="table-responsive ">
+                    $table = `<div class="table-responsive ">
                                 <table class="table table-bordered table-responsive-md table-striped ">
                         <thead class="thead-dark">
                             <tr>
@@ -152,8 +167,8 @@
                             </tr>
                         </thead>
                         <tbody>`;
-                for (let i = 0; i < cart.length; i++) {
-                    $table += `<tr>                            
+                    for (let i = 0; i < cart.length; i++) {
+                        $table += `<tr>                            
                                             <td>${cart[i]['name'] }</td>
                                             <td>${cart[i]['price'] }</td>
                                             <td id="${cart[i]['id'] }">${cart[i]['qty'] }</td>
@@ -173,17 +188,17 @@
                                                     data-price="${cart[i]['price'] }">X</button>
                                             </td>
                                         </tr>`;
-                }
-                $table += "</table></div>"
-                $('#modalDatas').html(
-                    $table
-                )
-                $('#staticBackdrop').modal('show');
+                    }
+                    $table += "</table></div>"
+                    $('#modalDatas').html(
+                        $table
+                    )
+                    $('#staticBackdrop').modal('show');
 
-                setTimeout(function() {
-                    $('#staticBackdrop').modal('hide');
-                }, 7000);
-            }
+                    setTimeout(function() {
+                        $('#staticBackdrop').modal('hide');
+                    }, 7000);
+                }
 
                 function updateCartButton() {
 

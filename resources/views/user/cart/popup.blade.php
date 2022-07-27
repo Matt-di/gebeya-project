@@ -5,7 +5,7 @@
 
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Added to cart</h3>
+                <h3>Information</h3>
             </div>
             <div class="modal-body">
                 <div class="text-right">

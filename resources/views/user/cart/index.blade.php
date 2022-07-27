@@ -120,31 +120,46 @@
 
             $('.add-to-cart').on('click', function(event) {
 
-                var cart = window.cart || [];
-                let item = cart.findIndex((item => item.id == $(this).data('id')));
-                if (item == -1) {
-                    cart.push({
-                        'id': $(this).data('id'),
-                        'name': $(this).data('name'),
-                        'price': $(this).data('price'),
-                        'qty': $(this).prev('input').val()
-                    });
-                } else {
-                    cart[item]['qty'] = $(this).prev('input').val();
-                }
-                window.cart = cart;
-                $.ajax("{{ route('carts.store') }}", {
-                    type: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "cart": cart
-                    },
-                    success: function(data, status, xhr) {
-
+                    var cart = window.cart || [];
+                    let item = cart.findIndex((item => item.id == $(this).data('id')));
+                    if (item == -1) {
+                        cart.push({
+                            'id': $(this).data('id'),
+                            'name': $(this).data('name'),
+                            'price': $(this).data('price'),
+                            'qty': $(this).prev('input').val()
+                        });
+                    } else {
+                        cart[item]['qty'] = $(this).prev('input').val();
                     }
-                });
+                    window.cart = cart;
+                    $.ajax("{{ route('carts.store') }}", {
+                        type: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "cart": cart
+                        },
+                        success: function(data, status, xhr) {
+                            console.log(data, status);
+                            if (data[0].success) {
+                                showCartPopup(cart);
+                                updateCartButton();
+                            } else {
+                                $('#modalDatas').html(
+                                    `<div class="alert alert-warning">${data[0].error}</div>`
+                                );
+                                $('#staticBackdrop').modal('show');
 
-                updateCartButton();
+                                setTimeout(function() {
+                                    $('#staticBackdrop').modal('hide');
+                                }, 4000);
+                            }
+                        },
+                        error: function(error, status) {
+                            console.log(error);
+                        }
+                    });
+                
             });
         });
 
