@@ -13,6 +13,8 @@ class Order extends Model
         'id',
         'payment_id',
         'total',
+        'store_id',
+
     ];
 
 

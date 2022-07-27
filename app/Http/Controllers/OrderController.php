@@ -83,7 +83,7 @@ class OrderController extends Controller
             'firstname' => $request['firstname'],
             'lastname' => $request['lastname'],
             'role' => 3,
-            'email' => 'null',
+            'email' => UuidV4::uuid4(),
             'password' => Hash::make($request['password']),
         ]);
         $shippment =  $user->userShippment()->create(
