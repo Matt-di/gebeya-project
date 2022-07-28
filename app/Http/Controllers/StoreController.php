@@ -82,13 +82,13 @@ class StoreController extends Controller
         if (auth()->check())
             if (auth()->user()->role == 1)
                 return view('admin.store.index', [
-                    'stores' => User::where('role', 2)->paginate(20)
+                    'stores' => User::where('role', 2)->paginate(10)
                 ]);
         $cart = session()->get('cart');
         if ($cart == null)
             $cart = [];
         $stores = User::where('role', 2)
-            ->where('store_status', 1)->paginate();
+            ->where('store_status', 1)->paginate(10);
         return view('user.store.index', compact('stores', 'cart'));
     }
     public function wipe($store_id)

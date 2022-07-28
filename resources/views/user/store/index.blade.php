@@ -82,6 +82,9 @@
             @endforelse
             {{-- </div> --}}
         </div>
+        <div>
+            {{$stores->links()}}
+        </div>
         @include('layouts.contact')
     </div>
     @include('user.cart.popup')
