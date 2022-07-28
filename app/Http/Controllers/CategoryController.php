@@ -13,7 +13,7 @@ class CategoryController extends Controller
     public function index()
     {
         # code...
-        $categories = Category::paginate(10);
+        $categories = auth()->user()->categories()->paginate(10);
         return view('client.category.index', [
             'categories' => $categories
         ]);
