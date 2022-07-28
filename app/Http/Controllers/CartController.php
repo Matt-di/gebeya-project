@@ -32,15 +32,17 @@ class CartController extends Controller
         $cartData = $request->cart;
         foreach ($cartData as $data) {
             $product = Product::find($data['id']);
-            if ($product->quantity < $data['qty']) {
+            if ($data['qty'] < 1) {
+                $output = array('error' => 'Below 1 is not allowed. Please Correct!');
+            } elseif ($product->quantity < $data['qty']) {
                 $output = array('error' => "We don have " . $data['qty'] . ' in stock for ' . $product->name);
                 break;
             }
         }
-        if ($output == "")
+        if ($output == "") {
             $output = array('success' => "added");
-       
-        session()->put('cart', $request->post('cart'));
+            session()->put('cart', $request->post('cart'));
+        }
 
         return response()->json([
             $output
