@@ -25,13 +25,13 @@ class MerchanProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = auth()->user()->categories()->get();
         return view('client.product.create', compact('categories'));
     }
 
     public function index()
     {
-        $category = auth()->user()->categories->all();
+        $category = auth()->user()->categories()->get();
         $products = auth()->user()->products()->paginate(10);
         return view('client.product.index', [
             "categories" => $category,
