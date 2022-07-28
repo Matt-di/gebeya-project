@@ -111,7 +111,6 @@
                     },
                     success: function(data, status, xhr) {
                         location.reload();
-
                     }
                 });
                 updateCartButton();
@@ -144,6 +143,7 @@
                             if (data[0].success) {
                                 showCartPopup(cart);
                                 updateCartButton();
+                                location.reload();
                             } else {
                                 $('#modalDatas').html(
                                     `<div class="alert alert-warning">${data[0].error}</div>`
