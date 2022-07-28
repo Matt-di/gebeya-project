@@ -141,7 +141,6 @@
                         success: function(data, status, xhr) {
                             console.log(data, status);
                             if (data[0].success) {
-                                showCartPopup(cart);
                                 updateCartButton();
                                 location.reload();
                             } else {
