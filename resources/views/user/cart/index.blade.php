@@ -91,6 +91,8 @@
 
         </div>
     </section>
+    @include('user.cart.popup')
+
 @endsection
 
 @section('footer-script')
@@ -103,6 +105,39 @@
                 var cart = window.cart || [];
                 cart = cart.filter((item => item.id != $(this).data('id')));
                 window.cart = cart;
+                console.log(cart);
+                $.ajax("{{ route('carts.store') }}", {
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "cart": window.cart
+                    },
+                    success: function(data, status, xhr) {
+                        updateCartButton();
+                        location.reload();
+                    },
+                    error: function(error, status){
+                        console.log(error);
+                    }
+                });
+
+            });
+
+            $('.add-to-cart').on('click', function(event) {
+
+                var cart = window.cart || [];
+                let item = cart.findIndex((item => item.id == $(this).data('id')));
+                if (item == -1) {
+                    cart.push({
+                        'id': $(this).data('id'),
+                        'name': $(this).data('name'),
+                        'price': $(this).data('price'),
+                        'qty': $(this).prev('input').val()
+                    });
+                } else {
+                    cart[item]['qty'] = $(this).prev('input').val();
+                }
+                window.cart = cart;
                 $.ajax("{{ route('carts.store') }}", {
                     type: 'POST',
                     data: {
@@ -110,55 +145,26 @@
                         "cart": cart
                     },
                     success: function(data, status, xhr) {
-                        location.reload();
+                        console.log(data, status);
+                        if (data[0].success) {
+                            updateCartButton();
+                            // location.reload();
+                        } else {
+                            $('#modalDatas').html(
+                                `<div class="alert alert-warning">${data[0].error}</div>`
+                            );
+                            $('#staticBackdrop').modal('show');
+
+                            setTimeout(function() {
+                                $('#staticBackdrop').modal('hide');
+                            }, 4000);
+                        }
+                    },
+                    error: function(error, status) {
+                        console.log(error);
                     }
                 });
-                updateCartButton();
 
-            });
-
-            $('.add-to-cart').on('click', function(event) {
-
-                    var cart = window.cart || [];
-                    let item = cart.findIndex((item => item.id == $(this).data('id')));
-                    if (item == -1) {
-                        cart.push({
-                            'id': $(this).data('id'),
-                            'name': $(this).data('name'),
-                            'price': $(this).data('price'),
-                            'qty': $(this).prev('input').val()
-                        });
-                    } else {
-                        cart[item]['qty'] = $(this).prev('input').val();
-                    }
-                    window.cart = cart;
-                    $.ajax("{{ route('carts.store') }}", {
-                        type: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "cart": cart
-                        },
-                        success: function(data, status, xhr) {
-                            console.log(data, status);
-                            if (data[0].success) {
-                                updateCartButton();
-                                location.reload();
-                            } else {
-                                $('#modalDatas').html(
-                                    `<div class="alert alert-warning">${data[0].error}</div>`
-                                );
-                                $('#staticBackdrop').modal('show');
-
-                                setTimeout(function() {
-                                    $('#staticBackdrop').modal('hide');
-                                }, 4000);
-                            }
-                        },
-                        error: function(error, status) {
-                            console.log(error);
-                        }
-                    });
-                
             });
         });
 
@@ -167,11 +173,9 @@
             var count = 0;
             let total = 0;
             window.cart.forEach(function(item, i) {
-
                 count += Number(item.qty);
                 $('#' + item.id).html(item.qty);
                 total += (item.qty * item.price);
-
             });
 
             $('#items-in-cart').html(count);

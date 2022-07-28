@@ -30,6 +30,8 @@ class CartController extends Controller
         // dd($request->cart);
         $output = "";
         $cartData = $request->cart;
+        // return $cartData;
+        if(isset($cartData) )
         foreach ($cartData as $data) {
             $product = Product::find($data['id']);
             if ($data['qty'] < 1) {
