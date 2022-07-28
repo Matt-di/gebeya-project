@@ -39,13 +39,11 @@ class CartController extends Controller
         }
         if ($output == "")
             $output = array('success' => "added");
-        return response()->json([
-            $output
-        ]);
+       
         session()->put('cart', $request->post('cart'));
 
         return response()->json([
-            'status' => 'added'
+            $output
         ]);
         // if (auth()->user()->user_type == "merchant") {
         //     $output = array(['error' => 'Sorry you are not allowed to do this!']);

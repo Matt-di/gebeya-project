@@ -140,7 +140,7 @@
                     });
 
                 });
-            });
+           
             $('.remove-from-cart').on('click', function(event) {
                 var cart = window.cart || [];
                 cart = cart.filter((item => item.id != $(this).data('id')));
@@ -155,15 +155,14 @@
                         $('#staticBackdrop').modal('hide');
                         showCartPopup(cart);
 
-                        if (cart.length == 0) {
-                            location.reload();
-                        }
+                        // if (cart.length == 0) {
+                        //     location.reload();
+                        // }
                     }
                 });
-                updateCartButton();
 
             });
-
+        });
             function showCartPopup(cart) {
                 $table = `<div class="table-responsive ">
                                 <table class="table table-bordered table-responsive-md table-striped ">
